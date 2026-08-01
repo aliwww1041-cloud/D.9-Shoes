@@ -6,6 +6,7 @@ from django.db.models import Q
 from django.core.mail import send_mail
 from .models import Order, OrderItem, Product, Category
 from .utils import generate_jazzcash_hash
+from .models import Product
 
 
 # 1. Product List & Category Filtering
@@ -112,24 +113,63 @@ def cart(request):
     return render(request, 'store/cart.html', context)
 
 
+
+
+
 def add_to_cart(request, product_id):
-    product = get_object_or_404(Product, id=product_id)
-    cart = request.session.get('cart', {})
+    if request.method == 'POST':
+        size = request.POST.get('size', '')
+        try:
+            quantity = int(request.POST.get('quantity', 1))
+        except (ValueError, TypeError):
+            quantity = 1
 
-    str_id = str(product_id)
-    if str_id in cart:
-        cart[str_id]['quantity'] += 1
-    else:
-        cart[str_id] = {
-            'name': product.name,
-            'price': float(product.price),
-            'quantity': 1,
-            'image': product.image.url if product.image else ''
-        }
+        cart = request.session.get('cart', {})
+        
+        # Key unique rakhi hai taake alag size ke liye alag cart row bane
+        item_key = f"{product_id}_{size}" if size else str(product_id)
 
-    request.session['cart'] = cart
+        if item_key in cart:
+            cart[item_key]['quantity'] += quantity
+        else:
+            product = get_object_or_404(Product, id=product_id)
+            cart[item_key] = {
+                'product_id': product.id,
+                'name': product.name,
+                'price': float(product.price),
+                'size': size,
+                'quantity': quantity,
+            }
+
+        request.session['cart'] = cart
+        request.session.modified = True
+
     return redirect('cart')
 
+
+def cart_view(request):
+    cart = request.session.get('cart', {})
+    cart_items = []
+    total_price = 0.0
+
+    for key, item in cart.items():
+        subtotal = item['price'] * item['quantity']
+        total_price += subtotal
+        
+        cart_items.append({
+            'key': key,
+            'name': item.get('name', 'Product'),
+            'price': item.get('price', 0),
+            'size': item.get('size', '-'),
+            'quantity': item.get('quantity', 1),
+            'subtotal': subtotal,
+        })
+
+    context = {
+        'cart_items': cart_items,
+        'total_price': total_price,
+    }
+    return render(request, 'store/cart.html', context)
 # 5. Checkout & Order Processing
 
 def checkout(request):

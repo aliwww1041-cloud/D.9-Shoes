@@ -7,7 +7,7 @@
   <div class="row">
     <!-- Left Side: Items Table -->
     <div class="col-md-8">
-      {% if request.session.cart %}
+      {% if cart_items %}
         <div class="table-responsive">
           <table class="table table-dark align-middle">
             <thead>
@@ -19,10 +19,10 @@
               </tr>
             </thead>
             <tbody>
-              {% for key, item in request.session.cart.items %}
+              {% for item in cart_items %}
                 <tr>
                   <td>{{ item.name }}</td>
-                  <td><span class="badge bg-secondary">{{ item.size }}</span></td>
+                  <td><span class="badge bg-secondary">{{ item.size|default:"N/A" }}</span></td>
                   <td>RS {{ item.price }}</td>
                   <td>{{ item.quantity }}</td>
                 </tr>
@@ -46,7 +46,7 @@
           <span class="fs-5">Total:</span>
           <span class="fs-5 fw-bold text-primary">RS {{ total_price }}</span>
         </div>
-        {% if request.session.cart %}
+        {% if cart_items %}
           <a href="{% url 'checkout' %}" class="btn btn-primary btn-lg w-100">Proceed to Checkout</a>
         {% else %}
           <button class="btn btn-secondary btn-lg w-100" disabled>Proceed to Checkout</button>
