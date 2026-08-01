@@ -131,6 +131,7 @@ def add_to_cart(request, product_id):
     return redirect('cart')
 
 # 5. Checkout & Order Processing
+
 def checkout(request):
     cart = request.session.get('cart', {})
     if not cart:
@@ -138,12 +139,12 @@ def checkout(request):
 
     if request.method == 'POST':
         # Form values extract karein
-        full_name = request.POST.get('full_name')
-        email = request.POST.get('email')
-        phone = request.POST.get('phone')
-        address = request.POST.get('address')
-        city = request.POST.get('city')
-        payment_method = request.POST.get('payment_method')
+        full_name = request.POST.get('full_name', '')
+        email = request.POST.get('email', '')
+        phone = request.POST.get('phone', '')
+        address = request.POST.get('address', '')
+        city = request.POST.get('city', '')
+        payment_method = request.POST.get('payment_method', 'Cash on Delivery')
 
         valid_products = Product.objects.filter(id__in=cart.keys())
         if not valid_products.exists():
@@ -159,10 +160,16 @@ def checkout(request):
             total_price += subtotal
             items_summary += f"- {product.name} (Qty: {item_data['quantity']}) - Rs. {subtotal}\n"
 
-        # Order Create Karein
+        # Order Create Karein (Tamam customer details ke sath)
         order = Order.objects.create(
             user=request.user if request.user.is_authenticated else None,
+            full_name=full_name,
+            email=email,
+            phone=phone,
+            address=address,
+            city=city,
             total_amount=total_price,
+            payment_method=payment_method,
             status='Pending'
         )
 
@@ -185,7 +192,7 @@ Thank you for your order at D.9 Shoes!
 
 --- Order Details ---
 Order ID: #{order.id}
-Payment Method: {payment_method.upper()}
+Payment Method: {str(payment_method).upper()}
 
 Items:
 {items_summary}
