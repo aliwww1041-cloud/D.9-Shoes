@@ -1,0 +1,103 @@
+{% extends 'store/base.html' %}
+
+{% block content %}
+<div class="container py-5 text-light">
+    <h2 class="fw-bold mb-4 luxury-serif">Checkout 💳</h2>
+
+    <div class="row g-4">
+        <!-- Left: Shipping Form -->
+        <div class="col-md-7">
+            <div class="card p-4 shadow-sm bg-dark text-light border-secondary rounded-0">
+                <h4 class="mb-3 text-warning luxury-serif">Shipping Address</h4>
+                <form method="POST">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" name="full_name" class="form-control bg-secondary text-light border-0 rounded-0" required>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Email Address (for confirmation)</label>
+                            <input type="email" name="email" class="form-control bg-secondary text-light border-0 rounded-0" placeholder="example@email.com" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Phone Number</label>
+                            <input type="text" name="phone" class="form-control bg-secondary text-light border-0 rounded-0" required>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Address</label>
+                        <textarea name="address" class="form-control bg-secondary text-light border-0 rounded-0" rows="3" required></textarea>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="form-label">City</label>
+                        <input type="text" name="city" class="form-control bg-secondary text-light border-0 rounded-0" required>
+                    </div>
+
+                    <!-- PAYMENT METHOD SECTION -->
+                    <hr class="border-secondary my-4">
+                    <h5 class="mb-3 text-warning luxury-serif">SELECT PAYMENT METHOD</h5>
+
+                    <div class="form-check border border-secondary p-3 mb-2 bg-black">
+                        <input class="form-check-input ms-1" type="radio" name="payment_method" id="jazzcash" value="jazzcash" checked>
+                        <label class="form-check-label text-white fw-bold ms-2" for="jazzcash">
+                            📱 JazzCash Mobile Account
+                        </label>
+                    </div>
+
+                    <div class="form-check border border-secondary p-3 mb-2 bg-black">
+                        <input class="form-check-input ms-1" type="radio" name="payment_method" id="easypaisa" value="easypaisa">
+                        <label class="form-check-label text-white fw-bold ms-2" for="easypaisa">
+                            📱 EasyPaisa Mobile Account
+                        </label>
+                    </div>
+
+                    <div class="form-check border border-secondary p-3 mb-4 bg-black">
+                        <input class="form-check-input ms-1" type="radio" name="payment_method" id="cod" value="cod">
+                        <label class="form-check-label text-white fw-bold ms-2" for="cod">
+                            💵 Cash on Delivery (COD)
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-warning text-dark fw-bold w-100 rounded-0 py-3 text-uppercase">
+                        Place Order
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Right: Order Summary Section -->
+        <div class="col-md-5">
+            <div class="card p-4 shadow-sm bg-dark text-light border-secondary rounded-0">
+                <h4 class="mb-3 text-warning luxury-serif">Order Summary</h4>
+                <hr class="border-secondary">
+
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-muted">Subtotal</span>
+                    <span class="fw-bold">Rs. {{ total }}</span>
+                </div>
+
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-muted">Shipping Charges</span>
+                    <span class="text-success fw-bold">FREE</span>
+                </div>
+
+                <hr class="border-secondary">
+
+                <div class="d-flex justify-content-between mb-3 fs-5">
+                    <span class="fw-bold text-uppercase">Total Payable</span>
+                    <span class="fw-bold text-warning">Rs. {{ total }}</span>
+                </div>
+
+                <div class="alert alert-secondary text-center small rounded-0 border-0 mb-0">
+                    🔒 Guaranteed Safe & Secure Checkout
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

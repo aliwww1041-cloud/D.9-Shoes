@@ -1,0 +1,17 @@
+{% extends 'store/base.html' %}
+
+{% block content %}
+<div class="container text-center my-5 py-5" style="color: #fff;">
+    <div class="card bg-dark text-light p-5 border-success mx-auto" style="max-width: 600px;">
+        <h1 class="text-success mb-3">✓ Order Placed Successfully!</h1>
+        <p class="lead">Thank you for shopping with D.9 SHOES.</p>
+        <hr class="bg-secondary">
+        <p><strong>Order ID:</strong> #{{ order.id }}</p>
+        <p><strong>Total Amount:</strong> RS {{ order.total_amount }}</p>
+        
+        <div class="mt-4">
+            <a href="{% url 'product_list' %}" class="btn btn-outline-light">Continue Shopping</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
