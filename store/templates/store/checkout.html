@@ -1,3 +1,5 @@
+
+{% load static %}
 {% extends 'store/base.html' %}
 
 {% block content %}
@@ -51,9 +53,7 @@
       <input type="radio" name="payment_method" value="jazzcash" class="form-check-input mt-0" checked required>
       <span class="text-white fw-bold fs-6">JazzCash Mobile Account</span>
     </div>
-    <img src="jazzcash.png" 
-         alt="JazzCash" 
-         style="height: 32px; width: auto; object-fit: contain;">
+    <img src="{% static 'images/jazzcash.png' %}" alt="JazzCash" style="height: 32px; width: auto; object-fit: contain;">
   </label>
 
   <!-- EasyPaisa -->
@@ -62,11 +62,8 @@
       <input type="radio" name="payment_method" value="easypaisa" class="form-check-input mt-0" required>
       <span class="text-white fw-bold fs-6">EasyPaisa Mobile Account</span>
     </div>
-    <img src="easy.png" 
-         alt="EasyPaisa" 
-         style="height: 32px; width: auto; object-fit: contain;">
+    <img src="{% static 'images/easy.png' %}" alt="EasyPaisa" style="height: 32px; width: auto; object-fit: contain;">
   </label>
-
   <!-- Cash on Delivery -->
   <label class="payment-option border border-secondary p-3 rounded bg-dark d-flex align-items-center justify-content-between" style="cursor: pointer;">
     <div class="d-flex align-items-center gap-3">
