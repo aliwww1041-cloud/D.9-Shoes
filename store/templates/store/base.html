@@ -213,12 +213,15 @@
                 </ul>
 
                 <!-- Cart & User Buttons (Right Side) -->
-                <div class="d-none d-lg-flex align-items-center gap-3">
-                    <a href="{% url 'cart' %}" class="position-relative text-white me-2" style="font-size: 1.2rem;">
-                        <i class="fa-solid fa-bag-shopping"></i>
-                    </a>
-                    <a href="/admin/" class="btn btn-outline-light py-1 px-3 btn-sm">Admin Portal</a>
-                </div>
+            <div class="d-none d-lg-flex align-items-center gap-3">
+             <a href="{% url 'cart' %}" class="position-relative text-white me-2" style="font-size: 1.2rem;">
+                <i class="fa-solid fa-bag-shopping"></i>
+             </a>
+    
+            {% if user.is_authenticated and user.is_staff %}
+                <a href="/admin/" class="btn btn-outline-light py-1 px-3 btn-sm">Admin Portal</a>
+            {% endif %}
+            </div>
             </div>
 
         </div>
