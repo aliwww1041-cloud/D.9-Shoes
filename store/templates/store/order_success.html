@@ -1,16 +1,16 @@
 {% extends 'store/base.html' %}
 
 {% block content %}
-<div class="container text-center my-5 py-5" style="color: #fff;">
-    <div class="card bg-dark text-light p-5 border-success mx-auto" style="max-width: 600px;">
-        <h1 class="text-success mb-3">✓ Order Placed Successfully!</h1>
-        <p class="lead">Thank you for shopping with D.9 SHOES.</p>
-        <hr class="bg-secondary">
-        <p><strong>Order ID:</strong> #{{ order.id }}</p>
-        <p><strong>Total Amount:</strong> RS {{ order.total_amount }}</p>
+<div class="container py-5 text-center text-light">
+    <div class="card bg-dark border-secondary p-5 mx-auto shadow-lg" style="max-width: 600px;">
+        <div class="mb-3">
+            <span class="display-1 text-success">🎉</span>
+        </div>
+        <h2 class="fw-bold text-white mb-3">Order Placed Successfully!</h2>
+        <p class="text-muted fs-5 mb-4">Aap ka order receive ho gaya hai. Hum jald hi aap se raabta karenge.</p>
         
-        <div class="mt-4">
-            <a href="{% url 'product_list' %}" class="btn btn-outline-light">Continue Shopping</a>
+        <div class="d-flex justify-content-center gap-3">
+            <a href="{% url 'home' %}" class="btn btn-warning fw-bold px-4">Continue Shopping</a>
         </div>
     </div>
 </div>

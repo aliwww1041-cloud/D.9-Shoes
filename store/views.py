@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from django.shortcuts import render, redirect, get_object_or_404
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
@@ -6,8 +6,6 @@ from django.db.models import Q
 from django.core.mail import send_mail
 from .models import Order, OrderItem, Product, Category
 from .utils import generate_jazzcash_hash
-from .models import Product
-
 
 # 1. Product List & Category Filtering
 def product_list(request):
@@ -17,7 +15,6 @@ def product_list(request):
     if category_slug:
         cat = category_slug.lower().strip()
         
-        # Main Men Section (All Men Shoes & Subcategories)
         if cat == 'men':
             products = products.filter(
                 Q(category__name__icontains='men') | 
@@ -29,8 +26,6 @@ def product_list(request):
                 Q(category__name__icontains='loafer') |
                 Q(category__name__icontains='formal')
             )
-        
-        # Individual Sub-Categories Filtering
         elif cat in ['chappals', 'chappal']:
             products = products.filter(
                 Q(category__name__icontains='chappal') | Q(name__icontains='chappal')
@@ -88,34 +83,7 @@ def product_detail(request, pk):
     return render(request, 'store/product_detail.html', {'product': product})
 
 
-# 4. Cart Management
-def cart(request):
-    cart_session = request.session.get('cart', {})
-    cart_items = []
-    total = 0
-
-    for product_id, item_data in cart_session.items():
-        subtotal = item_data['price'] * item_data['quantity']
-        total += subtotal
-        cart_items.append({
-            'product_id': product_id,
-            'name': item_data['name'],
-            'price': item_data['price'],
-            'quantity': item_data['quantity'],
-            'subtotal': subtotal,
-            'image': item_data.get('image', '')
-        })
-
-    context = {
-        'cart_items': cart_items,
-        'total': total
-    }
-    return render(request, 'store/cart.html', context)
-
-
-
-
-
+# 4. Cart Management Functions
 def add_to_cart(request, product_id):
     if request.method == 'POST':
         size = request.POST.get('size', '')
@@ -125,8 +93,6 @@ def add_to_cart(request, product_id):
             quantity = 1
 
         cart = request.session.get('cart', {})
-        
-        # Key unique rakhi hai taake alag size ke liye alag cart row bane
         item_key = f"{product_id}_{size}" if size else str(product_id)
 
         if item_key in cart:
@@ -170,37 +136,26 @@ def cart_view(request):
         'total_price': total_price,
     }
     return render(request, 'store/cart.html', context)
-# 5. Checkout & Order Processing
 
+
+# 5. Checkout & Order Processing
 def checkout(request):
     cart = request.session.get('cart', {})
     if not cart:
         return redirect('product_list')
 
     if request.method == 'POST':
-        # Form values extract karein
         full_name = request.POST.get('full_name', '')
         email = request.POST.get('email', '')
         phone = request.POST.get('phone', '')
         address = request.POST.get('address', '')
         city = request.POST.get('city', '')
-        payment_method = request.POST.get('payment_method', 'Cash on Delivery')
-
-        valid_products = Product.objects.filter(id__in=cart.keys())
-        if not valid_products.exists():
-            request.session['cart'] = {}
-            return redirect('product_list')
+        payment_method = request.POST.get('payment_method', 'cod')
 
         total_price = 0
         items_summary = ""
 
-        for product in valid_products:
-            item_data = cart[str(product.id)]
-            subtotal = float(item_data['price']) * item_data['quantity']
-            total_price += subtotal
-            items_summary += f"- {product.name} (Qty: {item_data['quantity']}) - Rs. {subtotal}\n"
-
-        # Order Create Karein (Tamam customer details ke sath)
+        # Order Pehle Create Karein
         order = Order.objects.create(
             user=request.user if request.user.is_authenticated else None,
             full_name=full_name,
@@ -208,13 +163,21 @@ def checkout(request):
             phone=phone,
             address=address,
             city=city,
-            total_amount=total_price,
+            total_amount=0, # Neeche calculate hoga
             payment_method=payment_method,
             status='Pending'
         )
 
-        for product in valid_products:
-            item_data = cart[str(product.id)]
+        # Session Cart Se Order Items Banayein
+        for item_key, item_data in cart.items():
+            product_id = item_data['product_id']
+            product = get_object_or_404(Product, id=product_id)
+            subtotal = float(item_data['price']) * item_data['quantity']
+            total_price += subtotal
+            
+            size_info = f" (Size: {item_data['size']})" if item_data.get('size') else ""
+            items_summary += f"- {product.name}{size_info} x {item_data['quantity']} = Rs. {subtotal}\n"
+
             OrderItem.objects.create(
                 order=order,
                 product=product,
@@ -222,9 +185,13 @@ def checkout(request):
                 quantity=item_data['quantity']
             )
 
+        # Order Total Amount Update Karein
+        order.total_amount = total_price
+        order.save()
+
         # CLIENT KO EMAIL BHEJNA
         if email:
-            subject = f"Order Placed - #{order.id} | D.9 Shoes"
+            subject = f"Order Confirmation - #{order.id} | D.9 Shoes"
             message = f"""
 Hello {full_name},
 
@@ -258,9 +225,11 @@ D.9 Shoes Team
             except Exception as e:
                 print(f"Email error: {e}")
 
-        # Checkout Flow Routing
+        # Cart Clean Karein
         request.session['cart'] = {}
+        request.session.modified = True
 
+        # Routing logic
         if payment_method == 'jazzcash':
             return redirect('initiate_jazzcash_payment', order_id=order.id)
         else:
@@ -268,6 +237,7 @@ D.9 Shoes Team
 
     total = sum(float(item['price']) * item['quantity'] for item in cart.values())
     return render(request, 'store/checkout.html', {'total': total})
+
 
 def order_success(request, order_id):
     order = get_object_or_404(Order, id=order_id)
@@ -278,35 +248,38 @@ def order_success(request, order_id):
 def initiate_jazzcash_payment(request, order_id):
     order = get_object_or_404(Order, id=order_id)
     
-    txn_ref_no = f"T{datetime.now().strftime('%Y%m%d%H%M%S')}"
-    pp_expiry_date = datetime.now().strftime('%Y%m%d%H%M%S')
+    now = datetime.now()
+    txn_ref_no = f"T{now.strftime('%Y%m%d%H%M%S')}"
+    # Expiry 1 ghanta aage ki set ki gayi hai taake JazzCash error na de
+    pp_expiry_date = (now + timedelta(hours=1)).strftime('%Y%m%d%H%M%S')
     
     post_data = {
         'pp_Version': '1.1',
         'pp_TxnType': '',
         'pp_Language': 'EN',
-        'pp_MerchantID': settings.JAZZCASH_MERCHANT_ID,
+        'pp_MerchantID': getattr(settings, 'JAZZCASH_MERCHANT_ID', ''),
         'pp_SubMerchantID': '',
-        'pp_Password': settings.JAZZCASH_PASSWORD,
+        'pp_Password': getattr(settings, 'JAZZCASH_PASSWORD', ''),
         'pp_BankID': 'TBANK',
         'pp_ProductID': 'REFILL',
         'pp_TxnRefNo': txn_ref_no,
-        'pp_Amount': str(int(order.total_amount * 100)),
+        'pp_Amount': str(int(order.total_amount * 100)), # Amount in Paisa
         'pp_TxnCurrency': 'PKR',
-        'pp_TxnDateTime': datetime.now().strftime('%Y%m%d%H%M%S'),
+        'pp_TxnDateTime': now.strftime('%Y%m%d%H%M%S'),
         'pp_BillReference': str(order.id),
         'pp_Description': f'Order #{order.id} Payment',
         'pp_TxnExpiryDateTime': pp_expiry_date,
-        'pp_ReturnURL': settings.JAZZCASH_RETURN_URL,
+        'pp_ReturnURL': getattr(settings, 'JAZZCASH_RETURN_URL', ''),
         'pp_SecureHash': '',
         'ppmpf_1': str(order.id),
     }
 
+    # Secure Hash Generation
     post_data['pp_SecureHash'] = generate_jazzcash_hash(post_data)
 
     return render(request, 'store/jazzcash_redirect.html', {
         'post_data': post_data,
-        'jazzcash_url': settings.JAZZCASH_API_URL
+        'jazzcash_url': getattr(settings, 'JAZZCASH_API_URL', 'https://sandbox.jazzcash.com.pk/CustomerPortal/transactionmanagement/merchantform')
     })
 
 
@@ -323,7 +296,7 @@ def jazzcash_callback(request):
                 order.is_paid = True
                 order.status = 'Shipped'
                 order.save()
-            return render(request, 'store/order_success.html', {'order': order, 'message': 'Payment Successful!'})
+                return render(request, 'store/order_success.html', {'order': order, 'message': 'Payment Successful!'})
         else:
             return render(request, 'store/order_failed.html', {'message': response_data.get('pp_ResponseMessage', 'Payment Failed')})
 

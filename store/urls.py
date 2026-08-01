@@ -21,4 +21,6 @@ urlpatterns = [
     path('jazzcash-callback/', views.jazzcash_callback, name='jazzcash_callback'),
     path('jazzcash/pay/<int:order_id>/', views.initiate_jazzcash_payment, name='initiate_jazzcash_payment'),
     path('jazzcash/callback/', views.jazzcash_callback, name='jazzcash_callback'),
+    path('checkout/', views.checkout_view, name='checkout'),
+    path('order-success/', views.order_success_view, name='order_success'), # YEH ADD KAREIN
 ]
