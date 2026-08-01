@@ -38,34 +38,47 @@
                         <input type="text" name="city" class="form-control bg-secondary text-light border-0 rounded-0" required>
                     </div>
 
-                    <!-- PAYMENT METHOD SECTION -->
-                    <hr class="border-secondary my-4">
-                    <h5 class="mb-3 text-warning luxury-serif">SELECT PAYMENT METHOD</h5>
+                    <h5 class="text-warning fw-bold mb-3">SELECT PAYMENT METHOD</h5>
 
-                    <div class="form-check border border-secondary p-3 mb-2 bg-black">
-                        <input class="form-check-input ms-1" type="radio" name="payment_method" id="jazzcash" value="jazzcash" checked>
-                        <label class="form-check-label text-white fw-bold ms-2" for="jazzcash">
-                            📱 JazzCash Mobile Account
-                        </label>
-                    </div>
+<div class="payment-methods d-flex flex-column gap-2 mb-4">
+  
+  <!-- JazzCash Option -->
+  <label class="payment-option border border-secondary p-3 rounded bg-dark d-flex align-items-center justify-content-between" style="cursor: pointer;">
+    <div class="d-flex align-items-center gap-3">
+      <input type="radio" name="payment_method" value="jazzcash" class="form-check-input mt-0" checked required>
+      <span class="text-white fw-bold fs-6">JazzCash Mobile Account</span>
+    </div>
+    <!-- Clean Online SVG Logo -->
+    <img src="https://sandbox.jazzcash.com.pk/CustomerPortal/Content/Images/JazzCashLogo.png" 
+         alt="JazzCash" 
+         style="height: 35px; width: auto; object-fit: contain;">
+  </label>
 
-                    <div class="form-check border border-secondary p-3 mb-2 bg-black">
-                        <input class="form-check-input ms-1" type="radio" name="payment_method" id="easypaisa" value="easypaisa">
-                        <label class="form-check-label text-white fw-bold ms-2" for="easypaisa">
-                            📱 EasyPaisa Mobile Account
-                        </label>
-                    </div>
+  <!-- EasyPaisa Option -->
+  <label class="payment-option border border-secondary p-3 rounded bg-dark d-flex align-items-center justify-content-between" style="cursor: pointer;">
+    <div class="d-flex align-items-center gap-3">
+      <input type="radio" name="payment_method" value="easypaisa" class="form-check-input mt-0" required>
+      <span class="text-white fw-bold fs-6">EasyPaisa Mobile Account</span>
+    </div>
+    <!-- Clean SVG Logo -->
+    <img src="https://easypaisa.com.pk/wp-content/uploads/2023/02/easypaisa_logo.png" 
+         alt="EasyPaisa" 
+         style="height: 35px; width: auto; object-fit: contain;">
+  </label>
 
-                    <div class="form-check border border-secondary p-3 mb-4 bg-black">
-                        <input class="form-check-input ms-1" type="radio" name="payment_method" id="cod" value="cod">
-                        <label class="form-check-label text-white fw-bold ms-2" for="cod">
-                            💵 Cash on Delivery (COD)
-                        </label>
-                    </div>
+  <!-- Cash on Delivery Option -->
+  <label class="payment-option border border-secondary p-3 rounded bg-dark d-flex align-items-center justify-content-between" style="cursor: pointer;">
+    <div class="d-flex align-items-center gap-3">
+      <input type="radio" name="payment_method" value="cod" class="form-check-input mt-0" required>
+      <span class="text-white fw-bold fs-6">Cash on Delivery (COD)</span>
+    </div>
+    <!-- FontAwesome/SVG Icon for COD -->
+    <span class="badge bg-success fs-6 p-2">💵 COD</span>
+  </label>
 
-                    <button type="submit" class="btn btn-warning text-dark fw-bold w-100 rounded-0 py-3 text-uppercase">
-                        Place Order
-                    </button>
+</div>
+
+<button type="submit" class="btn btn-warning btn-lg w-100 fw-bold text-uppercase">Place Order</button>
                 </form>
             </div>
         </div>
