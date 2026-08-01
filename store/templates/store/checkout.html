@@ -40,45 +40,47 @@
 
                     <h5 class="text-warning fw-bold mb-3">SELECT PAYMENT METHOD</h5>
 
+                    <!-- YAHAN SE PASTE KAREIN -->
+<h5 class="text-warning fw-bold mb-3">SELECT PAYMENT METHOD</h5>
+
 <div class="payment-methods d-flex flex-column gap-2 mb-4">
   
-  <!-- JazzCash Option -->
+  <!-- JazzCash -->
   <label class="payment-option border border-secondary p-3 rounded bg-dark d-flex align-items-center justify-content-between" style="cursor: pointer;">
     <div class="d-flex align-items-center gap-3">
       <input type="radio" name="payment_method" value="jazzcash" class="form-check-input mt-0" checked required>
       <span class="text-white fw-bold fs-6">JazzCash Mobile Account</span>
     </div>
-    <!-- Clean Online SVG Logo -->
-    <img src="https://sandbox.jazzcash.com.pk/CustomerPortal/Content/Images/JazzCashLogo.png" 
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/JazzCash_logo.svg/320px-JazzCash_logo.svg.png" 
          alt="JazzCash" 
-         style="height: 35px; width: auto; object-fit: contain;">
+         style="height: 32px; width: auto; object-fit: contain;">
   </label>
 
-  <!-- EasyPaisa Option -->
+  <!-- EasyPaisa -->
   <label class="payment-option border border-secondary p-3 rounded bg-dark d-flex align-items-center justify-content-between" style="cursor: pointer;">
     <div class="d-flex align-items-center gap-3">
       <input type="radio" name="payment_method" value="easypaisa" class="form-check-input mt-0" required>
       <span class="text-white fw-bold fs-6">EasyPaisa Mobile Account</span>
     </div>
-    <!-- Clean SVG Logo -->
-    <img src="https://easypaisa.com.pk/wp-content/uploads/2023/02/easypaisa_logo.png" 
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Easypaisa_logo.svg/320px-Easypaisa_logo.svg.png" 
          alt="EasyPaisa" 
-         style="height: 35px; width: auto; object-fit: contain;">
+         style="height: 32px; width: auto; object-fit: contain;">
   </label>
 
-  <!-- Cash on Delivery Option -->
+  <!-- Cash on Delivery -->
   <label class="payment-option border border-secondary p-3 rounded bg-dark d-flex align-items-center justify-content-between" style="cursor: pointer;">
     <div class="d-flex align-items-center gap-3">
       <input type="radio" name="payment_method" value="cod" class="form-check-input mt-0" required>
       <span class="text-white fw-bold fs-6">Cash on Delivery (COD)</span>
     </div>
-    <!-- FontAwesome/SVG Icon for COD -->
     <span class="badge bg-success fs-6 p-2">💵 COD</span>
   </label>
 
 </div>
 
-<button type="submit" class="btn btn-warning btn-lg w-100 fw-bold text-uppercase">Place Order</button>
+                    <button type="submit" class="btn btn-warning text-dark fw-bold px-4 py-2 rounded-0 text-uppercase">
+                        Place Order
+                    </button>
                 </form>
             </div>
         </div>
