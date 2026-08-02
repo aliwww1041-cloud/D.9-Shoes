@@ -379,6 +379,12 @@ def user_register(request):
         form = UserCreationForm()
     return render(request, 'store/register.html', {'form': form})
 def remove_from_cart(request, item_id):
-    cart_item = get_object_or_404(CartItem, id=item_id)
-    cart_item.delete()
+    cart = request.session.get('cart', {})
+    
+    # item_id yahan session dictionary ki key hai (misal ke tor par product_id ya product_id_size)
+    if item_id in cart:
+        del cart[item_id]
+        request.session['cart'] = cart
+        request.session.modified = True
+        
     return redirect('cart')
