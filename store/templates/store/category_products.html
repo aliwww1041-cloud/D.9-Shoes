@@ -2,47 +2,74 @@
 {% load static %}
 
 {% block content %}
-<div class="container my-5">
+<div class="container my-3 px-2">
     <!-- Page Header -->
-    <div class="text-center mb-5">
-        <h2 class="text-white fw-bold text-uppercase" style="letter-spacing: 2px;">{{ category_name }} Collection</h2>
-        <div class="mx-auto mt-2" style="width: 60px; height: 3px; background-color: #ffc107;"></div>
+    <div class="text-center mb-3">
+        <h2 class="text-white fw-bold text-uppercase" style="letter-spacing: 1px; font-size: 1.25rem;">{{ category_name }} Collection</h2>
+        <div class="mx-auto mt-1" style="width: 40px; height: 2px; background-color: #ff4500;"></div>
     </div>
 
     <!-- Product Grid -->
-    <div class="row g-4">
+    <div class="row row-cols-3 row-cols-md-4 row-cols-lg-5 g-1 g-md-2">
         {% for product in products %}
-        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-            <div class="card product-card bg-dark text-white border-secondary h-100 position-relative rounded-3 shadow-sm">
+        <div class="col">
+            <div class="card product-card bg-dark text-white border-secondary h-100 position-relative shadow-sm">
                 
                 <!-- Sale Badge -->
-                {% if product.sale %}
-                    <span class="badge bg-danger position-absolute top-0 start-0 m-2 px-2 py-1 shadow-sm" style="z-index: 2;">SALE</span>
+                {% if product.discount_price or product.sale %}
+                    <span class="badge bg-danger position-absolute top-0 start-0 m-1" style="font-size: 0.4rem; z-index: 2; padding: 1px 2px;">SALE</span>
                 {% endif %}
 
-                <!-- Product Image Container -->
-                <div class="bg-white p-3 text-center position-relative overflow-hidden" style="height: 220px;">
-                    <img src="{{ product.image.url }}" class="img-fluid h-100 w-100 object-fit-contain transition-zoom" alt="{{ product.name }}">
+                <!-- Product Image Container (Height reduced using 4/3 ratio) -->
+                <div class="bg-white text-center position-relative overflow-hidden w-100 compact-img-container">
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" class="w-100 h-100 transition-zoom compact-img" alt="{{ product.name }}">
+                    {% else %}
+                        <img src="https://via.placeholder.com/300x300?text=No+Image" class="w-100 h-100 transition-zoom compact-img" alt="No Image">
+                    {% endif %}
                 </div>
 
                 <!-- Product Body -->
-                <div class="card-body d-flex flex-column justify-content-between p-3 text-center">
+                <div class="card-body d-flex flex-column justify-content-between p-1 text-center">
                     <div>
-                        <h6 class="card-title text-truncate fw-semibold mb-2 text-light" style="font-size: 0.95rem;">{{ product.name }}</h6>
+                        <!-- Product Title -->
+                        <h6 class="card-title text-white fw-semibold mb-1 text-truncate" style="font-size: 0.6rem;">
+                            {{ product.name }}
+                        </h6>
                         
-                        <!-- Price Section (Updated to match index page) -->
-                        <div class="d-flex align-items-center justify-content-center gap-2 mb-3">
-                            {% if product.old_price %}
-                                <span class="text-muted text-decoration-line-through small">Rs. {{ product.old_price }}</span>
-                            {% endif %}
-                            <span class="text-danger fw-bold fs-6">Rs. {{ product.price }}</span>
-                        </div>
+                        <!-- Product Description -->
+                        {% if product.description %}
+                            <p class="mb-1 text-truncate" style="font-size: 0.45rem; color: #d1d5db;">
+                                {{ product.description }}
+                            </p>
+                        {% endif %}
                     </div>
 
-                    <!-- Action Button -->
-                    <a href="{% url 'product_detail' product.id %}" class="btn btn-light btn-sm fw-bold w-100 py-2 text-uppercase transition-btn" style="font-size: 0.8rem;">
-                        VIEW
-                    </a>
+                    <div>
+                        <!-- Price Section -->
+                        {% if product.discount_price %}
+                            <div class="d-flex justify-content-center align-items-center gap-1 mb-1" style="font-size: 0.45rem;">
+                                <span class="text-white-50 text-decoration-line-through" style="font-size: 0.4rem; text-decoration-color: #ff4500;">Rs. {{ product.price }}</span>
+                                <span class="price-text text-danger fw-bold" style="font-size: 0.5rem;">Rs. {{ product.discount_price }}</span>
+                            </div>
+                        {% elif product.old_price %}
+                            <div class="d-flex justify-content-center align-items-center gap-1 mb-1" style="font-size: 0.45rem;">
+                                <span class="text-white-50 text-decoration-line-through" style="font-size: 0.4rem; text-decoration-color: #ff4500;">Rs. {{ product.old_price }}</span>
+                                <span class="price-text text-danger fw-bold" style="font-size: 0.5rem;">Rs. {{ product.price }}</span>
+                            </div>
+                        {% else %}
+                            <div class="price-text text-danger fw-bold mb-1" style="font-size: 0.5rem;">
+                                Rs. {{ product.price }}
+                            </div>
+                        {% endif %}
+
+                        <!-- Action Button -->
+                        <div>
+                            <a href="{% url 'product_detail' product.id %}" class="btn btn-sm text-uppercase fw-bold w-100 py-0 custom-product-btn" style="font-size: 13px; border-radius: 2px;">
+                                View
+                            </a>
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -57,26 +84,42 @@
 
 <!-- Custom Professional Styling -->
 <style>
+    /* Compact Image Styling */
+    .compact-img-container {
+        aspect-ratio: 4 / 3;
+        width: 100%;
+    }
+    .compact-img {
+        object-fit: cover;
+        object-position: center;
+    }
+
     .product-card {
         transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
     .product-card:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 193, 7, 0.15) !important;
-        border-color: #ffc107 !important;
+        transform: translateY(-3px);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5), 0 0 10px rgba(255, 69, 0, 0.2) !important;
+        border-color: #ff4500 !important;
     }
     .transition-zoom {
         transition: transform 0.4s ease;
     }
     .product-card:hover .transition-zoom {
-        transform: scale(1.08);
+        transform: scale(1.05);
     }
-    .transition-btn {
-        transition: all 0.2s ease-in-out;
+    
+    /* Matching Orange Button Theme */
+    .custom-product-btn {
+        color: #ff4500;
+        border: 1px solid #ff4500;
+        background-color: transparent;
+        transition: all 0.3s ease-in-out;
     }
-    .transition-btn:hover {
-        background-color: #ffc107 !important;
-        color: #000 !important;
+    .custom-product-btn:hover {
+        background-color: #ff4500;
+        color: #fff;
+        box-shadow: 0 0 8px rgba(255, 69, 0, 0.4);
     }
 </style>
 {% endblock %}
