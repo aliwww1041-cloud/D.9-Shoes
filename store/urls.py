@@ -23,4 +23,5 @@ urlpatterns = [
     path('pay-jazzcash/<int:order_id>/', views.initiate_jazzcash_payment, name='initiate_jazzcash'),
     path('jazzcash-callback/', views.jazzcash_callback, name='jazzcash_callback'),
     path('remove-from-cart/<str:item_id>/', views.remove_from_cart, name='remove_from_cart'),
+    path('category/<str:slug>/', views.category_products, name='category_products'),
 ]

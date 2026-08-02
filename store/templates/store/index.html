@@ -17,7 +17,15 @@
             <h3 class="fw-bold text-uppercase text-light mb-1" style="font-size: 1.75rem; letter-spacing: 2px;">
                 {{ category.name }}
             </h3>
-            <div style="width: 50px; height: 2px; background-color: #ff4500; margin: 0 auto 10px auto;"></div>
+            <div style="width: 50px; height: 2px; background-color: #ff4500; margin: 0 auto 8px auto;"></div>
+            
+            <!-- View All Button -->
+            <div class="mb-2">
+                <a href="{% url 'category_products' category.name|slugify %}" class="btn custom-view-all-btn text-uppercase fw-bold px-4 py-2" style="font-size: 0.75rem; border-radius: 30px;">
+                    View All {{ category.name }}
+                </a>
+            </div>
+
             <p class="text-muted small">Explore our latest {{ category.name }} collection</p>
         </div>
 
@@ -26,52 +34,56 @@
                 
                 {% for product in category.category_products %}
                 <div class="swiper-slide h-auto">
-                    <div class="card product-card bg-dark text-white border-secondary h-100">
-                        <div class="product-img-wrapper position-relative overflow-hidden">
+                    <div class="card product-card bg-dark text-white border-secondary h-100 shadow-sm">
+                        <div class="product-img-wrapper position-relative overflow-hidden bg-white p-2">
                             {% if product.discount_price %}
-                                <span class="badge bg-danger position-absolute top-0 start-0 m-2 px-2 py-1" style="font-size: 0.7rem; z-index: 2;">SALE</span>
+                                <span class="badge bg-danger position-absolute top-0 start-0 m-1" style="font-size: 0.55rem; z-index: 2; padding: 2px 4px;">SALE</span>
                             {% endif %}
                             
                             {% if product.image %}
-                                <img src="{{ product.image.url }}" class="card-img-top object-fit-cover" alt="{{ product.name }}" style="height: 220px;">
+                                <img src="{{ product.image.url }}" class="card-img-top object-fit-contain" alt="{{ product.name }}" style="height: 120px;">
                             {% else %}
-                                <img src="https://via.placeholder.com/300x300?text=No+Image" class="card-img-top object-fit-cover" alt="No Image" style="height: 220px;">
+                                <img src="https://via.placeholder.com/300x300?text=No+Image" class="card-img-top object-fit-contain" alt="No Image" style="height: 120px;">
                             {% endif %}
                         </div>
 
-                        <div class="card-body d-flex flex-column justify-content-between text-center p-3">
+                        <div class="card-body d-flex flex-column justify-content-between text-center p-2">
                             <div>
-                                <span class="text-uppercase text-muted d-block fw-bold mb-1" style="font-size: 0.65rem;">
+                                <span class="text-uppercase text-muted d-block fw-bold mb-1" style="font-size: 0.55rem;">
                                     {{ category.name }}
                                 </span>
-                                <!-- Product Title in White Color -->
-                                <h6 class="card-title text-white fw-semibold mb-1" style="font-size: 0.9rem;">
+                                <!-- Product Title -->
+                                <h6 class="card-title text-white fw-semibold mb-1 text-truncate" style="font-size: 0.75rem;">
                                     {{ product.name }}
                                 </h6>
-                                <!-- Product Description in White/Muted Color -->
+                                
+                                <!-- Product Description with Visible Color -->
                                 {% if product.description %}
-                                <p class="text-white-50 small mb-2" style="font-size: 0.75rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
-                                    {{ product.description }}
-                                </p>
+                                    <p class="mb-2 text-truncate" style="font-size: 0.6rem; color: #d1d5db;">
+                                        {{ product.description }}
+                                    </p>
                                 {% endif %}
                             </div>
 
-                            <div class="mt-2">
-                                <!-- Price & Discount Logic with clear line-through and red discount price -->
+                            <div class="mt-1">
+                                <!-- Price & Discount Logic -->
                                 {% if product.discount_price %}
-                                    <div class="d-flex justify-content-center align-items-center gap-2">
-                                        <span class="text-white-50 text-decoration-line-through text-decoration-thickness-2" style="font-size: 0.8rem; text-decoration-color: #ff4500;">Rs. {{ product.price }}</span>
-                                        <span class="price-text text-danger fw-bold" style="font-size: 0.9rem;">Rs. {{ product.discount_price }}</span>
+                                    <div class="d-flex justify-content-center align-items-center gap-1 mb-2" style="font-size: 0.6rem;">
+                                        <span class="text-white-50 text-decoration-line-through" style="font-size: 0.55rem; text-decoration-color: #ff4500;">Rs. {{ product.price }}</span>
+                                        <span class="price-text text-danger fw-bold" style="font-size: 0.65rem;">Rs. {{ product.discount_price }}</span>
                                     </div>
                                 {% else %}
-                                    <div class="price-text text-danger fw-bold" style="font-size: 0.9rem;">
+                                    <div class="price-text text-danger fw-bold mb-2" style="font-size: 0.65rem;">
                                         Rs. {{ product.price }}
                                     </div>
                                 {% endif %}
 
-                                <a href="{% url 'product_detail' product.id %}" class="btn btn-light w-100 mt-2 btn-sm text-uppercase fw-bold text-dark">
-                                    VIEW
-                                </a>
+                                <!-- Updated View Product Button with matching Orange Theme -->
+                                <div>
+                                    <a href="{% url 'product_detail' product.id %}" class="btn btn-sm text-uppercase fw-bold w-100 py-1 custom-product-btn" style="font-size: 0.65rem; border-radius: 4px;">
+                                        View Product
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -93,13 +105,41 @@
     </div>
 {% endfor %}
 
+<!-- Custom Styling for Buttons and Theme Colors -->
+<style>
+    .custom-view-all-btn {
+        color: #ff4500;
+        border: 2px solid #ff4500;
+        background-color: transparent;
+        transition: all 0.3s ease-in-out;
+    }
+    .custom-view-all-btn:hover {
+        background-color: #ff4500;
+        color: #fff;
+        box-shadow: 0 0 15px rgba(255, 69, 0, 0.4);
+    }
+
+    /* Product Card Button Custom Styling */
+    .custom-product-btn {
+        color: #ff4500;
+        border: 1px solid #ff4500;
+        background-color: transparent;
+        transition: all 0.3s ease-in-out;
+    }
+    .custom-product-btn:hover {
+        background-color: #ff4500;
+        color: #fff;
+        box-shadow: 0 0 10px rgba(255, 69, 0, 0.4);
+    }
+</style>
+
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         var swipers = document.querySelectorAll('.categorySwiper');
         
         swipers.forEach(function(swiperContainer) {
             new Swiper(swiperContainer, {
-                slidesPerView: 3,       // 📱 Mobile par ab aik waqt mein 3 products aayengi
+                slidesPerView: 3,      
                 spaceBetween: 8,
                 loop: true,
                 autoplay: {
@@ -117,19 +157,19 @@
                 breakpoints: {
                     320: {
                         slidesPerView: 3,
-                        spaceBetween: 8,
+                        spaceBetween: 6,
                     },
                     576: {
                         slidesPerView: 3,
-                        spaceBetween: 10,
+                        spaceBetween: 8,
                     },
                     768: {
-                        slidesPerView: 3,
-                        spaceBetween: 15,
+                        slidesPerView: 4,
+                        spaceBetween: 10,
                     },
                     1024: {
-                        slidesPerView: 5,
-                        spaceBetween: 20,
+                        slidesPerView: 5,   
+                        spaceBetween: 15,
                     }
                 }
             });

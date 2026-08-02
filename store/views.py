@@ -12,7 +12,6 @@ from django.http import HttpResponse
 from .models import Order, OrderItem, Product, Category
 from .utils import generate_jazzcash_hash
 
-
 # 0. Main Home View (Dynamic 7 Sections Page)
 def index(request):
     featured_products = Product.objects.all()[:10]
@@ -170,7 +169,6 @@ def cart_view(request):
         'total_price': total_price,
     }
     
-    # Rendering with strict anti-cache headers to completely resolve back-button issue
     response = render(request, 'store/cart.html', context)
     response['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
     response['Pragma'] = 'no-cache'
@@ -178,7 +176,6 @@ def cart_view(request):
     return response
 
 
-# 5. Checkout & Order Processing
 # 5. Checkout & Order Processing
 @never_cache
 def checkout(request):
@@ -228,8 +225,6 @@ def checkout(request):
         order.total_amount = total_price
         order.save()
 
-        print(f"DEBUG: Form submitted with Email -> '{email}'")
-
         if email:
             subject = f"Order Confirmation - #{order.id} | D.9 Shoes"
             message = f"""
@@ -259,16 +254,12 @@ D.9 Shoes Team
                     subject,
                     message,
                     settings.DEFAULT_FROM_EMAIL,
-                    [email,aliksks827@gmail.com],
+                    [email, 'aliksks827@gmail.com'],
                     fail_silently=False
                 )
-                print("DEBUG: Email sent successfully!")
             except Exception as e:
                 print(f"CRITICAL EMAIL ERROR: {e}")
-        else:
-            print("DEBUG: Email field is empty or not captured from form!")
 
-        # Clear Session Cart Safely
         request.session['cart'] = {}
         request.session.modified = True
 
@@ -378,13 +369,26 @@ def user_register(request):
     else:
         form = UserCreationForm()
     return render(request, 'store/register.html', {'form': form})
+
 def remove_from_cart(request, item_id):
     cart = request.session.get('cart', {})
     
-    # item_id yahan session dictionary ki key hai (misal ke tor par product_id ya product_id_size)
     if item_id in cart:
         del cart[item_id]
         request.session['cart'] = cart
         request.session.modified = True
         
     return redirect('cart')
+
+def category_products(request, slug):
+    # Slug ko space mein convert karein (jaise 'peshawari-chapal' ko 'peshawari chapal')
+    category_name = slug.replace('-', ' ')
+    
+    # ForeignKey ke field `name` par `icontains` query lagayein taake error na aaye
+    products = Product.objects.filter(category__name__icontains=category_name)
+    
+    context = {
+        'products': products,
+        'category_name': category_name
+    }
+    return render(request, 'store/category_products.html', context)

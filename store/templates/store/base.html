@@ -250,6 +250,41 @@
         font-size: 10px !important;
     }
 }
+/* Product Card Hover Effect */
+.product-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(255, 193, 7, 0.2); /* Halki si yellow/gold glow shadow */
+    border-color: #ffc107 !important;
+}
+.custom-view-all-btn {
+    color: #ff0015;
+    border: 2px solid #1b1713;
+    background-color: transparent;
+    transition: all 0.3s ease-in-out;
+}
+
+.custom-view-all-btn:hover {
+    background-color: #727272;
+    color: #000;
+    box-shadow: 0 0 15px rgba(255, 127, 0, 0.4);
+}
+.product-card .btn-outline-warning, 
+.product-card a[href*="product_detail"] {
+    color: #ff4500 !important;
+    border-color: #ff4500 !important;
+    transition: all 0.3s ease-in-out;
+}
+
+.product-card .btn-outline-warning:hover, 
+.product-card a[href*="product_detail"]:hover {
+    background-color: #ff4500 !important;
+    color: #fff !important;
+    box-shadow: 0 0 15px rgba(255, 69, 0, 0.4);
+}
     </style>
 </head>
 <body class="d-flex flex-column min-vh-100">
@@ -294,6 +329,16 @@
                             <li><a class="dropdown-item" href="/#naurozi">Naurozi</a></li>
                             <li><a class="dropdown-item" href="/#sandals">Sandals</a></li>
                         </ul>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="menDropdown">
+                            <li><a class="dropdown-item" href="{% url 'category_products' 'sleeper' %}">Sleeper</a></li>
+                           <li><a class="dropdown-item" href="{% url 'category_products' 'shoe' %}">Shoe</a></li>
+                            <li><a class="dropdown-item" href="{% url 'category_products' 'peshawari-chapal' %}">Peshawari Chapal</a></li>
+                           <li><a class="dropdown-item" href="{% url 'category_products' 'pumpy' %}">Pumpy</a></li>
+                           <li><a class="dropdown-item" href="{% url 'category_products' 'loafers' %}">Loafers</a></li>
+                           <li><a class="dropdown-item" href="{% url 'category_products' 'naurozi' %}">Naurozi</a></li>
+                           <li><a class="dropdown-item" href="{% url 'category_products' 'sandals' %}">Sandals</a></li>
+                        </ul>
+
                     </li>
 
                     <li class="nav-item">
