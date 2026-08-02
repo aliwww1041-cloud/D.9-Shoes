@@ -13,8 +13,34 @@
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Swiper.js CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
     <style>
+        /* Navbar ko mobile par behtar dikhane ke liye */
+        .navbar-collapse {
+            background-color: #141518 !important;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        /* 🌟 Navbar Bottom Accent Line (Gold/Orange Theme Match) */
+        .navbar {
+            background-color: #0f1012 !important;
+            border-bottom: 2px solid #ff4500 !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Product images ki height ko fix karna */
+        .card-img-top, 
+        .product-card img, 
+        .swiper-slide img {
+            width: 100% !important;
+            height: 180px !important;
+            object-fit: cover !important;
+        }
+
         :root {
             --bg-dark: #0f1012;
             --card-dark: #181a1e;
@@ -23,12 +49,10 @@
             --text-muted: #9a9a9a;
         }
 
-        /* 🌟 ADDED: Smooth Scrolling for Jump Links */
         html {
             scroll-behavior: smooth;
         }
 
-        /* 📱 MOBILE RESPONSIVE FIXES */
         html, body {
             max-width: 100% !important;
             overflow-x: hidden !important;
@@ -71,7 +95,6 @@
             color: #fff !important;
         }
 
-        /* 🎯 DESKTOP HOVER DROPDOWN FIX (Calza Style) */
         @media (min-width: 992px) {
             .nav-item.dropdown:hover .dropdown-menu {
                 display: block !important;
@@ -91,7 +114,6 @@
             }
         }
 
-        /* Dark Dropdown Styling */
         .dropdown-menu-dark {
             background-color: #141518 !important;
             border: 1px solid rgba(255, 255, 255, 0.15) !important;
@@ -114,17 +136,6 @@
             padding-left: 24px;
         }
 
-        /* Mobile Menu Container Styling */
-        @media (max-width: 991.98px) {
-            .navbar-collapse {
-                background-color: #141518;
-                padding: 15px 20px;
-                margin-top: 10px;
-                border: 1px solid rgba(255, 255, 255, 0.1);
-            }
-        }
-
-        /* Contact Section */
         .contact-section {
             background-color: #0b0c0e;
             border-top: 2px solid #222;
@@ -160,30 +171,91 @@
             color: var(--text-muted);
             font-size: 0.85rem;
         }
-        /* Mobile Professional Product Images Fix */
-    .product-card img, 
-    .product-img, 
-    .card-img-top {
-        width: 100%;
-        height: 200px;
-        object-fit: cover;
-        border-top-left-radius: 8px;
-        border-top-right-radius: 8px;
-    }
 
-    .product-detail-img {
-        max-height: 350px;
-        width: 100%;
-        object-fit: contain;
+        /* 📱 Strict Mobile Image Sizing Fix */
+        img, 
+        .swiper-slide img, 
+        .product-card img, 
+        .product-img, 
+        .card-img-top {
+            width: 100% !important;
+            max-height: 200px !important;
+            height: 200px !important;
+            object-fit: contain !important;
+            background-color: #141518;
+        }
+
+        .product-detail-img {
+            max-height: 350px;
+            width: 100%;
+            object-fit: contain;
+        }
+
+        /* 📱 Ultra-Clean Mobile Card Typography & Compact Height Fix (3 Products View) */
+       @media (max-width: 576px) {
+    /* 📱 Professional Mobile Card Layout */
+    .product-card .card-img-top, 
+    .product-card img {
+        height: 105px !important; 
+        object-fit: contain !important;
     }
+    .product-card .card-body {
+        padding: 6px 4px !important;
+    }
+    .product-card h6.card-title {
+        font-size: 0.7rem !important;
+        margin-bottom: 2px !important;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    /* Subtitle / Brand text ko clean karna */
+    .product-card p.small, 
+    .product-card .text-muted {
+        font-size: 0.55rem !important;
+        margin-bottom: 2px !important;
+    }
+    /* Prices overlap fix aur proper alignment */
+    .product-card .d-flex.justify-content-center,
+    .product-card .price-container {
+        font-size: 0.65rem !important;
+        margin-bottom: 4px !important;
+    }
+    .product-card .price-text, 
+    .product-card .text-decoration-line-through {
+        font-size: 0.6rem !important;
+    }
+    /* View Button styling */
+    .product-card .btn {
+        padding: 2px 6px !important;
+        font-size: 0.6rem !important;
+        margin-top: 2px !important;
+    }
+    /* Sale badge chota aur neat */
+    .product-card .badge, 
+    .product-card .sale-badge {
+        font-size: 0.45rem !important;
+        padding: 2px 4px !important;
+        top: 4px !important;
+        left: 4px !important;
+    }
+    /* Arrows ko adjust karna taake text ke oopar na aayein */
+    .swiper-button-next, 
+    .swiper-button-prev {
+        width: 22px !important;
+        height: 22px !important;
+    }
+    .swiper-button-next::after, 
+    .swiper-button-prev::after {
+        font-size: 10px !important;
+    }
+}
     </style>
-    <!-- Swiper.js CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" /> 
 </head>
 <body class="d-flex flex-column min-vh-100">
 
     <!-- Header / Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: #0f1012 !important; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container px-3">
             
             <!-- Logo -->
@@ -195,7 +267,7 @@
                     <i class="fa-solid fa-bag-shopping"></i>
                 </a>
 
-                <button class="navbar-toggler border-1 border-secondary p-1" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+                <button class="navbar-toggler border-1 border-secondary p-1" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
             </div>
@@ -208,9 +280,9 @@
                         <a class="nav-link text-uppercase" href="{% url 'product_list' %}">Home</a>
                     </li>
                     
-                    <!-- 🔽 UPDATED: MEN DROPDOWN MENU WITH JUMP LINKS -->
+                    <!-- Men Dropdown Menu with Jump Links -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-uppercase" href="/" id="menDropdown" role="button" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle text-uppercase" href="#" id="menDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Men
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="menDropdown">
@@ -234,16 +306,16 @@
 
                 </ul>
 
-                <!-- Cart & User Buttons (Right Side) -->
-            <div class="d-none d-lg-flex align-items-center gap-3">
-             <a href="{% url 'cart' %}" class="position-relative text-white me-2" style="font-size: 1.2rem;">
-                <i class="fa-solid fa-bag-shopping"></i>
-             </a>
-    
-            {% if user.is_authenticated and user.is_staff %}
-                <a href="/admin/" class="btn btn-outline-light py-1 px-3 btn-sm">Admin Portal</a>
-            {% endif %}
-            </div>
+                <!-- Cart & User Buttons (Right Side - Desktop) -->
+                <div class="d-none d-lg-flex align-items-center gap-3">
+                   <a href="{% url 'cart' %}" class="position-relative text-white me-2" style="font-size: 1.2rem;">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                   </a>
+        
+                   {% if user.is_authenticated and user.is_staff %}
+                        <a href="/admin/" class="btn btn-outline-light py-1 px-3 btn-sm">Admin Portal</a>
+                   {% endif %}
+                </div>
             </div>
 
         </div>
@@ -303,8 +375,8 @@
     </footer>
 
     <!-- Bootstrap 5 JS Bundle -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Swiper.js JS -->
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 </body>
 </html>

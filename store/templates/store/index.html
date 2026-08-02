@@ -99,8 +99,13 @@
         
         swipers.forEach(function(swiperContainer) {
             new Swiper(swiperContainer, {
-                slidesPerView: 1,
-                spaceBetween: 15,
+                slidesPerView: 3,       // 📱 Mobile par ab aik waqt mein 3 products aayengi
+                spaceBetween: 8,
+                loop: true,
+                autoplay: {
+                    delay: 2500,
+                    disableOnInteraction: false,
+                },
                 navigation: {
                     nextEl: swiperContainer.querySelector('.swiper-button-next'),
                     prevEl: swiperContainer.querySelector('.swiper-button-prev'),
@@ -110,17 +115,21 @@
                     clickable: true,
                 },
                 breakpoints: {
+                    320: {
+                        slidesPerView: 3,
+                        spaceBetween: 8,
+                    },
                     576: {
-                        slidesPerView: 2,
-                        spaceBetween: 15,
+                        slidesPerView: 3,
+                        spaceBetween: 10,
                     },
                     768: {
                         slidesPerView: 3,
-                        spaceBetween: 20,
+                        spaceBetween: 15,
                     },
                     1024: {
-                        slidesPerView: 4,
-                        spaceBetween: 25,
+                        slidesPerView: 5,
+                        spaceBetween: 20,
                     }
                 }
             });
