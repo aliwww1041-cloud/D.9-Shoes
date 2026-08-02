@@ -160,6 +160,22 @@
             color: var(--text-muted);
             font-size: 0.85rem;
         }
+        /* Mobile Professional Product Images Fix */
+    .product-card img, 
+    .product-img, 
+    .card-img-top {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+    }
+
+    .product-detail-img {
+        max-height: 350px;
+        width: 100%;
+        object-fit: contain;
+    }
     </style>
     <!-- Swiper.js CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" /> 
