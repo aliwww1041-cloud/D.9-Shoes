@@ -12,7 +12,7 @@
         <div class="col-md-7">
             <div class="card p-4 shadow-sm bg-dark text-light border-secondary rounded-0">
                 <h4 class="mb-3 text-warning luxury-serif">Shipping Address</h4>
-                <form method="POST">
+                <form method="POST" action="{% url 'checkout' %}">
                     {% csrf_token %}
                     
                     <div class="mb-3">

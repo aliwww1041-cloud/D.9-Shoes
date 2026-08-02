@@ -2,12 +2,40 @@ from datetime import datetime, timedelta
 from django.shortcuts import render, redirect, get_object_or_404
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
-from django.db.models import Q
+from django.views.decorators.cache import never_cache
+from django.db.models import Q, Prefetch
 from django.core.mail import send_mail
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib import messages
+from django.http import HttpResponse
 from .models import Order, OrderItem, Product, Category
 from .utils import generate_jazzcash_hash
 
-# 1. Product List & Category Filtering
+
+# 0. Main Home View (Dynamic 7 Sections Page)
+def index(request):
+    featured_products = Product.objects.all()[:10]
+
+    target_categories = [
+        'Sleeper', 'Shoe', 'Peshawari chapal', 
+        'Pumpy', 'Loafers', 'Naurozi', 'Sandals'
+    ]
+
+    categories_sections = Category.objects.filter(
+        name__in=target_categories
+    ).prefetch_related(
+        Prefetch('products', queryset=Product.objects.all(), to_attr='category_products')
+    )
+
+    context = {
+        'featured_products': featured_products,
+        'categories_sections': categories_sections,
+    }
+    return render(request, 'store/index.html', context)
+
+
+# 1. Product List & Category Filtering (Dedicated Filter Page)
 def product_list(request):
     category_slug = request.GET.get('category')
     products = Product.objects.all()
@@ -34,10 +62,11 @@ def product_list(request):
             products = products.filter(
                 Q(category__name__icontains='sandal') | Q(name__icontains='sandal')
             )
-        elif cat in ['peshawari', 'pashawari']:
+        elif cat in ['peshawari', 'pashawari', 'peshawari chapal', 'peshawari-chapal']:
             products = products.filter(
                 Q(category__name__icontains='peshawari') | Q(name__icontains='peshawari') |
-                Q(category__name__icontains='pashawari') | Q(name__icontains='pashawari')
+                Q(category__name__icontains='pashawari') | Q(name__icontains='pashawari') |
+                Q(category__name__icontains='chapal') | Q(name__icontains='chapal')
             )
         elif cat in ['sneakers', 'sports', 'sneakers / sports', 'sneaker']:
             products = products.filter(
@@ -48,9 +77,10 @@ def product_list(request):
             products = products.filter(
                 Q(category__name__icontains='loafer') | Q(name__icontains='loafer')
             )
-        elif cat in ['formals', 'formal']:
+        elif cat in ['formals', 'formal', 'shoe', 'shoes']:
             products = products.filter(
-                Q(category__name__icontains='formal') | Q(name__icontains='formal')
+                Q(category__name__icontains='formal') | Q(name__icontains='formal') |
+                Q(category__name__icontains='shoe') | Q(name__icontains='shoe')
             )
         elif cat == 'women':
             products = products.filter(
@@ -72,9 +102,9 @@ def product_list(request):
     return render(request, 'store/product_list.html', context)
 
 
-# 2. Home View Redirect
+# 2. Home View Redirect Handler
 def home(request):
-    return product_list(request)
+    return index(request)
 
 
 # 3. Product Details Page
@@ -92,17 +122,20 @@ def add_to_cart(request, product_id):
         except (ValueError, TypeError):
             quantity = 1
 
+        product = get_object_or_404(Product, id=product_id)
+        final_price = float(product.discount_price) if product.discount_price else float(product.price)
+
         cart = request.session.get('cart', {})
         item_key = f"{product_id}_{size}" if size else str(product_id)
 
         if item_key in cart:
-            cart[item_key]['quantity'] += quantity
+            cart[item_key]['quantity'] = quantity
+            cart[item_key]['price'] = final_price
         else:
-            product = get_object_or_404(Product, id=product_id)
             cart[item_key] = {
                 'product_id': product.id,
                 'name': product.name,
-                'price': float(product.price),
+                'price': final_price,
                 'size': size,
                 'quantity': quantity,
             }
@@ -113,6 +146,7 @@ def add_to_cart(request, product_id):
     return redirect('cart')
 
 
+@never_cache
 def cart_view(request):
     cart = request.session.get('cart', {})
     cart_items = []
@@ -135,10 +169,18 @@ def cart_view(request):
         'cart_items': cart_items,
         'total_price': total_price,
     }
-    return render(request, 'store/cart.html', context)
+    
+    # Rendering with strict anti-cache headers to completely resolve back-button issue
+    response = render(request, 'store/cart.html', context)
+    response['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+    response['Pragma'] = 'no-cache'
+    response['Expires'] = '0'
+    return response
 
 
 # 5. Checkout & Order Processing
+# 5. Checkout & Order Processing
+@never_cache
 def checkout(request):
     cart = request.session.get('cart', {})
     if not cart:
@@ -155,7 +197,6 @@ def checkout(request):
         total_price = 0
         items_summary = ""
 
-        # Order Pehle Create Karein
         order = Order.objects.create(
             user=request.user if request.user.is_authenticated else None,
             full_name=full_name,
@@ -163,12 +204,11 @@ def checkout(request):
             phone=phone,
             address=address,
             city=city,
-            total_amount=0, # Neeche calculate hoga
+            total_amount=0,
             payment_method=payment_method,
             status='Pending'
         )
 
-        # Session Cart Se Order Items Banayein
         for item_key, item_data in cart.items():
             product_id = item_data['product_id']
             product = get_object_or_404(Product, id=product_id)
@@ -185,11 +225,11 @@ def checkout(request):
                 quantity=item_data['quantity']
             )
 
-        # Order Total Amount Update Karein
         order.total_amount = total_price
         order.save()
 
-        # CLIENT KO EMAIL BHEJNA
+        print(f"DEBUG: Form submitted with Email -> '{email}'")
+
         if email:
             subject = f"Order Confirmation - #{order.id} | D.9 Shoes"
             message = f"""
@@ -219,24 +259,30 @@ D.9 Shoes Team
                     subject,
                     message,
                     settings.DEFAULT_FROM_EMAIL,
-                    [email],
-                    fail_silently=True
+                    [email,aliksks827@gmail.com],
+                    fail_silently=False
                 )
+                print("DEBUG: Email sent successfully!")
             except Exception as e:
-                print(f"Email error: {e}")
+                print(f"CRITICAL EMAIL ERROR: {e}")
+        else:
+            print("DEBUG: Email field is empty or not captured from form!")
 
-        # Cart Clean Karein
+        # Clear Session Cart Safely
         request.session['cart'] = {}
         request.session.modified = True
 
-        # Routing logic
         if payment_method == 'jazzcash':
             return redirect('initiate_jazzcash_payment', order_id=order.id)
         else:
             return redirect('order_success', order_id=order.id)
 
     total = sum(float(item['price']) * item['quantity'] for item in cart.values())
-    return render(request, 'store/checkout.html', {'total': total})
+    response = render(request, 'store/checkout.html', {'total': total})
+    response['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+    response['Pragma'] = 'no-cache'
+    response['Expires'] = '0'
+    return response
 
 
 def order_success(request, order_id):
@@ -250,7 +296,6 @@ def initiate_jazzcash_payment(request, order_id):
     
     now = datetime.now()
     txn_ref_no = f"T{now.strftime('%Y%m%d%H%M%S')}"
-    # Expiry 1 ghanta aage ki set ki gayi hai taake JazzCash error na de
     pp_expiry_date = (now + timedelta(hours=1)).strftime('%Y%m%d%H%M%S')
     
     post_data = {
@@ -263,7 +308,7 @@ def initiate_jazzcash_payment(request, order_id):
         'pp_BankID': 'TBANK',
         'pp_ProductID': 'REFILL',
         'pp_TxnRefNo': txn_ref_no,
-        'pp_Amount': str(int(order.total_amount * 100)), # Amount in Paisa
+        'pp_Amount': str(int(order.total_amount * 100)),
         'pp_TxnCurrency': 'PKR',
         'pp_TxnDateTime': now.strftime('%Y%m%d%H%M%S'),
         'pp_BillReference': str(order.id),
@@ -274,7 +319,6 @@ def initiate_jazzcash_payment(request, order_id):
         'ppmpf_1': str(order.id),
     }
 
-    # Secure Hash Generation
     post_data['pp_SecureHash'] = generate_jazzcash_hash(post_data)
 
     return render(request, 'store/jazzcash_redirect.html', {
@@ -305,10 +349,32 @@ def jazzcash_callback(request):
 
 # 7. User Auth Handlers
 def user_login(request):
-    return redirect('home')
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect('home')
+        else:
+            messages.error(request, "Invalid username or password.")
+    else:
+        form = AuthenticationForm()
+    return render(request, 'store/login.html', {'form': form})
 
 def user_logout(request):
+    logout(request)
     return redirect('home')
 
 def user_register(request):
-    return redirect('home')
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            messages.success(request, "Registration successful!")
+            return redirect('home')
+        else:
+            messages.error(request, "Registration failed. Please correct the errors.")
+    else:
+        form = UserCreationForm()
+    return render(request, 'store/register.html', {'form': form})

@@ -23,6 +23,11 @@
             --text-muted: #9a9a9a;
         }
 
+        /* 🌟 ADDED: Smooth Scrolling for Jump Links */
+        html {
+            scroll-behavior: smooth;
+        }
+
         /* 📱 MOBILE RESPONSIVE FIXES */
         html, body {
             max-width: 100% !important;
@@ -156,6 +161,8 @@
             font-size: 0.85rem;
         }
     </style>
+    <!-- Swiper.js CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" /> 
 </head>
 <body class="d-flex flex-column min-vh-100">
 
@@ -185,29 +192,26 @@
                         <a class="nav-link text-uppercase" href="{% url 'product_list' %}">Home</a>
                     </li>
                     
-                    <!-- 🔽 MEN DROPDOWN MENU WITH HOVER EFFECT -->
+                    <!-- 🔽 UPDATED: MEN DROPDOWN MENU WITH JUMP LINKS -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-uppercase" href="{% url 'product_list' %}?category=men" id="menDropdown" role="button" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle text-uppercase" href="/" id="menDropdown" role="button" aria-expanded="false">
                             Men
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="menDropdown">
-                            <li><a class="dropdown-item" href="{% url 'product_list' %}?category=Sleeper">Sleeper</a></li>
-                            <li><a class="dropdown-item" href="{% url 'product_list' %}?category=Shoe">Shoe</a></li>
-                            <li><a class="dropdown-item" href="{% url 'product_list' %}?category=peshawari chaplal">Peshawarichapal</a></li>
-                            <li><a class="dropdown-item" href="{% url 'product_list' %}?category=Pumpy">Pumpy</a></li>
-                            <li><a class="dropdown-item" href="{% url 'product_list' %}?category=loafer">Loafers</a></li>
-                            <li><a class="dropdown-item" href="{% url 'product_list' %}?category=Naurozi">Naurozi</a></li>
-                            <li><a class="dropdown-item" href="{% url 'product_list' %}?category=Sandals">Sandals</a></li>
+                            <li><a class="dropdown-item" href="/#sleeper">Sleeper</a></li>
+                            <li><a class="dropdown-item" href="/#shoe">Shoe</a></li>
+                            <li><a class="dropdown-item" href="/#peshawari-chapal">Peshawari Chapal</a></li>
+                            <li><a class="dropdown-item" href="/#pumpy">Pumpy</a></li>
+                            <li><a class="dropdown-item" href="/#loafers">Loafers</a></li>
+                            <li><a class="dropdown-item" href="/#naurozi">Naurozi</a></li>
+                            <li><a class="dropdown-item" href="/#sandals">Sandals</a></li>
                         </ul>
                     </li>
 
-                    {% comment %} <li class="nav-item">
-                        <a class="nav-link text-uppercase" href="{% url 'product_list' %}?category=women">Women</a>
-                    </li> {% endcomment %}
                     <li class="nav-item">
                         <a class="nav-link text-uppercase" href="{% url 'product_list' %}?category=luxury">Luxury Edition</a>
                     </li>
-                    
+
                     <li class="nav-item">
                         <a class="nav-link text-uppercase" href="#contact">Contact</a>
                     </li>
@@ -284,5 +288,7 @@
 
     <!-- Bootstrap 5 JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bundle.min.js"></script>
+    <!-- Swiper.js JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 </body>
 </html>

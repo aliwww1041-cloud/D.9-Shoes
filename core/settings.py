@@ -108,11 +108,10 @@ JAZZCASH_INTEGERITY_SALT = 'your_salt'
 JAZZCASH_RETURN_URL = 'https://myshoes.pythonanywhere.com/jazzcash-callback/'
 JAZZCASH_API_URL = 'https://sandbox.jazzcash.com.pk/CustomerPortal/transactionpay/pay'
 
-# Email Configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'your-email@gmail.com'       # Apna Email Yahan Likhein
-EMAIL_HOST_PASSWORD = 'your-app-password'     # App Password Yahan Likhein
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_HOST_USER = 'aliksks827@gmail.com'          # Yahan apni asal Gmail ID likhein
+EMAIL_HOST_PASSWORD = 'kgui bxoe wfai ejrb'        # Yahan Google App Password likhein (Normal password nahi)
+DEFAULT_FROM_EMAIL = 'aliksks827@gmail.com'

@@ -1,0 +1,131 @@
+{% extends 'store/base.html' %} 
+
+{% block content %}
+
+<div class="container mt-4 text-center">
+    <h1 class="luxury-font text-white">WELCOME TO D.9 SHOES</h1>
+    <p class="text-muted">Explore Our Premium Collection</p>
+</div>
+
+<!-- ========================================== -->
+<!-- 7 CATEGORY SECTIONS WITH DIVIDER LINES     -->
+<!-- ========================================== -->
+{% for category in categories_sections %}
+    <div id="{{ category.name|slugify }}" class="container my-5 pt-3">
+        
+        <div class="text-center mb-4 pb-1">
+            <h3 class="fw-bold text-uppercase text-light mb-1" style="font-size: 1.75rem; letter-spacing: 2px;">
+                {{ category.name }}
+            </h3>
+            <div style="width: 50px; height: 2px; background-color: #ff4500; margin: 0 auto 10px auto;"></div>
+            <p class="text-muted small">Explore our latest {{ category.name }} collection</p>
+        </div>
+
+        <div class="swiper categorySwiper pb-5 position-relative">
+            <div class="swiper-wrapper">
+                
+                {% for product in category.category_products %}
+                <div class="swiper-slide h-auto">
+                    <div class="card product-card bg-dark text-white border-secondary h-100">
+                        <div class="product-img-wrapper position-relative overflow-hidden">
+                            {% if product.discount_price %}
+                                <span class="badge bg-danger position-absolute top-0 start-0 m-2 px-2 py-1" style="font-size: 0.7rem; z-index: 2;">SALE</span>
+                            {% endif %}
+                            
+                            {% if product.image %}
+                                <img src="{{ product.image.url }}" class="card-img-top object-fit-cover" alt="{{ product.name }}" style="height: 220px;">
+                            {% else %}
+                                <img src="https://via.placeholder.com/300x300?text=No+Image" class="card-img-top object-fit-cover" alt="No Image" style="height: 220px;">
+                            {% endif %}
+                        </div>
+
+                        <div class="card-body d-flex flex-column justify-content-between text-center p-3">
+                            <div>
+                                <span class="text-uppercase text-muted d-block fw-bold mb-1" style="font-size: 0.65rem;">
+                                    {{ category.name }}
+                                </span>
+                                <!-- Product Title in White Color -->
+                                <h6 class="card-title text-white fw-semibold mb-1" style="font-size: 0.9rem;">
+                                    {{ product.name }}
+                                </h6>
+                                <!-- Product Description in White/Muted Color -->
+                                {% if product.description %}
+                                <p class="text-white-50 small mb-2" style="font-size: 0.75rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                                    {{ product.description }}
+                                </p>
+                                {% endif %}
+                            </div>
+
+                            <div class="mt-2">
+                                <!-- Price & Discount Logic with clear line-through and red discount price -->
+                                {% if product.discount_price %}
+                                    <div class="d-flex justify-content-center align-items-center gap-2">
+                                        <span class="text-white-50 text-decoration-line-through text-decoration-thickness-2" style="font-size: 0.8rem; text-decoration-color: #ff4500;">Rs. {{ product.price }}</span>
+                                        <span class="price-text text-danger fw-bold" style="font-size: 0.9rem;">Rs. {{ product.discount_price }}</span>
+                                    </div>
+                                {% else %}
+                                    <div class="price-text text-danger fw-bold" style="font-size: 0.9rem;">
+                                        Rs. {{ product.price }}
+                                    </div>
+                                {% endif %}
+
+                                <a href="{% url 'product_detail' product.id %}" class="btn btn-light w-100 mt-2 btn-sm text-uppercase fw-bold text-dark">
+                                    VIEW
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="swiper-slide w-100 text-center py-4">
+                    <p class="text-muted">No items available in {{ category.name }} yet.</p>
+                </div>
+                {% endfor %}
+
+            </div>
+
+            <div class="swiper-button-next text-warning"></div>
+            <div class="swiper-button-prev text-warning"></div>
+            <div class="swiper-pagination mt-4"></div>
+        </div>
+
+        <hr class="my-5" style="border: none; height: 1px; background: linear-gradient(to right, transparent, rgba(255, 69, 0, 0.4), transparent);">
+    </div>
+{% endfor %}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var swipers = document.querySelectorAll('.categorySwiper');
+        
+        swipers.forEach(function(swiperContainer) {
+            new Swiper(swiperContainer, {
+                slidesPerView: 1,
+                spaceBetween: 15,
+                navigation: {
+                    nextEl: swiperContainer.querySelector('.swiper-button-next'),
+                    prevEl: swiperContainer.querySelector('.swiper-button-prev'),
+                },
+                pagination: {
+                    el: swiperContainer.querySelector('.swiper-pagination'),
+                    clickable: true,
+                },
+                breakpoints: {
+                    576: {
+                        slidesPerView: 2,
+                        spaceBetween: 15,
+                    },
+                    768: {
+                        slidesPerView: 3,
+                        spaceBetween: 20,
+                    },
+                    1024: {
+                        slidesPerView: 4,
+                        spaceBetween: 25,
+                    }
+                }
+            });
+        });
+    });
+</script>
+
+{% endblock %}
