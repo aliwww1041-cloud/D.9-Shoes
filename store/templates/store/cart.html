@@ -16,6 +16,7 @@
                 <th>Size</th>
                 <th>Price</th>
                 <th>Quantity</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -25,6 +26,9 @@
                   <td><span class="badge bg-secondary">{{ item.size|default:"N/A" }}</span></td>
                   <td>RS {{ item.price }}</td>
                   <td>{{ item.quantity }}</td>
+                  <td>
+                    <a href="{% url 'remove_from_cart' item.id %}" class="btn btn-danger btn-sm">Delete</a>
+                  </td>
                 </tr>
               {% endfor %}
             </tbody>

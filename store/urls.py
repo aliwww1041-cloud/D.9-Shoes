@@ -22,4 +22,5 @@ urlpatterns = [
     # JazzCash Integration
     path('pay-jazzcash/<int:order_id>/', views.initiate_jazzcash_payment, name='initiate_jazzcash'),
     path('jazzcash-callback/', views.jazzcash_callback, name='jazzcash_callback'),
+    path('remove-from-cart/<int:item_id>/', views.remove_from_cart, name='remove_from_cart'),
 ]

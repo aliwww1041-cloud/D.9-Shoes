@@ -378,3 +378,7 @@ def user_register(request):
     else:
         form = UserCreationForm()
     return render(request, 'store/register.html', {'form': form})
+def remove_from_cart(request, item_id):
+    cart_item = get_object_or_404(CartItem, id=item_id)
+    cart_item.delete()
+    return redirect('cart')
