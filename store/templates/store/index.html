@@ -38,7 +38,7 @@
                         
                         <!-- Sale Badge -->
                         {% if product.discount_price or product.sale %}
-                            <span class="badge bg-danger position-absolute top-0 start-0 m-1" style="font-size: 0.4rem; z-index: 2; padding: 1px 2px;">SALE</span>
+                            <span class="badge bg-danger position-absolute top-0 start-0 m-1" style="font-size: 10px; z-index: 2; padding: 1px 2px;">SALE</span>
                         {% endif %}
 
                         <!-- Product Image Container (Using balanced aspect ratio for proper height) -->
@@ -63,7 +63,7 @@
                                 
                                 <!-- Product Description -->
                                 {% if product.description %}
-                                    <p class="mb-1 text-truncate" style="font-size: 0.45rem; color: #d1d5db;">
+                                    <p class="mb-1 text-truncate" style="font-size: 12px; color: #d1d5db;">
                                         {{ product.description }}
                                     </p>
                                 {% endif %}
@@ -82,7 +82,7 @@
                                         <span class="price-text text-danger fw-bold" style="font-size: 0.5rem;">Rs. {{ product.price }}</span>
                                     </div>
                                 {% else %}
-                                    <div class="price-text text-danger fw-bold mb-1" style="font-size: 20px;">
+                                    <div class="price-text text-danger fw-bold mb-1" style="font-size: 10px;">
                                         Rs. {{ product.price }}
                                     </div>
                                 {% endif %}

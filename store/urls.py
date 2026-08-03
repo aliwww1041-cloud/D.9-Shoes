@@ -20,8 +20,11 @@ urlpatterns = [
     path('order-success/<int:order_id>/', views.order_success, name='order_success'),
 
     # JazzCash Integration
-    path('pay-jazzcash/<int:order_id>/', views.initiate_jazzcash_payment, name='initiate_jazzcash'),
+   
+    path('pay-jazzcash/<int:order_id>/', views.initiate_jazzcash_payment, name='initiate_jazzcash_payment'),
     path('jazzcash-callback/', views.jazzcash_callback, name='jazzcash_callback'),
     path('remove-from-cart/<str:item_id>/', views.remove_from_cart, name='remove_from_cart'),
     path('category/<str:slug>/', views.category_products, name='category_products'),
+    path('pay-easypaisa/<int:order_id>/', views.initiate_easypaisa_payment, name='initiate_easypaisa_payment'),
 ]
+

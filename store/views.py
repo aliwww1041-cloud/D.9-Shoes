@@ -265,6 +265,8 @@ D.9 Shoes Team
 
         if payment_method == 'jazzcash':
             return redirect('initiate_jazzcash_payment', order_id=order.id)
+        elif payment_method == 'easypaisa':
+            return redirect('initiate_easypaisa_payment', order_id=order.id)
         else:
             return redirect('order_success', order_id=order.id)
 
@@ -291,7 +293,7 @@ def initiate_jazzcash_payment(request, order_id):
     
     post_data = {
         'pp_Version': '1.1',
-        'pp_TxnType': '',
+        'pp_TxnType': 'MWALLET',  # <-- Yehahan 'MWALLET' add kar diya gaya hai
         'pp_Language': 'EN',
         'pp_MerchantID': getattr(settings, 'JAZZCASH_MERCHANT_ID', ''),
         'pp_SubMerchantID': '',
@@ -392,3 +394,7 @@ def category_products(request, slug):
         'category_name': category_name
     }
     return render(request, 'store/category_products.html', context)
+def initiate_easypaisa_payment(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    # Yahan Easypaisa gateway ya instructions page render hoga
+    return render(request, 'store/easypaisa_redirect.html', {'order': order})
