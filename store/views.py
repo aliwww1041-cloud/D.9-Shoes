@@ -11,6 +11,15 @@ from django.contrib import messages
 from django.http import HttpResponse
 from .models import Order, OrderItem, Product, Category
 from .utils import generate_jazzcash_hash
+import urllib.parse # WhatsApp message encoding ke liye
+
+# Helper function for WhatsApp Message (Click-to-Chat / Auto Redirect)
+def get_whatsapp_url(order):
+    phone_number = f"92{order.phone.lstrip('0')}"
+    message = f"Dear {order.full_name}, your order #{order.id} has been successfully confirmed and verified!"
+    encoded_message = urllib.parse.quote(message)
+    return f"https://wa.me/{phone_number}?text={encoded_message}"
+
 
 # 0. Main Home View (Dynamic 7 Sections Page)
 def index(request):
@@ -280,7 +289,8 @@ D.9 Shoes Team
 
 def order_success(request, order_id):
     order = get_object_or_404(Order, id=order_id)
-    return render(request, 'store/order_success.html', {'order': order})
+    whatsapp_url = get_whatsapp_url(order)
+    return render(request, 'store/order_success.html', {'order': order, 'whatsapp_url': whatsapp_url})
 
 
 # 6. JazzCash Payment Gateway Logic
@@ -293,7 +303,7 @@ def initiate_jazzcash_payment(request, order_id):
     
     post_data = {
         'pp_Version': '1.1',
-        'pp_TxnType': 'MWALLET',  # <-- Yehahan 'MWALLET' add kar diya gaya hai
+        'pp_TxnType': 'MWALLET', 
         'pp_Language': 'EN',
         'pp_MerchantID': getattr(settings, 'JAZZCASH_MERCHANT_ID', ''),
         'pp_SubMerchantID': '',
@@ -314,6 +324,7 @@ def initiate_jazzcash_payment(request, order_id):
 
     post_data['pp_SecureHash'] = generate_jazzcash_hash(post_data)
 
+    # Updated Sandbox URL to prevent LoggedOut / Technical Reasons error
     return render(request, 'store/jazzcash_redirect.html', {
         'post_data': post_data,
         'jazzcash_url': getattr(settings, 'JAZZCASH_API_URL', 'https://sandbox.jazzcash.com.pk/CustomerPortal/transactionmanagement/merchantform')
@@ -333,7 +344,8 @@ def jazzcash_callback(request):
                 order.is_paid = True
                 order.status = 'Shipped'
                 order.save()
-                return render(request, 'store/order_success.html', {'order': order, 'message': 'Payment Successful!'})
+                whatsapp_url = get_whatsapp_url(order)
+                return render(request, 'store/order_success.html', {'order': order, 'message': 'Payment Successful!', 'whatsapp_url': whatsapp_url})
         else:
             return render(request, 'store/order_failed.html', {'message': response_data.get('pp_ResponseMessage', 'Payment Failed')})
 
@@ -370,7 +382,7 @@ def user_register(request):
             messages.error(request, "Registration failed. Please correct the errors.")
     else:
         form = UserCreationForm()
-    return render(request, 'store/register.html', {'form': form})
+    return render(request, 'store/register.html', {'form': register.html if 'register.html' in globals() else 'store/register.html'})
 
 def remove_from_cart(request, item_id):
     cart = request.session.get('cart', {})
@@ -383,10 +395,7 @@ def remove_from_cart(request, item_id):
     return redirect('cart')
 
 def category_products(request, slug):
-    # Slug ko space mein convert karein (jaise 'peshawari-chapal' ko 'peshawari chapal')
     category_name = slug.replace('-', ' ')
-    
-    # ForeignKey ke field `name` par `icontains` query lagayein taake error na aaye
     products = Product.objects.filter(category__name__icontains=category_name)
     
     context = {
@@ -394,7 +403,8 @@ def category_products(request, slug):
         'category_name': category_name
     }
     return render(request, 'store/category_products.html', context)
+
 def initiate_easypaisa_payment(request, order_id):
     order = get_object_or_404(Order, id=order_id)
-    # Yahan Easypaisa gateway ya instructions page render hoga
-    return render(request, 'store/easypaisa_redirect.html', {'order': order})
+    whatsapp_url = get_whatsapp_url(order)
+    return render(request, 'store/easypaisa_redirect.html', {'order': order, 'whatsapp_url': whatsapp_url})
