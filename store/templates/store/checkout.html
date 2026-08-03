@@ -1,116 +1,177 @@
-
-{% extends 'store/base.html' %}
-{% load static %}
-
-{% block content %}
+{% extends 'store/base.html' %} {% load static %} {% block content %}
 <!-- Baaki aap ka saara checkout code yahan niche aayega -->
 <div class="container py-5 text-light">
-    <h2 class="fw-bold mb-4 luxury-serif">Checkout 💳</h2>
+  <h2 class="fw-bold mb-4 luxury-serif">Checkout 💳</h2>
 
-    <div class="row g-4">
-        <!-- Left: Shipping Form -->
-        <div class="col-md-7">
-            <div class="card p-4 shadow-sm bg-dark text-light border-secondary rounded-0">
-                <h4 class="mb-3 text-warning luxury-serif">Shipping Address</h4>
-                <form method="POST" action="{% url 'checkout' %}">
-                    {% csrf_token %}
-                    
-                    <div class="mb-3">
-                        <label class="form-label">Full Name</label>
-                        <input type="text" name="full_name" class="form-control bg-secondary text-light border-0 rounded-0" required>
-                    </div>
-                    
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Email Address (for confirmation)</label>
-                            <input type="email" name="email" class="form-control bg-secondary text-light border-0 rounded-0" placeholder="example@email.com" required>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Phone Number</label>
-                            <input type="text" name="phone" class="form-control bg-secondary text-light border-0 rounded-0" required>
-                        </div>
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label class="form-label">Address</label>
-                        <textarea name="address" class="form-control bg-secondary text-light border-0 rounded-0" rows="3" required></textarea>
-                    </div>
-                    
-                    <div class="mb-4">
-                        <label class="form-label">City</label>
-                        <input type="text" name="city" class="form-control bg-secondary text-light border-0 rounded-0" required>
-                    </div>
+  <div class="row g-4">
+    <!-- Left: Shipping Form -->
+    <div class="col-md-7">
+      <div
+        class="card p-4 shadow-sm bg-dark text-light border-secondary rounded-0"
+      >
+        <h4 class="mb-3 text-warning luxury-serif">Shipping Address</h4>
+        <form method="POST" action="{% url 'checkout' %}">
+          {% csrf_token %}
 
-                    <h5 class="text-warning fw-bold mb-3">SELECT PAYMENT METHOD</h5>
+          <div class="mb-3">
+            <label class="form-label">Full Name</label>
+            <input
+              type="text"
+              name="full_name"
+              class="form-control bg-secondary text-light border-0 rounded-0"
+              required
+            />
+          </div>
 
-                    <!-- YAHAN SE PASTE KAREIN -->
-<h5 class="text-warning fw-bold mb-3">SELECT PAYMENT METHOD</h5>
-
-<div class="payment-methods d-flex flex-column gap-2 mb-4">
-  
-  <!-- JazzCash -->
-  <label class="payment-option border border-secondary p-3 rounded bg-dark d-flex align-items-center justify-content-between" style="cursor: pointer;">
-    <div class="d-flex align-items-center gap-3">
-      <input type="radio" name="payment_method" value="jazzcash" class="form-check-input mt-0" checked required>
-      <span class="text-white fw-bold fs-6">JazzCash Mobile Account</span>
-    </div>
-    
-  </label>
-
-  <!-- EasyPaisa -->
-  <label class="payment-option border border-secondary p-3 rounded bg-dark d-flex align-items-center justify-content-between" style="cursor: pointer;">
-    <div class="d-flex align-items-center gap-3">
-      <input type="radio" name="payment_method" value="easypaisa" class="form-check-input mt-0" required>
-      <span class="text-white fw-bold fs-6">EasyPaisa Mobile Account</span>
-    </div>
-    
-  </label>
-  <!-- Cash on Delivery -->
-  <label class="payment-option border border-secondary p-3 rounded bg-dark d-flex align-items-center justify-content-between" style="cursor: pointer;">
-    <div class="d-flex align-items-center gap-3">
-      <input type="radio" name="payment_method" value="cod" class="form-check-input mt-0" required>
-      <span class="text-white fw-bold fs-6">Cash on Delivery (COD)</span>
-    </div>
-    <span class="badge bg-success fs-6 p-2">💵 COD</span>
-  </label>
-
-</div>
-
-                    <button type="submit" class="btn btn-warning text-dark fw-bold px-4 py-2 rounded-0 text-uppercase">
-                        Place Order
-                    </button>
-                </form>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Email Address (for confirmation)</label>
+              <input
+                type="email"
+                name="email"
+                class="form-control bg-secondary text-light border-0 rounded-0"
+                placeholder="example@email.com"
+                required
+              />
             </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Phone Number</label>
+              <input
+                type="text"
+                name="phone"
+                class="form-control bg-secondary text-light border-0 rounded-0"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Address</label>
+            <textarea
+              name="address"
+              class="form-control bg-secondary text-light border-0 rounded-0"
+              rows="3"
+              required
+            ></textarea>
+          </div>
+
+          <div class="mb-4">
+            <label class="form-label">City</label>
+            <input
+              type="text"
+              name="city"
+              class="form-control bg-secondary text-light border-0 rounded-0"
+              required
+            />
+          </div>
+
+          <h5 class="text-warning fw-bold mb-3">SELECT PAYMENT METHOD</h5>
+
+          <!-- YAHAN SE PASTE KAREIN -->
+          <h5 class="text-warning fw-bold mb-3">SELECT PAYMENT METHOD</h5>
+
+          <div class="payment-methods d-flex flex-column gap-2 mb-4">
+            <!-- JazzCash -->
+            <label
+              class="payment-option border border-secondary p-3 rounded bg-dark d-flex align-items-center justify-content-between"
+              style="cursor: pointer"
+            >
+              <div class="d-flex align-items-center gap-3">
+                <input
+                  type="radio"
+                  name="payment_method"
+                  value="jazzcash"
+                  class="form-check-input mt-0"
+                  checked
+                  required
+                />
+                <span class="text-white fw-bold fs-6"
+                  >JazzCash Mobile Account</span
+                >
+              </div>
+            </label>
+
+            <!-- EasyPaisa -->
+            <label
+              class="payment-option border border-secondary p-3 rounded bg-dark d-flex align-items-center justify-content-between"
+              style="cursor: pointer"
+            >
+              <div class="d-flex align-items-center gap-3">
+                <input
+                  type="radio"
+                  name="payment_method"
+                  value="easypaisa"
+                  class="form-check-input mt-0"
+                  required
+                />
+                <span class="text-white fw-bold fs-6"
+                  >EasyPaisa Mobile Account</span
+                >
+              </div>
+            </label>
+            <!-- Cash on Delivery -->
+            <label
+              class="payment-option border border-secondary p-3 rounded bg-dark d-flex align-items-center justify-content-between"
+              style="cursor: pointer"
+            >
+              <div class="d-flex align-items-center gap-3">
+                <input
+                  type="radio"
+                  name="payment_method"
+                  value="cod"
+                  class="form-check-input mt-0"
+                  required
+                />
+                <span class="text-white fw-bold fs-6"
+                  >Cash on Delivery (COD)</span
+                >
+              </div>
+              <span class="badge bg-success fs-6 p-2">💵 COD</span>
+            </label>
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn-warning text-dark fw-bold px-4 py-2 rounded-0 text-uppercase"
+          >
+            Place Order
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Right: Order Summary Section -->
+    <div class="col-md-5">
+      <div
+        class="card p-4 shadow-sm bg-dark text-light border-secondary rounded-0"
+      >
+        <h4 class="mb-3 text-warning luxury-serif">Order Summary</h4>
+        <hr class="border-secondary" />
+
+        <div class="d-flex justify-content-between mb-2">
+          <span class="text-muted">Subtotal</span>
+          <span class="fw-bold">Rs. {{ total }}</span>
         </div>
 
-        <!-- Right: Order Summary Section -->
-        <div class="col-md-5">
-            <div class="card p-4 shadow-sm bg-dark text-light border-secondary rounded-0">
-                <h4 class="mb-3 text-warning luxury-serif">Order Summary</h4>
-                <hr class="border-secondary">
-
-                <div class="d-flex justify-content-between mb-2">
-                    <span class="text-muted">Subtotal</span>
-                    <span class="fw-bold">Rs. {{ total }}</span>
-                </div>
-
-                <div class="d-flex justify-content-between mb-2">
-                    <span class="text-muted">Shipping Charges</span>
-                    <span class="text-success fw-bold">FREE</span>
-                </div>
-
-                <hr class="border-secondary">
-
-                <div class="d-flex justify-content-between mb-3 fs-5">
-                    <span class="fw-bold text-uppercase">Total Payable</span>
-                    <span class="fw-bold text-warning">Rs. {{ total }}</span>
-                </div>
-
-                <div class="alert alert-secondary text-center small rounded-0 border-0 mb-0">
-                    🔒 Guaranteed Safe & Secure Checkout
-                </div>
-            </div>
+        <div class="d-flex justify-content-between mb-2">
+          <span class="text-muted">Shipping Charges</span>
+          <span class="text-success fw-bold">FREE</span>
         </div>
+
+        <hr class="border-secondary" />
+
+        <div class="d-flex justify-content-between mb-3 fs-5">
+          <span class="fw-bold text-uppercase">Total Payable</span>
+          <span class="fw-bold text-warning">Rs. {{ total }}</span>
+        </div>
+
+        <div
+          class="alert alert-secondary text-center small rounded-0 border-0 mb-0"
+        >
+          🔒 Guaranteed Safe & Secure Checkout
+        </div>
+      </div>
     </div>
+  </div>
 </div>
 {% endblock %}

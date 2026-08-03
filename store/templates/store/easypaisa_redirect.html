@@ -1,71 +1,90 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Easypaisa Payment - D.9 Shoes</title>
     <style>
-        body {
-            background-color: #121212;
-            color: #ffffff;
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            background: #1e1e1e;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-            width: 400px;
-            text-align: center;
-        }
-        h2 { color: #00ba7c; }
-        .info { margin: 15px 0; font-size: 16px; text-align: left; }
-        .info span { float: right; font-weight: bold; }
-        input[type="text"] {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            background: #2a2a2a;
-            border: 1px solid #444;
-            color: #fff;
-            border-radius: 5px;
-        }
-        button {
-            background: #00ba7c;
-            color: white;
-            padding: 12px;
-            width: 100%;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        button:hover { background: #009663; }
+      body {
+        background-color: #121212;
+        color: #ffffff;
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+      .container {
+        background: #1e1e1e;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        width: 400px;
+        text-align: center;
+      }
+      h2 {
+        color: #00ba7c;
+      }
+      .info {
+        margin: 15px 0;
+        font-size: 16px;
+        text-align: left;
+      }
+      .info span {
+        float: right;
+        font-weight: bold;
+      }
+      input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        background: #2a2a2a;
+        border: 1px solid #444;
+        color: #fff;
+        border-radius: 5px;
+      }
+      button {
+        background: #00ba7c;
+        color: white;
+        padding: 12px;
+        width: 100%;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        font-weight: bold;
+      }
+      button:hover {
+        background: #009663;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Easypaisa Payment</h2>
+      <p>Please complete your payment via Easypaisa.</p>
 
-<div class="container">
-    <h2>Easypaisa Payment</h2>
-    <p>Please complete your payment via Easypaisa.</p>
-    
-    <div class="info">
+      <div class="info">
         <p>Order ID: <span>#{{ order.id }}</span></p>
         <p>Total Amount: <span>Rs. {{ order.total_amount }}</span></p>
         <p>Merchant Account: <span>0312-7995381</span></p>
-    </div>
+      </div>
 
-    <form action="{% url 'order_success' order.id %}" method="GET">
-        <input type="text" name="easypaisa_phone" placeholder="Enter your Easypaisa Mobile No" required>
-        <input type="text" name="transaction_id" placeholder="Enter 11-digit Transaction ID (TID)" required>
+      <form action="{% url 'order_success' order.id %}" method="GET">
+        <input
+          type="text"
+          name="easypaisa_phone"
+          placeholder="Enter your Easypaisa Mobile No"
+          required
+        />
+        <input
+          type="text"
+          name="transaction_id"
+          placeholder="Enter 11-digit Transaction ID (TID)"
+          required
+        />
         <button type="submit">Verify & Confirm Order</button>
-    </form>
-</div>
-
-</body>
+      </form>
+    </div>
+  </body>
 </html>

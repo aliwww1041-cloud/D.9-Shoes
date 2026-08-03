@@ -1,6 +1,4 @@
-{% extends 'store/base.html' %}
-
-{% block content %}
+{% extends 'store/base.html' %} {% block content %}
 <div class="container py-4">
   <h2 class="text-light mb-4">Your Shopping Cart 🛒</h2>
 
@@ -8,38 +6,42 @@
     <!-- Left Side: Items Table -->
     <div class="col-md-8">
       {% if cart_items %}
-        <div class="table-responsive">
-          <table class="table table-dark align-middle">
-            <thead>
-              <tr>
-                <th>Product</th>
-                <th>Size</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for item in cart_items %}
-                <tr>
-                  <td>{{ item.name }}</td>
-                  <td><span class="badge bg-secondary">{{ item.size|default:"N/A" }}</span></td>
-                  <td>RS {{ item.price }}</td>
-                  <td>{{ item.quantity }}</td>
-                  <td>
-                  
-                    <a href="{% url 'remove_from_cart' item.key %}" class="btn btn-danger btn-sm">Delete</a>
-                  
-                  </td>
-                </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
+      <div class="table-responsive">
+        <table class="table table-dark align-middle">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Size</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in cart_items %}
+            <tr>
+              <td>{{ item.name }}</td>
+              <td>
+                <span class="badge bg-secondary"
+                  >{{ item.size|default:"N/A" }}</span
+                >
+              </td>
+              <td>RS {{ item.price }}</td>
+              <td>{{ item.quantity }}</td>
+              <td>
+                <a
+                  href="{% url 'remove_from_cart' item.key %}"
+                  class="btn btn-danger btn-sm"
+                  >Delete</a
+                >
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
       {% else %}
-        <div class="alert alert-warning">
-          Your cart is empty.
-        </div>
+      <div class="alert alert-warning">Your cart is empty.</div>
       {% endif %}
     </div>
 
@@ -47,15 +49,19 @@
     <div class="col-md-4">
       <div class="card bg-white text-dark p-4 rounded shadow-sm">
         <h4 class="fw-bold mb-3">Order Summary</h4>
-        <hr>
+        <hr />
         <div class="d-flex justify-content-between align-items-center mb-3">
           <span class="fs-5">Total:</span>
           <span class="fs-5 fw-bold text-primary">RS {{ total_price }}</span>
         </div>
         {% if cart_items %}
-          <a href="{% url 'checkout' %}" class="btn btn-primary btn-lg w-100">Proceed to Checkout</a>
+        <a href="{% url 'checkout' %}" class="btn btn-primary btn-lg w-100"
+          >Proceed to Checkout</a
+        >
         {% else %}
-          <button class="btn btn-secondary btn-lg w-100" disabled>Proceed to Checkout</button>
+        <button class="btn btn-secondary btn-lg w-100" disabled>
+          Proceed to Checkout
+        </button>
         {% endif %}
       </div>
     </div>

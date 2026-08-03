@@ -1,427 +1,563 @@
 {% load static %}
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
     <title>D.9 Shoes | Luxury Footwear</title>
-    
+
     <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Poppins:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
     <!-- Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <!-- Swiper.js CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
 
     <style>
-        /* Navbar ko mobile par behtar dikhane ke liye */
-        .navbar-collapse {
-            background-color: #141518 !important;
-            padding: 15px;
-            border-radius: 5px;
-            margin-top: 10px;
-        }
+      /* Navbar ko mobile par behtar dikhane ke liye */
+      .navbar-collapse {
+        background-color: #141518 !important;
+        padding: 15px;
+        border-radius: 5px;
+        margin-top: 10px;
+      }
 
-        /* 🌟 Navbar Bottom Accent Line (Gold/Orange Theme Match) */
-        .navbar {
-            background-color: #0f1012 !important;
-            border-bottom: 2px solid #ff4500 !important;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-        }
+      /* 🌟 Navbar Bottom Accent Line (Gold/Orange Theme Match) */
+      .navbar {
+        background-color: #0f1012 !important;
+        border-bottom: 2px solid #ff4500 !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      }
 
-        /* Product images ki height ko fix karna */
-        .card-img-top, 
-        .product-card img, 
-        .swiper-slide img {
-            width: 100% !important;
-            height: 180px !important;
-            object-fit: cover !important;
-        }
+      /* Product images ki height ko fix karna */
+      .card-img-top,
+      .product-card img,
+      .swiper-slide img {
+        width: 100% !important;
+        height: 180px !important;
+        object-fit: cover !important;
+      }
 
-        :root {
-            --bg-dark: #0f1012;
-            --card-dark: #181a1e;
-            --accent-gold: #ff4500;
-            --text-light: #f0f0f0;
-            --text-muted: #9a9a9a;
-        }
+      :root {
+        --bg-dark: #0f1012;
+        --card-dark: #181a1e;
+        --accent-gold: #ff4500;
+        --text-light: #f0f0f0;
+        --text-muted: #9a9a9a;
+      }
+      /* Header ki height ke mutabiq isay adjust kar sakte hain */
+      body {
+        padding-top: 80px;
+      }
 
-        html {
-            scroll-behavior: smooth;
-        }
+      html {
+        scroll-behavior: smooth;
+      }
 
-        html, body {
-            max-width: 100% !important;
-            overflow-x: hidden !important;
-            background-color: var(--bg-dark);
-            background-image: url("{% static 'images/bg-pattern.jpg' %}");
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            color: var(--text-light);
-            font-family: 'Poppins', sans-serif;
-        }
+      html,
+      body {
+        max-width: 100% !important;
+        overflow-x: hidden !important;
+        background-color: var(--bg-dark);
+        background-image: url("{% static 'images/bg-pattern.jpg' %}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        color: var(--text-light);
+        font-family: "Poppins", sans-serif;
+      }
 
-        img {
-            max-width: 100%;
-            height: auto;
-        }
+      img {
+        max-width: 100%;
+        height: auto;
+      }
 
-        h1, h2, h3, .luxury-font, .luxury-serif {
-            font-family: 'Playfair Display', serif !important;
-        }
+      h1,
+      h2,
+      h3,
+      .luxury-font,
+      .luxury-serif {
+        font-family: "Playfair Display", serif !important;
+      }
 
-        .navbar-brand {
-            font-weight: 800;
-            letter-spacing: 1px;
-            color: #fff !important;
-            font-size: 1.2rem;
-            text-transform: uppercase;
-        }
+      .navbar-brand {
+        font-weight: 800;
+        letter-spacing: 1px;
+        color: #fff !important;
+        font-size: 1.2rem;
+        text-transform: uppercase;
+      }
 
-        .nav-link {
-            color: var(--text-muted) !important;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            transition: color 0.3s;
-        }
+      .nav-link {
+        color: var(--text-muted) !important;
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        transition: color 0.3s;
+      }
 
-        .nav-link:hover, .nav-link.active {
-            color: #fff !important;
-        }
+      .nav-link:hover,
+      .nav-link.active {
+        color: #fff !important;
+      }
 
-        @media (min-width: 992px) {
-            .nav-item.dropdown:hover .dropdown-menu {
-                display: block !important;
-                margin-top: 0;
-                animation: fadeIn 0.2s ease-in-out;
-            }
+      @media (min-width: 992px) {
+        .nav-item.dropdown:hover .dropdown-menu {
+          display: block !important;
+          margin-top: 0;
+          animation: fadeIn 0.2s ease-in-out;
         }
+      }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(8px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
         }
-
-        .dropdown-menu-dark {
-            background-color: #141518 !important;
-            border: 1px solid rgba(255, 255, 255, 0.15) !important;
-            border-radius: 4px !important;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
-            padding: 8px 0;
-            min-width: 200px;
+        to {
+          opacity: 1;
+          transform: translateY(0);
         }
+      }
 
-        .dropdown-item {
-            color: #bbb !important;
-            font-size: 0.85rem;
-            padding: 10px 20px;
-            transition: all 0.2s ease;
-        }
+      .dropdown-menu-dark {
+        background-color: #141518 !important;
+        border: 1px solid rgba(255, 255, 255, 0.15) !important;
+        border-radius: 4px !important;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+        padding: 8px 0;
+        min-width: 200px;
+      }
 
-        .dropdown-item:hover {
-            background-color: #1f2228 !important;
-            color: var(--accent-gold) !important;
-            padding-left: 24px;
-        }
+      .dropdown-item {
+        color: #bbb !important;
+        font-size: 0.85rem;
+        padding: 10px 20px;
+        transition: all 0.2s ease;
+      }
 
-        .contact-section {
-            background-color: #0b0c0e;
-            border-top: 2px solid #222;
-        }
+      .dropdown-item:hover {
+        background-color: #1f2228 !important;
+        color: var(--accent-gold) !important;
+        padding-left: 24px;
+      }
 
-        .contact-card {
-            background-color: #141518;
-            border: 2px solid #2a2a2a;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
+      .contact-section {
+        background-color: #0b0c0e;
+        border-top: 2px solid #222;
+      }
 
-        .form-control-brutalist {
-            background-color: #0d0e10 !important;
-            border: 1px solid #333 !important;
-            color: #fff !important;
-            border-radius: 0px !important;
-            padding: 12px 15px;
-        }
+      .contact-card {
+        background-color: #141518;
+        border: 2px solid #2a2a2a;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      }
 
-        .btn-contact-submit {
-            background-color: var(--accent-gold);
-            color: #fff;
-            font-weight: 700;
-            text-transform: uppercase;
-            border: 2px solid var(--accent-gold);
-            padding: 12px;
-        }
+      .form-control-brutalist {
+        background-color: #0d0e10 !important;
+        border: 1px solid #333 !important;
+        color: #fff !important;
+        border-radius: 0px !important;
+        padding: 12px 15px;
+      }
 
-        footer {
-            background-color: #080809;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 30px 0;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-        }
+      .btn-contact-submit {
+        background-color: var(--accent-gold);
+        color: #fff;
+        font-weight: 700;
+        text-transform: uppercase;
+        border: 2px solid var(--accent-gold);
+        padding: 12px;
+      }
 
-        /* 📱 Strict Mobile Image Sizing Fix */
-        img, 
-        .swiper-slide img, 
-        .product-card img, 
-        .product-img, 
-        .card-img-top {
-            width: 100% !important;
-            max-height: 200px !important;
-            height: 200px !important;
-            object-fit: contain !important;
-            background-color: #141518;
-        }
+      footer {
+        background-color: #080809;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        padding: 30px 0;
+        color: var(--text-muted);
+        font-size: 0.85rem;
+      }
 
-        .product-detail-img {
-            max-height: 350px;
-            width: 100%;
-            object-fit: contain;
-        }
-
-        /* 📱 Ultra-Clean Mobile Card Typography & Compact Height Fix (3 Products View) */
-       @media (max-width: 576px) {
-    /* 📱 Professional Mobile Card Layout */
-    .product-card .card-img-top, 
-    .product-card img {
-        height: 105px !important; 
+      /* 📱 Strict Mobile Image Sizing Fix */
+      img,
+      .swiper-slide img,
+      .product-card img,
+      .product-img,
+      .card-img-top {
+        width: 100% !important;
+        max-height: 200px !important;
+        height: 200px !important;
         object-fit: contain !important;
-    }
-    .product-card .card-body {
-        padding: 6px 4px !important;
-    }
-    .product-card h6.card-title {
-        font-size: 0.7rem !important;
-        margin-bottom: 2px !important;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-    /* Subtitle / Brand text ko clean karna */
-    .product-card p.small, 
-    .product-card .text-muted {
-        font-size: 0.55rem !important;
-        margin-bottom: 2px !important;
-    }
-    /* Prices overlap fix aur proper alignment */
-    .product-card .d-flex.justify-content-center,
-    .product-card .price-container {
-        font-size: 0.65rem !important;
-        margin-bottom: 4px !important;
-    }
-    .product-card .price-text, 
-    .product-card .text-decoration-line-through {
-        font-size: 0.6rem !important;
-    }
-    /* View Button styling */
-    .product-card .btn {
-        padding: 2px 6px !important;
-        font-size: 0.6rem !important;
-        margin-top: 2px !important;
-    }
-    /* Sale badge chota aur neat */
-    .product-card .badge, 
-    .product-card .sale-badge {
-        font-size: 0.45rem !important;
-        padding: 2px 4px !important;
-        top: 4px !important;
-        left: 4px !important;
-    }
-    /* Arrows ko adjust karna taake text ke oopar na aayein */
-    .swiper-button-next, 
-    .swiper-button-prev {
-        width: 22px !important;
-        height: 22px !important;
-    }
-    .swiper-button-next::after, 
-    .swiper-button-prev::after {
-        font-size: 10px !important;
-    }
-}
-/* Product Card Hover Effect */
-.product-card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
+        background-color: #141518;
+      }
 
-.product-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(255, 193, 7, 0.2); /* Halki si yellow/gold glow shadow */
-    border-color: #ffc107 !important;
-}
-.custom-view-all-btn {
-    color: #ff0015;
-    border: 2px solid #1b1713;
-    background-color: transparent;
-    transition: all 0.3s ease-in-out;
-}
+      .product-detail-img {
+        max-height: 350px;
+        width: 100%;
+        object-fit: contain;
+      }
 
-.custom-view-all-btn:hover {
-    background-color: #727272;
-    color: #000;
-    box-shadow: 0 0 15px rgba(255, 127, 0, 0.4);
-}
-.product-card .btn-outline-warning, 
-.product-card a[href*="product_detail"] {
-    color: #ff4500 !important;
-    border-color: #ff4500 !important;
-    transition: all 0.3s ease-in-out;
-}
+      /* 📱 Ultra-Clean Mobile Card Typography & Compact Height Fix (3 Products View) */
+      @media (max-width: 576px) {
+        /* 📱 Professional Mobile Card Layout */
+        .product-card .card-img-top,
+        .product-card img {
+          height: 105px !important;
+          object-fit: contain !important;
+        }
+        .product-card .card-body {
+          padding: 6px 4px !important;
+        }
+        .product-card h6.card-title {
+          font-size: 0.7rem !important;
+          margin-bottom: 2px !important;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        /* Subtitle / Brand text ko clean karna */
+        .product-card p.small,
+        .product-card .text-muted {
+          font-size: 0.55rem !important;
+          margin-bottom: 2px !important;
+        }
+        /* Prices overlap fix aur proper alignment */
+        .product-card .d-flex.justify-content-center,
+        .product-card .price-container {
+          font-size: 0.65rem !important;
+          margin-bottom: 4px !important;
+        }
+        .product-card .price-text,
+        .product-card .text-decoration-line-through {
+          font-size: 0.6rem !important;
+        }
+        /* View Button styling */
+        .product-card .btn {
+          padding: 2px 6px !important;
+          font-size: 0.6rem !important;
+          margin-top: 2px !important;
+        }
+        /* Sale badge chota aur neat */
+        .product-card .badge,
+        .product-card .sale-badge {
+          font-size: 0.45rem !important;
+          padding: 2px 4px !important;
+          top: 4px !important;
+          left: 4px !important;
+        }
+        /* Arrows ko adjust karna taake text ke oopar na aayein */
+        .swiper-button-next,
+        .swiper-button-prev {
+          width: 22px !important;
+          height: 22px !important;
+        }
+        .swiper-button-next::after,
+        .swiper-button-prev::after {
+          font-size: 10px !important;
+        }
+      }
+      /* Product Card Hover Effect */
+      .product-card {
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+      }
 
-.product-card .btn-outline-warning:hover, 
-.product-card a[href*="product_detail"]:hover {
-    background-color: #ff4500 !important;
-    color: #fff !important;
-    box-shadow: 0 0 15px rgba(255, 69, 0, 0.4);
-}
+      .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(255, 193, 7, 0.2); /* Halki si yellow/gold glow shadow */
+        border-color: #ffc107 !important;
+      }
+      .custom-view-all-btn {
+        color: #ff0015;
+        border: 2px solid #1b1713;
+        background-color: transparent;
+        transition: all 0.3s ease-in-out;
+      }
+
+      .custom-view-all-btn:hover {
+        background-color: #727272;
+        color: #000;
+        box-shadow: 0 0 15px rgba(255, 127, 0, 0.4);
+      }
+      .product-card .btn-outline-warning,
+      .product-card a[href*="product_detail"] {
+        color: #ff4500 !important;
+        border-color: #ff4500 !important;
+        transition: all 0.3s ease-in-out;
+      }
+
+      .product-card .btn-outline-warning:hover,
+      .product-card a[href*="product_detail"]:hover {
+        background-color: #ff4500 !important;
+        color: #fff !important;
+        box-shadow: 0 0 15px rgba(255, 69, 0, 0.4);
+      }
     </style>
-</head>
-<body class="d-flex flex-column min-vh-100">
-
+  </head>
+  <body class="d-flex flex-column min-vh-100">
     <!-- Header / Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
-        <div class="container px-3">
-            
-            <!-- Logo -->
-            <a class="navbar-brand fw-bold text-uppercase" href="{% url 'product_list' %}">D.9 Shoes</a>
-            
-            <!-- Mobile Cart & Hamburger Toggle -->
-            <div class="d-flex align-items-center gap-3 d-lg-none">
-                <a href="{% url 'cart' %}" class="position-relative text-white me-1" style="font-size: 1.2rem;">
-                    <i class="fa-solid fa-bag-shopping"></i>
-                </a>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark shadow">
+      <div class="container px-3">
+        <!-- Logo -->
+        <a
+          class="navbar-brand fw-bold text-uppercase"
+          href="{% url 'product_list' %}"
+          >D.9 Shoes</a
+        >
 
-                <button class="navbar-toggler border-1 border-secondary p-1" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-            </div>
+        <!-- Mobile Cart & Hamburger Toggle -->
+        <div class="d-flex align-items-center gap-3 d-lg-none">
+          <a
+            href="{% url 'cart' %}"
+            class="position-relative text-white me-1"
+            style="font-size: 1.2rem"
+          >
+            <i class="fa-solid fa-bag-shopping"></i>
+          </a>
 
-            <!-- Links Container -->
-            <div class="collapse navbar-collapse mt-2 mt-lg-0" id="navMenu">
-                <ul class="navbar-nav mx-auto gap-1 gap-lg-3 py-2 py-lg-0">
-                    
-                    <li class="nav-item">
-                        <a class="nav-link text-uppercase" href="{% url 'product_list' %}">Home</a>
-                    </li>
-                    
-                    <!-- Men Dropdown Menu with Jump Links -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-uppercase" href="#" id="menDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Men
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="menDropdown">
-                            <li><a class="dropdown-item" href="/#sleeper">Sleeper</a></li>
-                            <li><a class="dropdown-item" href="/#shoe">Shoe</a></li>
-                            <li><a class="dropdown-item" href="/#peshawari-chapal">Peshawari Chapal</a></li>
-                            <li><a class="dropdown-item" href="/#pumpy">Pumpy</a></li>
-                            <li><a class="dropdown-item" href="/#loafers">Loafers</a></li>
-                            <li><a class="dropdown-item" href="/#naurozi">Naurozi</a></li>
-                            <li><a class="dropdown-item" href="/#sandals">Sandals</a></li>
-                        </ul>
-                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="menDropdown">
-                            <li><a class="dropdown-item" href="{% url 'category_products' 'sleeper' %}">Sleeper</a></li>
-                           <li><a class="dropdown-item" href="{% url 'category_products' 'shoe' %}">Shoe</a></li>
-                            <li><a class="dropdown-item" href="{% url 'category_products' 'peshawari-chapal' %}">Peshawari Chapal</a></li>
-                           <li><a class="dropdown-item" href="{% url 'category_products' 'pumpy' %}">Pumpy</a></li>
-                           <li><a class="dropdown-item" href="{% url 'category_products' 'loafers' %}">Loafers</a></li>
-                           <li><a class="dropdown-item" href="{% url 'category_products' 'naurozi' %}">Naurozi</a></li>
-                           <li><a class="dropdown-item" href="{% url 'category_products' 'sandals' %}">Sandals</a></li>
-                        </ul>
-
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link text-uppercase" href="{% url 'product_list' %}?category=luxury">Luxury Edition</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link text-uppercase" href="#contact">Contact</a>
-                    </li>
-
-                </ul>
-
-                <!-- Cart & User Buttons (Right Side - Desktop) -->
-                <div class="d-none d-lg-flex align-items-center gap-3">
-                   <a href="{% url 'cart' %}" class="position-relative text-white me-2" style="font-size: 1.2rem;">
-                        <i class="fa-solid fa-bag-shopping"></i>
-                   </a>
-        
-                   {% if user.is_authenticated and user.is_staff %}
-                        <a href="/admin/" class="btn btn-outline-light py-1 px-3 btn-sm">Admin Portal</a>
-                   {% endif %}
-                </div>
-            </div>
-
+          <button
+            class="navbar-toggler border-1 border-secondary p-1"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navMenu"
+            aria-controls="navMenu"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
         </div>
+
+        <!-- Links Container -->
+        <div class="collapse navbar-collapse mt-2 mt-lg-0" id="navMenu">
+          <ul class="navbar-nav mx-auto gap-1 gap-lg-3 py-2 py-lg-0">
+            <li class="nav-item">
+              <a class="nav-link text-uppercase" href="{% url 'product_list' %}"
+                >Home</a
+              >
+            </li>
+
+            <!-- Men Dropdown Menu with Jump Links -->
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle text-uppercase"
+                href="#"
+                id="menDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Men
+              </a>
+              <ul
+                class="dropdown-menu dropdown-menu-dark"
+                aria-labelledby="menDropdown"
+              >
+                <li><a class="dropdown-item" href="/#sleeper">Sleeper</a></li>
+                <li><a class="dropdown-item" href="/#shoe">Shoe</a></li>
+                <li>
+                  <a class="dropdown-item" href="/#peshawari-chapal"
+                    >Peshawari Chapal</a
+                  >
+                </li>
+                <li><a class="dropdown-item" href="/#pumpy">Pumpy</a></li>
+                <li><a class="dropdown-item" href="/#loafers">Loafers</a></li>
+                <li><a class="dropdown-item" href="/#naurozi">Naurozi</a></li>
+                <li><a class="dropdown-item" href="/#sandals">Sandals</a></li>
+              </ul>
+              <ul
+                class="dropdown-menu dropdown-menu-dark"
+                aria-labelledby="menDropdown"
+              >
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="{% url 'category_products' 'sleeper' %}"
+                    >Sleeper</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="{% url 'category_products' 'shoe' %}"
+                    >Shoe</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="{% url 'category_products' 'peshawari-chapal' %}"
+                    >Peshawari Chapal</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="{% url 'category_products' 'pumpy' %}"
+                    >Pumpy</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="{% url 'category_products' 'loafers' %}"
+                    >Loafers</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="{% url 'category_products' 'naurozi' %}"
+                    >Naurozi</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="{% url 'category_products' 'sandals' %}"
+                    >Sandals</a
+                  >
+                </li>
+              </ul>
+            </li>
+
+            <li class="nav-item">
+              <a
+                class="nav-link text-uppercase"
+                href="{% url 'product_list' %}?category=luxury"
+                >Luxury Edition</a
+              >
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link text-uppercase" href="#contact">Contact</a>
+            </li>
+          </ul>
+
+          <!-- Cart & User Buttons (Right Side - Desktop) -->
+          <div class="d-none d-lg-flex align-items-center gap-3">
+            <a
+              href="{% url 'cart' %}"
+              class="position-relative text-white me-2"
+              style="font-size: 1.2rem"
+            >
+              <i class="fa-solid fa-bag-shopping"></i>
+            </a>
+
+            {% if user.is_authenticated and user.is_staff %}
+            <a href="/admin/" class="btn btn-outline-light py-1 px-3 btn-sm"
+              >Admin Portal</a
+            >
+            {% endif %}
+          </div>
+        </div>
+      </div>
     </nav>
 
     <!-- Main Content -->
-    <main class="flex-grow-1">
-        {% block content %}
-        {% endblock %}
-    </main>
+    <main class="flex-grow-1">{% block content %} {% endblock %}</main>
 
     <!-- Contact Section -->
     <section id="contact" class="contact-section py-5">
-        <div class="container py-2">
-            <div class="row g-4 align-items-center">
-                <div class="col-lg-5">
-                    <div class="pe-lg-3">
-                        <span class="text-uppercase fw-bold small tracking-widest" style="color: var(--accent-gold);">Need Assistance?</span>
-                        <h2 class="display-6 fw-bold text-white mb-3 luxury-font">GET IN TOUCH</h2>
-                        <p class="text-muted mb-4" style="font-size: 0.9rem;">
-                            Have questions about our edition, size availability, or custom orders?
-                        </p>
-                    </div>
-                </div>
-
-                <div class="col-lg-7">
-                    <div class="contact-card p-3 p-md-5">
-                        <form action="#" method="POST">
-                            {% csrf_token %}
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control form-control-brutalist" placeholder="Your Name" required>
-                                </div>
-                                <div class="col-md-6">
-                                    <input type="email" class="form-control form-control-brutalist" placeholder="Email Address" required>
-                                </div>
-                                <div class="col-12">
-                                    <textarea class="form-control form-control-brutalist" rows="3" placeholder="Message..." required></textarea>
-                                </div>
-                                <div class="col-12 mt-3">
-                                    <button type="submit" class="btn btn-contact-submit w-100">SEND MESSAGE</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+      <div class="container py-2">
+        <div class="row g-4 align-items-center">
+          <div class="col-lg-5">
+            <div class="pe-lg-3">
+              <span
+                class="text-uppercase fw-bold small tracking-widest"
+                style="color: var(--accent-gold)"
+                >Need Assistance?</span
+              >
+              <h2 class="display-6 fw-bold text-white mb-3 luxury-font">
+                GET IN TOUCH
+              </h2>
+              <p class="text-muted mb-4" style="font-size: 0.9rem">
+                Have questions about our edition, size availability, or custom
+                orders?
+              </p>
             </div>
+          </div>
+
+          <div class="col-lg-7">
+            <div class="contact-card p-3 p-md-5">
+              <form action="#" method="POST">
+                {% csrf_token %}
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <input
+                      type="text"
+                      class="form-control form-control-brutalist"
+                      placeholder="Your Name"
+                      required
+                    />
+                  </div>
+                  <div class="col-md-6">
+                    <input
+                      type="email"
+                      class="form-control form-control-brutalist"
+                      placeholder="Email Address"
+                      required
+                    />
+                  </div>
+                  <div class="col-12">
+                    <textarea
+                      class="form-control form-control-brutalist"
+                      rows="3"
+                      placeholder="Message..."
+                      required
+                    ></textarea>
+                  </div>
+                  <div class="col-12 mt-3">
+                    <button type="submit" class="btn btn-contact-submit w-100">
+                      SEND MESSAGE
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Footer -->
     <footer class="mt-auto text-center">
-        <div class="container">
-            <p class="mb-1 text-uppercase tracking-widest">D.9 Shoes — Haute Footwear Collection</p>
-            <p class="small text-muted mb-0">© 2026 Engineered for Luxury & Comfort.</p>
-        </div>
+      <div class="container">
+        <p class="mb-1 text-uppercase tracking-widest">
+          D.9 Shoes — Haute Footwear Collection
+        </p>
+        <p class="small text-muted mb-0">
+          © 2026 Engineered for Luxury & Comfort.
+        </p>
+      </div>
     </footer>
 
     <!-- Bootstrap 5 JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Swiper.js JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-</body>
+  </body>
 </html>

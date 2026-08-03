@@ -1,83 +1,147 @@
-{% extends 'store/base.html' %}
-
-{% block content %}
+{% extends 'store/base.html' %} {% block content %}
 <div class="container py-5 my-4">
-    <div class="row justify-content-center">
-        <div class="col-md-5 col-lg-4">
-            
-            <!-- Brutalist Card Box -->
-            <div class="card rounded-0 border-3 border-dark bg-dark text-white p-4 shadow-lg" style="box-shadow: 8px 8px 0px #ff4500 !important;">
-                
-                <!-- Heading -->
-                <div class="text-center mb-4">
-                    <h2 class="fw-black text-uppercase tracking-wider m-0" style="font-family: 'Archivo Black', sans-serif; font-size: 1.8rem; letter-spacing: 1px;">
-                        LOGIN TO <span style="color: #ff4500;"></span>
-                    </h2>
-                    <p class="text-secondary small mt-1 font-monospace">ACCESS YOUR INDUSTRIAL ACCOUNT</p>
-                </div>
-
-                <!-- Messages Alert -->
-                {% if messages %}
-                    {% for message in messages %}
-                        <div class="alert alert-dark border-2 border-warning rounded-0 small py-2 mb-3 font-monospace text-center text-warning" role="alert">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
-                {% endif %}
-
-                <!-- Login Form -->
-                <form method="POST" action="{% url 'login' %}">
-                    {% csrf_token %}
-                    
-                    <div class="mb-3">
-                        <label for="username" class="form-label small fw-bold text-uppercase tracking-wide font-monospace" style="color: #bbb;">Username</label>
-                        <input type="text" name="username" id="username" class="form-control rounded-0 font-monospace py-2" required placeholder="Enter username" style="background-color: #e8f0fe !important; color: #000 !important; border: none;">
-                    </div>
-
-                    <!-- Password Field with Seamless Eye Toggle -->
-                    <div class="mb-4">
-                        <label for="password" class="form-label small fw-bold text-uppercase tracking-wide font-monospace" style="color: #bbb;">Password</label>
-                        <div class="input-group">
-                            <input type="password" name="password" id="passwordInput" class="form-control rounded-0 font-monospace py-2" required placeholder="••••••••" style="background-color: #e8f0fe !important; color: #000 !important; border: none;">
-                            <button class="btn rounded-0 px-3" type="button" id="togglePassword" style="background-color: #e8f0fe !important; color: #333 !important; border: none;">
-                                <i class="bi bi-eye-fill" id="eyeIcon"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <button type="submit" class="btn w-100 rounded-0 fw-bold text-uppercase py-2 mt-2" style="background-color: #ff4500; color: #ffffff; border: 2px solid #ff4500; letter-spacing: 1px; font-family: 'Archivo Black', sans-serif; transition: all 0.2s ease;">
-                        SIGN IN <i class="bi bi-arrow-right ms-2"></i>
-                    </button>
-                </form>
-
-            </div>
-            
-            <div class="text-center mt-4">
-                <span class="text-secondary small font-monospace">NEVER SHARE YOUR CREDENTIALS</span>
-            </div>
-
+  <div class="row justify-content-center">
+    <div class="col-md-5 col-lg-4">
+      <!-- Brutalist Card Box -->
+      <div
+        class="card rounded-0 border-3 border-dark bg-dark text-white p-4 shadow-lg"
+        style="box-shadow: 8px 8px 0px #ff4500 !important"
+      >
+        <!-- Heading -->
+        <div class="text-center mb-4">
+          <h2
+            class="fw-black text-uppercase tracking-wider m-0"
+            style="
+              font-family: &quot;Archivo Black&quot;, sans-serif;
+              font-size: 1.8rem;
+              letter-spacing: 1px;
+            "
+          >
+            LOGIN TO <span style="color: #ff4500"></span>
+          </h2>
+          <p class="text-secondary small mt-1 font-monospace">
+            ACCESS YOUR INDUSTRIAL ACCOUNT
+          </p>
         </div>
+
+        <!-- Messages Alert -->
+        {% if messages %} {% for message in messages %}
+        <div
+          class="alert alert-dark border-2 border-warning rounded-0 small py-2 mb-3 font-monospace text-center text-warning"
+          role="alert"
+        >
+          {{ message }}
+        </div>
+        {% endfor %} {% endif %}
+
+        <!-- Login Form -->
+        <form method="POST" action="{% url 'login' %}">
+          {% csrf_token %}
+
+          <div class="mb-3">
+            <label
+              for="username"
+              class="form-label small fw-bold text-uppercase tracking-wide font-monospace"
+              style="color: #bbb"
+              >Username</label
+            >
+            <input
+              type="text"
+              name="username"
+              id="username"
+              class="form-control rounded-0 font-monospace py-2"
+              required
+              placeholder="Enter username"
+              style="
+                background-color: #e8f0fe !important;
+                color: #000 !important;
+                border: none;
+              "
+            />
+          </div>
+
+          <!-- Password Field with Seamless Eye Toggle -->
+          <div class="mb-4">
+            <label
+              for="password"
+              class="form-label small fw-bold text-uppercase tracking-wide font-monospace"
+              style="color: #bbb"
+              >Password</label
+            >
+            <div class="input-group">
+              <input
+                type="password"
+                name="password"
+                id="passwordInput"
+                class="form-control rounded-0 font-monospace py-2"
+                required
+                placeholder="••••••••"
+                style="
+                  background-color: #e8f0fe !important;
+                  color: #000 !important;
+                  border: none;
+                "
+              />
+              <button
+                class="btn rounded-0 px-3"
+                type="button"
+                id="togglePassword"
+                style="
+                  background-color: #e8f0fe !important;
+                  color: #333 !important;
+                  border: none;
+                "
+              >
+                <i class="bi bi-eye-fill" id="eyeIcon"></i>
+              </button>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            class="btn w-100 rounded-0 fw-bold text-uppercase py-2 mt-2"
+            style="
+              background-color: #ff4500;
+              color: #ffffff;
+              border: 2px solid #ff4500;
+              letter-spacing: 1px;
+              font-family: &quot;Archivo Black&quot;, sans-serif;
+              transition: all 0.2s ease;
+            "
+          >
+            SIGN IN <i class="bi bi-arrow-right ms-2"></i>
+          </button>
+        </form>
+      </div>
+
+      <div class="text-center mt-4">
+        <span class="text-secondary small font-monospace"
+          >NEVER SHARE YOUR CREDENTIALS</span
+        >
+      </div>
     </div>
+  </div>
 </div>
 
 <style>
-    .btn:hover {
-        opacity: 0.9;
-    }
+  .btn:hover {
+    opacity: 0.9;
+  }
 </style>
 
 <!-- Toggle Password Visibility Script -->
 <script>
-    const togglePassword = document.querySelector('#togglePassword');
-    const passwordInput = document.querySelector('#passwordInput');
-    const eyeIcon = document.querySelector('#eyeIcon');
+  const togglePassword = document.querySelector("#togglePassword");
+  const passwordInput = document.querySelector("#passwordInput");
+  const eyeIcon = document.querySelector("#eyeIcon");
 
-    togglePassword.addEventListener('click', function () {
-        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-        passwordInput.setAttribute('type', type);
-        
-        eyeIcon.classList.toggle('bi-eye-fill');
-        eyeIcon.classList.toggle('bi-eye-slash-fill');
-    });
+  togglePassword.addEventListener("click", function () {
+    const type =
+      passwordInput.getAttribute("type") === "password" ? "text" : "password";
+    passwordInput.setAttribute("type", type);
+
+    eyeIcon.classList.toggle("bi-eye-fill");
+    eyeIcon.classList.toggle("bi-eye-slash-fill");
+  });
 </script>
 {% endblock %}
