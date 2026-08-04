@@ -1,270 +1,327 @@
-{% extends 'store/base.html' %} {% load static %} {% block content %}
+{% extends 'store/base.html' %} 
+{% load static %} 
+
+{% block content %}
 <!-- Swiper.js CSS CDN -->
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
-/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
 <style>
-  /* Desktop Default Styles */
-  .product-card {
-    background-color: #141518;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    transition:
-      transform 0.3s ease,
-      box-shadow 0.3s ease;
-    height: 100%;
-  }
-  .product-card:hover {
-    transform: translateY(-5px);
-    border-color: #ff4500;
-    box-shadow: 0 10px 25px rgba(255, 69, 0, 0.15);
+  :root {
+    --accent-gold: #d4af37;
   }
 
-  /* 🖼️ Image Container Adjustment */
+  body {
+    background-color: #0a0b0d !important;
+    color: #ffffff !important;
+  }
+
+  /* Product Card Luxury Styling */
+  .product-card {
+    background-color: #121316;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), border-color 0.4s ease;
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  .product-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(212, 175, 55, 0.4);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(212, 175, 55, 0.1);
+  }
+
+  /* Image Container Adjustment */
   .product-img-wrapper {
     position: relative;
     overflow: hidden;
     background-color: #0b0c0e;
-    height: 200px;
+    height: 260px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 12px;
+    padding: 16px;
   }
+
   .product-img {
     max-width: 100%;
     max-height: 100%;
-    object-fit: contain;
-    transition: transform 0.3s ease;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
   }
+
   .product-card:hover .product-img {
-    transform: scale(1.05);
+    transform: scale(1.08);
   }
 
   .badge-sale {
     position: absolute;
-    top: 8px;
-    left: 8px;
-    background-color: #ff4500;
-    color: #fff;
+    top: 12px;
+    left: 12px;
+    background-color: var(--accent-gold);
+    color: #000;
     font-weight: 700;
     font-size: 0.65rem;
-    padding: 3px 6px;
+    padding: 5px 10px;
     text-transform: uppercase;
+    letter-spacing: 1.5px;
     z-index: 2;
+  }
+
+  /* Wishlist Icon Button */
+  .wishlist-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(11, 12, 14, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    z-index: 2;
+    backdrop-filter: blur(4px);
+    transition: all 0.3s ease;
+  }
+
+  .wishlist-btn:hover {
+    background: var(--accent-gold);
+    color: #000;
+    border-color: var(--accent-gold);
+    transform: scale(1.05);
   }
 
   /* Custom Swiper Buttons Styling */
   .swiper-button-next,
   .swiper-button-prev {
-    color: #ff4500 !important;
-    background: rgba(0, 0, 0, 0.6);
-    width: 38px;
-    height: 38px;
+    color: var(--accent-gold) !important;
+    background: rgba(18, 19, 22, 0.85);
+    width: 46px;
+    height: 46px;
     border-radius: 50%;
-    border: 1px solid rgba(255, 69, 0, 0.4);
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    transition: all 0.3s ease;
+    backdrop-filter: blur(4px);
   }
+
+  .swiper-button-next:hover,
+  .swiper-button-prev:hover {
+    background: var(--accent-gold);
+    color: #000 !important;
+    border-color: var(--accent-gold);
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+  }
+
   .swiper-button-next::after,
   .swiper-button-prev::after {
     font-size: 16px !important;
-    font-weight: bold;
-  }
-  .swiper-pagination-bullet-active {
-    background-color: #ff4500 !important;
+    font-weight: 600;
   }
 
-  /* 📱 MOBILE RESPONSIVE FIX */
+  .swiper-pagination-bullet {
+    background: #4b5563 !important;
+    opacity: 0.5;
+    transition: all 0.3s ease;
+  }
+
+  .swiper-pagination-bullet-active {
+    background-color: var(--accent-gold) !important;
+    opacity: 1;
+    width: 20px;
+    border-radius: 4px;
+  }
+
+  /* Luxury Button Details */
+  .btn-view-luxury {
+    background-color: transparent;
+    color: #fff;
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  }
+
+  .btn-view-luxury:hover {
+    background-color: var(--accent-gold);
+    color: #000;
+    border-color: var(--accent-gold);
+    box-shadow: 0 5px 20px rgba(212, 175, 55, 0.25);
+  }
+
+  /* Mobile Responsive Scroll Bar */
+  .mobile-cat-scroll {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    gap: 10px;
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .mobile-cat-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mobile-cat-btn {
+    background-color: #121316;
+    color: #9ca3af;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 8px 18px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 0;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+  }
+
+  .mobile-cat-btn:hover {
+    color: #fff;
+    border-color: rgba(212, 175, 55, 0.4);
+  }
+
+  .mobile-cat-btn.active {
+    background-color: var(--accent-gold);
+    color: #000;
+    border-color: var(--accent-gold);
+    font-weight: 600;
+  }
+
+  /* Mobile Fine-Tuning */
   @media (max-width: 767.98px) {
     .mobile-compact-container {
-      padding-left: 6px !important;
-      padding-right: 6px !important;
-      margin-top: 1rem !important;
+      padding-left: 12px !important;
+      padding-right: 12px !important;
     }
-
     .product-img-wrapper {
-      height: 140px !important;
-      padding: 6px !important;
+      height: 180px !important;
+      padding: 10px !important;
     }
-
-    .product-card .card-body {
-      padding: 8px !important;
-    }
-
     .product-title {
-      font-size: 0.75rem !important;
-      margin-bottom: 2px !important;
+      font-size: 0.85rem !important;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
-
-    .product-category {
-      font-size: 0.55rem !important;
-      margin-bottom: 2px !important;
-    }
-
-    .price-text {
-      font-size: 0.7rem !important;
-    }
-
-    .btn-view-details {
-      font-size: 0.65rem !important;
-      padding: 4px 2px !important;
-    }
-
-    .mobile-cat-scroll {
-      display: flex;
-      overflow-x: auto;
-      white-space: nowrap;
-      gap: 8px;
-      padding-bottom: 10px;
-      margin-bottom: 15px;
-      -webkit-overflow-scrolling: touch;
-    }
-    .mobile-cat-btn {
-      background-color: #181a1e;
-      color: #ccc;
-      border: 1px solid #333;
-      padding: 5px 12px;
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      text-decoration: none;
-      border-radius: 4px;
-    }
-    .mobile-cat-btn.active {
-      background-color: #ff4500;
-      color: #fff;
-      border-color: #ff4500;
-    }
   }
 </style>
 
-<div class="container my-4 mobile-compact-container">
+<div class="container my-5 mobile-compact-container">
+  
   <!-- Header Title -->
-  <div class="text-center mb-3">
-    <h2
-      class="fw-bold text-uppercase text-light tracking-wider mb-1"
-      style="font-size: 1.5rem"
-    >
-      MEN'S COLLECTION
-    </h2>
-    <p class="text-muted small d-none d-md-block">
-      Premium footwear designed for comfort and style
-    </p>
+  <div class="row justify-content-center mb-5">
+    <div class="col-lg-8 text-center">
+      <span class="badge rounded-0 px-3 py-1 mb-2 fw-semibold text-uppercase" style="background-color: rgba(212, 175, 55, 0.1); color: var(--accent-gold); border: 1px solid rgba(212, 175, 55, 0.25); letter-spacing: 2px; font-size: 0.7rem;">Explore Catalog</span>
+      <h2 class="fw-bold text-uppercase text-light luxury-font mb-2" style="font-size: 2.5rem; letter-spacing: 1.5px;">
+        Men's Luxury Collection
+      </h2>
+      <div style="width: 50px; height: 1.5px; background-color: var(--accent-gold); margin: 0 auto 1rem auto;" class="opacity-75"></div>
+      <p class="text-muted small d-none d-md-block fw-light mx-auto" style="line-height: 1.6; max-width: 550px; letter-spacing: 0.5px; font-size: 0.85rem;">
+        Handcrafted premium footwear designed for ultimate comfort and statement style.
+      </p>
+    </div>
   </div>
 
   <!-- Mobile Quick Categories Bar -->
   <div class="d-md-none mobile-cat-scroll">
-    <a
-      href="{% url 'product_list' %}"
-      class="mobile-cat-btn {% if not current_category %}active{% endif %}"
-      >All</a
-    >
-    <a
-      href="{% url 'product_list' %}?category=sneakers"
-      class="mobile-cat-btn {% if current_category == 'sneakers' %}active{% endif %}"
-      >Sneakers</a
-    >
-    <a
-      href="{% url 'product_list' %}?category=chappal"
-      class="mobile-cat-btn {% if current_category == 'chappal' %}active{% endif %}"
-      >Chappals</a
-    >
-    <a
-      href="{% url 'product_list' %}?category=sandal"
-      class="mobile-cat-btn {% if current_category == 'sandal' %}active{% endif %}"
-      >Sandals</a
-    >
-    <a
-      href="{% url 'product_list' %}?category=peshawari"
-      class="mobile-cat-btn {% if current_category == 'peshawari' %}active{% endif %}"
-      >Peshawari</a
-    >
-    <a
-      href="{% url 'product_list' %}?category=loafer"
-      class="mobile-cat-btn {% if current_category == 'loafer' %}active{% endif %}"
-      >Loafers</a
-    >
+    <a href="{% url 'product_list' %}" class="mobile-cat-btn {% if not current_category %}active{% endif %}">All</a>
+    <a href="{% url 'product_list' %}?category=sneakers" class="mobile-cat-btn {% if current_category == 'sneakers' %}active{% endif %}">Sneakers</a>
+    <a href="{% url 'product_list' %}?category=chappal" class="mobile-cat-btn {% if current_category == 'chappal' %}active{% endif %}">Chappals</a>
+    <a href="{% url 'product_list' %}?category=sandal" class="mobile-cat-btn {% if current_category == 'sandal' %}active{% endif %}">Sandals</a>
+    <a href="{% url 'product_list' %}?category=peshawari" class="mobile-cat-btn {% if current_category == 'peshawari' %}active{% endif %}">Peshawari</a>
+    <a href="{% url 'product_list' %}?category=loafer" class="mobile-cat-btn {% if current_category == 'loafer' %}active{% endif %}">Loafers</a>
   </div>
 
   <!-- Swiper Products Slider Container -->
-  <div class="swiper productSwiper pb-5">
+  <div class="swiper productSwiper pb-5 px-1">
     <div class="swiper-wrapper">
+      
       {% for product in products %}
-      <div class="swiper-slide">
-        <div class="card product-card">
+      <div class="swiper-slide h-auto">
+        <div class="card product-card rounded-0">
+          
           <div class="product-img-wrapper">
             {% if product.discount_price %}
-            <span class="badge-sale">SALE</span>
-            {% endif %} {% if product.image %}
-            <img
-              src="{{ product.image.url }}"
-              class="product-img"
-              alt="{{ product.name }}"
-            />
+            <span class="badge-sale">Sale</span>
+            {% endif %} 
+            
+            <!-- Wishlist Button -->
+            <button type="button" class="wishlist-btn" title="Add to Wishlist" aria-label="Add to Wishlist">
+              <i class="fa-regular fa-heart" style="font-size: 0.85rem;"></i>
+            </button>
+
+            {% if product.image %}
+            <img src="{{ product.image.url }}" class="product-img" alt="{{ product.name }}" loading="lazy" />
             {% else %}
-            <img
-              src="https://via.placeholder.com/300x300?text=No+Image"
-              class="product-img"
-              alt="No Image"
-            />
+            <img src="https://via.placeholder.com/300x300?text=No+Image" class="product-img" alt="No Image" loading="lazy" />
             {% endif %}
           </div>
 
-          <div
-            class="card-body d-flex flex-column justify-content-between text-center"
-          >
+          <div class="card-body d-flex flex-column justify-content-between text-center p-4">
             <div>
-              <span
-                class="text-uppercase text-muted d-block product-category fw-bold"
-              >
+              <span class="text-uppercase text-muted d-block product-category fw-semibold mb-1" style="letter-spacing: 1.5px; font-size: 0.65rem;">
                 {{ product.category.name|default:"Footwear" }}
               </span>
-              <h6 class="card-title text-light product-title fw-semibold">
+              <h6 class="card-title text-light product-title fw-semibold mb-2" style="letter-spacing: 0.5px;">
                 {{ product.name }}
               </h6>
+              <!-- Star Rating Indicator -->
+              <div class="mb-3" style="font-size: 0.65rem; color: var(--accent-gold);">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star-half-stroke"></i>
+                <span class="text-muted ms-1 fw-light">(4.8)</span>
+              </div>
             </div>
 
-            <div class="mt-2">
+            <div>
               {% if product.discount_price %}
-              <div class="price-text">
-                <span
-                  class="text-muted text-decoration-line-through small me-1"
-                  style="font-size: 0.65rem"
-                  >Rs. {{ product.price }}</span
-                >
-                <span class="text-danger fw-bold"
-                  >Rs. {{ product.discount_price }}</span
-                >
+              <div class="price-text mb-3">
+                <span class="text-muted text-decoration-line-through small me-2 fw-light" style="font-size: 0.75rem;">
+                  Rs. {{ product.price }}
+                </span>
+                <span class="fw-bold fs-6" style="color: var(--accent-gold); letter-spacing: 0.5px;">
+                  Rs. {{ product.discount_price }}
+                </span>
               </div>
               {% else %}
-              <div class="price-text text-light fw-bold">
+              <div class="price-text fw-bold fs-6 mb-3" style="color: var(--accent-gold); letter-spacing: 0.5px;">
                 Rs. {{ product.price }}
               </div>
               {% endif %}
 
               <a
                 href="{% url 'product_detail' product.id %}"
-                class="btn btn-light w-100 mt-2 btn-view-details text-uppercase fw-bold"
+                class="btn w-100 btn-view-luxury text-uppercase fw-bold rounded-0 py-2.5 shadow-none"
+                style="letter-spacing: 1.5px; font-size: 0.75rem;"
               >
-                View
+                <i class="fa-solid fa-eye me-1" style="font-size: 0.7rem;"></i> View Product
               </a>
             </div>
           </div>
+
         </div>
       </div>
       {% empty %}
       <div class="swiper-slide w-100 text-center py-5">
-        <h4 class="text-muted">No products found in this category.</h4>
+        <div class="text-muted py-5 border border-secondary border-opacity-25 bg-dark rounded-0 p-4" style="background-color: #121316 !important;">
+          <i class="fa-solid fa-box-open fs-1 mb-3" style="color: var(--accent-gold);"></i>
+          <h4 class="text-white fw-semibold mb-2" style="letter-spacing: 1px;">No products found in this category.</h4>
+          <p class="small text-muted mb-0 fw-light">Please check back later or explore other collections.</p>
+        </div>
       </div>
       {% endfor %}
+
     </div>
 
     <!-- Navigation Buttons & Pagination Dots -->
     <div class="swiper-button-next"></div>
     <div class="swiper-button-prev"></div>
-    <div class="swiper-pagination"></div>
+    <div class="swiper-pagination mt-4"></div>
   </div>
 </div>
 
@@ -274,11 +331,11 @@
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     var swiper = new Swiper(".productSwiper", {
-      slidesPerView: 1, // Mobile Par Default 1 Card
-      spaceBetween: 12, // Gap Between Cards
-      loop: true, // Infinite Auto-Slide Loop
+      slidesPerView: 1, 
+      spaceBetween: 20, 
+      loop: true, 
       autoplay: {
-        delay: 2500, // 2.5 seconds mein automatic slide hoga
+        delay: 4000, 
         disableOnInteraction: false,
       },
       pagination: {
@@ -290,10 +347,10 @@
         prevEl: ".swiper-button-prev",
       },
       breakpoints: {
-        576: { slidesPerView: 2, spaceBetween: 15 }, // Small Screens (Mobile Large)
-        768: { slidesPerView: 3, spaceBetween: 15 }, // Tablets
-        992: { slidesPerView: 4, spaceBetween: 20 }, // Laptops
-        1200: { slidesPerView: 5, spaceBetween: 20 }, // Large PC Desktop Screen -> Exactly 5 Products!
+        576: { slidesPerView: 2, spaceBetween: 20 }, 
+        768: { slidesPerView: 3, spaceBetween: 20 }, 
+        992: { slidesPerView: 4, spaceBetween: 24 }, 
+        1200: { slidesPerView: 5, spaceBetween: 24 }, 
       },
     });
   });

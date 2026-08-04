@@ -403,7 +403,12 @@ def category_products(request, slug):
         'category_name': category_name
     }
     return render(request, 'store/category_products.html', context)
-
+def contact_view(request):
+    if request.method == 'POST':
+        # Yahan aap form data handle kar sakte hain (jaise email send karna ya database me save karna)
+        messages.success(request, 'Your message has been sent successfully!')
+        return redirect('contact')
+    return render(request, 'store/contact.html')
 def initiate_easypaisa_payment(request, order_id):
     order = get_object_or_404(Order, id=order_id)
     whatsapp_url = get_whatsapp_url(order)

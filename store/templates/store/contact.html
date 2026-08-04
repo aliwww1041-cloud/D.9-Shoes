@@ -1,0 +1,140 @@
+{% extends 'store/base.html' %} 
+{% load static %} 
+
+{% block content %}
+<div class="container-fluid py-5 contact-page-wrapper" style="background-color: #0a0b0d; min-height: 80vh; color: #ffffff;">
+  <div class="container py-4 py-lg-5">
+    <!-- Header Section -->
+    <div class="row justify-content-center mb-5">
+      <div class="col-lg-8 text-center">
+        <span class="text-uppercase fw-semibold small" style="color: var(--accent-gold); letter-spacing: 3px;">Concierge Services</span>
+        <h2 class="luxury-font fw-bold mb-3 mt-2 text-white" style="letter-spacing: 2px; font-size: 2.75rem;">GET IN TOUCH</h2>
+        <div style="width: 50px; height: 1.5px; background-color: var(--accent-gold); margin: 0 auto 1.5rem auto;" class="opacity-75"></div>
+        <p class="text-muted text-uppercase fw-light mx-auto" style="letter-spacing: 1.5px; font-size: 0.8rem; max-width: 500px; line-height: 1.6;">
+          We would love to hear from you. Send us a message below and our client services team will respond promptly.
+        </p>
+      </div>
+    </div>
+
+    <!-- Main Contact Grid with Info & Form -->
+    <div class="row justify-content-center g-4">
+      <!-- Contact Info Cards Column -->
+      <div class="col-lg-4 d-flex flex-column gap-3">
+        <div class="p-4 bg-dark border border-secondary border-opacity-25 h-100 shadow-sm contact-info-card" style="background-color: #121316 !important;">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 42px; height: 42px; background-color: rgba(212, 175, 55, 0.1); color: var(--accent-gold);">
+              <i class="fa-solid fa-location-dot" style="font-size: 1rem;"></i>
+            </div>
+            <div>
+              <h6 class="text-white mb-0 fw-semibold text-uppercase" style="letter-spacing: 1px; font-size: 0.85rem;">Headquarters</h6>
+              <span class="text-muted small fw-light" style="font-size: 0.75rem;">Jaranwala, Punjab, Pakistan</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-4 bg-dark border border-secondary border-opacity-25 h-100 shadow-sm contact-info-card" style="background-color: #121316 !important;">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 42px; height: 42px; background-color: rgba(212, 175, 55, 0.1); color: var(--accent-gold);">
+              <i class="fa-solid fa-envelope" style="font-size: 1rem;"></i>
+            </div>
+            <div>
+              <h6 class="text-white mb-0 fw-semibold text-uppercase" style="letter-spacing: 1px; font-size: 0.85rem;">Direct Inquiry</h6>
+              <span class="text-muted small fw-light" style="font-size: 0.75rem;">concierge@d9shoes.com</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-4 bg-dark border border-secondary border-opacity-25 h-100 shadow-sm contact-info-card" style="background-color: #121316 !important;">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 42px; height: 42px; background-color: rgba(212, 175, 55, 0.1); color: var(--accent-gold);">
+              <i class="fa-solid fa-clock" style="font-size: 1rem;"></i>
+            </div>
+            <div>
+              <h6 class="text-white mb-0 fw-semibold text-uppercase" style="letter-spacing: 1px; font-size: 0.85rem;">Working Hours</h6>
+              <span class="text-muted small fw-light" style="font-size: 0.75rem;">Mon - Sat: 9:00 AM - 8:00 PM</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form Column -->
+      <div class="col-lg-7">
+        <div class="card p-4 p-md-5 rounded-0 shadow-lg contact-form-card" style="background-color: #121316; border: 1px solid rgba(212, 175, 55, 0.15) !important;">
+          <form method="POST" novalidate>
+            {% csrf_token %>
+            <div class="mb-4">
+              <label class="form-label text-uppercase text-muted fw-medium" style="letter-spacing: 1px; font-size: 0.75rem;">Your Name <span style="color: var(--accent-gold);">*</span></label>
+              <input type="text" name="name" class="form-control form-control-brutalist rounded-0" placeholder="Enter your full name" required style="padding: 14px 16px;">
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label text-uppercase text-muted fw-medium" style="letter-spacing: 1px; font-size: 0.75rem;">Email Address <span style="color: var(--accent-gold);">*</span></label>
+              <input type="email" name="email" class="form-control form-control-brutalist rounded-0" placeholder="Enter your email address" required style="padding: 14px 16px;">
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label text-uppercase text-muted fw-medium" style="letter-spacing: 1px; font-size: 0.75rem;">Message <span style="color: var(--accent-gold);">*</span></label>
+              <textarea name="message" rows="5" class="form-control form-control-brutalist rounded-0" placeholder="How can we assist you today?" required style="padding: 14px 16px;"></textarea>
+            </div>
+
+            <button type="submit" class="btn w-100 text-uppercase fw-bold rounded-0 py-3 mt-2 shadow-sm btn-submit-luxury transition-all" style="background-color: var(--accent-gold); color: #000; letter-spacing: 2px; font-size: 0.8rem; border: none;">
+              Send Message <i class="fa-solid fa-paper-plane ms-2" style="font-size: 0.75rem;"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  :root {
+    --accent-gold: #d4af37;
+  }
+
+  body {
+    background-color: #0a0b0d !important;
+    color: #ffffff !important;
+  }
+
+  .form-control-brutalist {
+    background-color: #0b0c0e !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #fff !important;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+  }
+
+  .form-control-brutalist:focus {
+    background-color: #0d0e10 !important;
+    color: #fff !important;
+    border-color: var(--accent-gold) !important;
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.15) !important;
+  }
+
+  .form-control-brutalist::placeholder {
+    color: #6b7280;
+  }
+
+  .btn-submit-luxury {
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  }
+
+  .btn-submit-luxury:hover {
+    background-color: #ffffff !important;
+    color: #000 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(212, 175, 55, 0.25);
+  }
+
+  .contact-info-card {
+    transition: border-color 0.3s ease, transform 0.3s ease;
+  }
+
+  .contact-info-card:hover {
+    border-color: rgba(212, 175, 55, 0.35) !important;
+    transform: translateY(-3px);
+  }
+</style>
+{% endblock %}

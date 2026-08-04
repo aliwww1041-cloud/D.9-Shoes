@@ -1,147 +1,175 @@
-{% extends 'store/base.html' %} {% block content %}
-<div class="container py-5 my-4">
+{% extends 'store/base.html' %} 
+{% load static %} 
+
+{% block content %}
+<div class="container py-5 my-4 login-page-wrapper">
   <div class="row justify-content-center">
-    <div class="col-md-5 col-lg-4">
-      <!-- Brutalist Card Box -->
-      <div
-        class="card rounded-0 border-3 border-dark bg-dark text-white p-4 shadow-lg"
-        style="box-shadow: 8px 8px 0px #ff4500 !important"
-      >
+    <div class="col-md-6 col-lg-5">
+      
+      <!-- Modern Luxury Card Box -->
+      <div class="card rounded-0 bg-dark text-white p-4 p-md-5 border shadow-lg login-card" style="border-color: rgba(212, 175, 55, 0.15) !important; background-color: #121316 !important;">
+        
         <!-- Heading -->
         <div class="text-center mb-4">
-          <h2
-            class="fw-black text-uppercase tracking-wider m-0"
-            style="
-              font-family: &quot;Archivo Black&quot;, sans-serif;
-              font-size: 1.8rem;
-              letter-spacing: 1px;
-            "
-          >
-            LOGIN TO <span style="color: #ff4500"></span>
+          <span class="badge rounded-0 px-3 py-1 mb-3 fw-semibold text-uppercase" style="background-color: rgba(212, 175, 55, 0.1); color: var(--accent-gold); border: 1px solid rgba(212, 175, 55, 0.25); letter-spacing: 2px; font-size: 0.7rem;">Welcome Back</span>
+          <h2 class="fw-bold luxury-font text-white mb-2" style="letter-spacing: 1px; font-size: 2rem;">
+            Sign In to D.9
           </h2>
-          <p class="text-secondary small mt-1 font-monospace">
-            ACCESS YOUR INDUSTRIAL ACCOUNT
+          <p class="text-muted small mt-1 mb-0 fw-light mx-auto" style="line-height: 1.6; font-size: 0.825rem; max-width: 320px; letter-spacing: 0.5px;">
+            Access your account, track orders, and manage your wishlist.
           </p>
         </div>
 
         <!-- Messages Alert -->
-        {% if messages %} {% for message in messages %}
-        <div
-          class="alert alert-dark border-2 border-warning rounded-0 small py-2 mb-3 font-monospace text-center text-warning"
-          role="alert"
-        >
-          {{ message }}
-        </div>
-        {% endfor %} {% endif %}
+        {% if messages %} 
+          {% for message in messages %}
+          <div class="alert alert-dark border border-warning rounded-0 small py-2 mb-4 text-center text-warning bg-black" style="font-size: 0.8rem; letter-spacing: 0.5px;">
+            <i class="fa-solid fa-triangle-exclamation me-1"></i> {{ message }}
+          </div>
+          {% endfor %} 
+        {% endif %}
 
         <!-- Login Form -->
-        <form method="POST" action="{% url 'login' %}">
+        <form method="POST" action="{% url 'login' %}" novalidate>
           {% csrf_token %}
 
           <div class="mb-3">
-            <label
-              for="username"
-              class="form-label small fw-bold text-uppercase tracking-wide font-monospace"
-              style="color: #bbb"
-              >Username</label
-            >
-            <input
-              type="text"
-              name="username"
-              id="username"
-              class="form-control rounded-0 font-monospace py-2"
-              required
-              placeholder="Enter username"
-              style="
-                background-color: #e8f0fe !important;
-                color: #000 !important;
-                border: none;
-              "
-            />
+            <label for="username" class="form-label text-muted small text-uppercase fw-medium" style="letter-spacing: 1px; font-size: 0.75rem;">Username</label>
+            <div class="input-group rounded-0">
+              <span class="input-group-text bg-black text-muted border border-secondary border-opacity-25 rounded-0 px-3"><i class="fa-solid fa-user" style="font-size: 0.85rem;"></i></span>
+              <input
+                type="text"
+                name="username"
+                id="username"
+                class="form-control form-control-brutalist rounded-0 py-2 shadow-none"
+                required
+                placeholder="Enter your username"
+                style="padding: 12px 16px;"
+              />
+            </div>
           </div>
 
           <!-- Password Field with Seamless Eye Toggle -->
           <div class="mb-4">
-            <label
-              for="password"
-              class="form-label small fw-bold text-uppercase tracking-wide font-monospace"
-              style="color: #bbb"
-              >Password</label
-            >
-            <div class="input-group">
+            <label for="passwordInput" class="form-label text-muted small text-uppercase fw-medium" style="letter-spacing: 1px; font-size: 0.75rem;">Password</label>
+            <div class="input-group rounded-0">
+              <span class="input-group-text bg-black text-muted border border-secondary border-opacity-25 rounded-0 px-3"><i class="fa-solid fa-lock" style="font-size: 0.85rem;"></i></span>
               <input
                 type="password"
                 name="password"
                 id="passwordInput"
-                class="form-control rounded-0 font-monospace py-2"
+                class="form-control form-control-brutalist rounded-0 py-2 shadow-none border-start-0 border-end-0"
                 required
                 placeholder="••••••••"
-                style="
-                  background-color: #e8f0fe !important;
-                  color: #000 !important;
-                  border: none;
-                "
+                style="padding: 12px 16px;"
               />
               <button
-                class="btn rounded-0 px-3"
+                class="btn rounded-0 px-3 border border-secondary border-opacity-25 shadow-none toggle-password-btn"
                 type="button"
                 id="togglePassword"
-                style="
-                  background-color: #e8f0fe !important;
-                  color: #333 !important;
-                  border: none;
-                "
+                style="background-color: #0b0c0e; color: #9ca3af;"
+                aria-label="Toggle password visibility"
               >
-                <i class="bi bi-eye-fill" id="eyeIcon"></i>
+                <i class="fa-solid fa-eye" id="eyeIcon"></i>
               </button>
             </div>
           </div>
 
           <button
             type="submit"
-            class="btn w-100 rounded-0 fw-bold text-uppercase py-2 mt-2"
-            style="
-              background-color: #ff4500;
-              color: #ffffff;
-              border: 2px solid #ff4500;
-              letter-spacing: 1px;
-              font-family: &quot;Archivo Black&quot;, sans-serif;
-              transition: all 0.2s ease;
-            "
+            class="btn w-100 rounded-0 fw-bold text-uppercase py-3 shadow-sm custom-submit-btn transition-all"
+            style="letter-spacing: 1.5px; font-size: 0.8rem; background-color: var(--accent-gold); color: #000; border: none;"
           >
-            SIGN IN <i class="bi bi-arrow-right ms-2"></i>
+            Sign In <i class="fa-solid fa-arrow-right ms-2" style="font-size: 0.75rem;"></i>
           </button>
         </form>
       </div>
 
+      <!-- Security / Footer Note -->
       <div class="text-center mt-4">
-        <span class="text-secondary small font-monospace"
-          >NEVER SHARE YOUR CREDENTIALS</span
-        >
+        <span class="text-muted small d-flex align-items-center justify-content-center gap-2 fw-light" style="font-size: 0.75rem; letter-spacing: 0.5px;">
+          <i class="fa-solid fa-shield-halved" style="color: var(--accent-gold);"></i> Secure 256-Bit Encrypted Login
+        </span>
       </div>
     </div>
   </div>
 </div>
 
 <style>
-  .btn:hover {
-    opacity: 0.9;
+  :root {
+    --accent-gold: #d4af37;
+  }
+
+  body {
+    background-color: #0a0b0d !important;
+    color: #ffffff !important;
+  }
+
+  .form-control-brutalist {
+    background-color: #0b0c0e !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #fff !important;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+  }
+
+  .form-control-brutalist:focus {
+    background-color: #0d0e10 !important;
+    color: #fff !important;
+    border-color: var(--accent-gold) !important;
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.15) !important;
+  }
+
+  .form-control-brutalist::placeholder {
+    color: #6b7280;
+  }
+
+  .custom-submit-btn {
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  }
+
+  .custom-submit-btn:hover {
+    background-color: #ffffff !important;
+    color: #000 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(212, 175, 55, 0.25) !important;
+  }
+
+  .toggle-password-btn {
+    transition: color 0.2s ease, background-color 0.2s ease;
+  }
+
+  .toggle-password-btn:hover {
+    color: var(--accent-gold) !important;
+    background-color: #121316 !important;
+  }
+
+  .login-card {
+    transition: border-color 0.3s ease;
+  }
+
+  .login-card:hover {
+    border-color: rgba(212, 175, 55, 0.35) !important;
   }
 </style>
 
 <!-- Toggle Password Visibility Script -->
 <script>
-  const togglePassword = document.querySelector("#togglePassword");
-  const passwordInput = document.querySelector("#passwordInput");
-  const eyeIcon = document.querySelector("#eyeIcon");
+  document.addEventListener("DOMContentLoaded", function () {
+    const togglePassword = document.querySelector("#togglePassword");
+    const passwordInput = document.querySelector("#passwordInput");
+    const eyeIcon = document.querySelector("#eyeIcon");
 
-  togglePassword.addEventListener("click", function () {
-    const type =
-      passwordInput.getAttribute("type") === "password" ? "text" : "password";
-    passwordInput.setAttribute("type", type);
+    if (togglePassword) {
+      togglePassword.addEventListener("click", function () {
+        const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+        passwordInput.setAttribute("type", type);
 
-    eyeIcon.classList.toggle("bi-eye-fill");
-    eyeIcon.classList.toggle("bi-eye-slash-fill");
+        eyeIcon.classList.toggle("fa-eye");
+        eyeIcon.classList.toggle("fa-eye-slash");
+      });
+    }
   });
 </script>
 {% endblock %}

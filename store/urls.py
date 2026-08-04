@@ -18,7 +18,7 @@ urlpatterns = [
     path('logout/', views.user_logout, name='logout'),
     path('register/', views.user_register, name='register'),
     path('order-success/<int:order_id>/', views.order_success, name='order_success'),
-
+    path('contact/', views.contact_view, name='contact'),
     # JazzCash Integration
    
     path('pay-jazzcash/<int:order_id>/', views.initiate_jazzcash_payment, name='initiate_jazzcash_payment'),

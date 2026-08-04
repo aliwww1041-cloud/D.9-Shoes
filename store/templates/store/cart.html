@@ -1,70 +1,223 @@
-{% extends 'store/base.html' %} {% block content %}
-<div class="container py-4">
-  <h2 class="text-light mb-4">Your Shopping Cart 🛒</h2>
+{% extends 'store/base.html' %} 
+{% load static %}
 
-  <div class="row">
+{% block content %}
+<div class="container py-5 cart-page-wrapper">
+  <!-- Step-by-Step Progress Indicator -->
+  <div class="row justify-content-center mb-5">
+    <div class="col-lg-8">
+      <div class="d-flex justify-content-between align-items-center position-relative px-md-4">
+        <!-- Progress Line Background -->
+        <div class="position-absolute w-100 top-50 translate-middle-y" style="height: 2px; background: rgba(255, 255, 255, 0.12); z-index: 1;"></div>
+        
+        <!-- Step 1: Cart (Active) -->
+        <div class="d-flex flex-column align-items-center position-relative" style="z-index: 2;">
+          <div class="rounded-circle d-flex align-items-center justify-content-center text-dark fw-bold shadow-lg step-badge active" style="width: 40px; height: 40px; background-color: var(--accent-gold); font-size: 0.9rem;">1</div>
+          <span class="text-white small mt-2 fw-semibold text-uppercase tracking-wider" style="font-size: 0.7rem; letter-spacing: 1.5px;">Cart</span>
+        </div>
+
+        <!-- Step 2: Shipping -->
+        <div class="d-flex flex-column align-items-center position-relative" style="z-index: 2;">
+          <div class="rounded-circle d-flex align-items-center justify-content-center text-muted fw-bold step-badge" style="width: 40px; height: 40px; background-color: #121316; border: 1px solid rgba(255, 255, 255, 0.15); font-size: 0.9rem;">2</div>
+          <span class="text-muted small mt-2 text-uppercase tracking-wider" style="font-size: 0.7rem; letter-spacing: 1.5px;">Shipping</span>
+        </div>
+
+        <!-- Step 3: Payment -->
+        <div class="d-flex flex-column align-items-center position-relative" style="z-index: 2;">
+          <div class="rounded-circle d-flex align-items-center justify-content-center text-muted fw-bold step-badge" style="width: 40px; height: 40px; background-color: #121316; border: 1px solid rgba(255, 255, 255, 0.15); font-size: 0.9rem;">3</div>
+          <span class="text-muted small mt-2 text-uppercase tracking-wider" style="font-size: 0.7rem; letter-spacing: 1.5px;">Payment</span>
+        </div>
+
+        <!-- Step 4: Confirmation -->
+        <div class="d-flex flex-column align-items-center position-relative" style="z-index: 2;">
+          <div class="rounded-circle d-flex align-items-center justify-content-center text-muted fw-bold step-badge" style="width: 40px; height: 40px; background-color: #121316; border: 1px solid rgba(255, 255, 255, 0.15); font-size: 0.9rem;">4</div>
+          <span class="text-muted small mt-2 text-uppercase tracking-wider" style="font-size: 0.7rem; letter-spacing: 1.5px;">Confirmation</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Page Header -->
+  <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between mb-4 pb-2 border-bottom border-secondary border-opacity-25 gap-3">
+    <div>
+      <h2 class="text-white fw-bold luxury-font mb-1" style="letter-spacing: 1px;">Your Shopping Cart</h2>
+      <p class="text-muted small mb-0 fw-light" style="letter-spacing: 0.5px;">Review your curated selections before final acquisition.</p>
+    </div>
+    <a href="{% url 'product_list' %}" class="btn btn-outline-light btn-sm rounded-0 text-uppercase tracking-wider py-2 px-4 transition-all" style="font-size: 0.75rem; letter-spacing: 1.5px; border-color: rgba(255,255,255,0.2);">
+      <i class="fa-solid fa-arrow-left me-2"></i>Continue Shopping
+    </a>
+  </div>
+
+  <div class="row g-4">
     <!-- Left Side: Items Table -->
-    <div class="col-md-8">
+    <div class="col-lg-8">
       {% if cart_items %}
-      <div class="table-responsive">
-        <table class="table table-dark align-middle">
-          <thead>
-            <tr>
-              <th>Product</th>
-              <th>Size</th>
-              <th>Price</th>
-              <th>Quantity</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for item in cart_items %}
-            <tr>
-              <td>{{ item.name }}</td>
-              <td>
-                <span class="badge bg-secondary"
-                  >{{ item.size|default:"N/A" }}</span
-                >
-              </td>
-              <td>RS {{ item.price }}</td>
-              <td>{{ item.quantity }}</td>
-              <td>
-                <a
-                  href="{% url 'remove_from_cart' item.key %}"
-                  class="btn btn-danger btn-sm"
-                  >Delete</a
-                >
-              </td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+      <div class="card bg-dark border-secondary rounded-0 shadow-lg overflow-hidden" style="border-color: rgba(212, 175, 55, 0.15) !important;">
+        <div class="table-responsive">
+          <table class="table table-dark table-hover align-middle mb-0">
+            <thead style="background-color: #141518; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 1.5px;">
+              <tr>
+                <th class="py-3 ps-4 text-muted">Product</th>
+                <th class="py-3 text-muted">Size</th>
+                <th class="py-3 text-muted">Price</th>
+                <th class="py-3 text-muted">Quantity</th>
+                <th class="py-3 text-end pe-4 text-muted">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in cart_items %}
+              <tr class="cart-item-row">
+                <!-- Product Name & Image -->
+                <td class="ps-4 py-3">
+                  <div class="d-flex align-items-center gap-3">
+                    <div class="bg-secondary rounded-0 overflow-hidden flex-shrink-0 position-relative" style="width: 65px; height: 65px; border: 1px solid rgba(255,255,255,0.1);">
+                      {% if item.image %}
+                        <img src="{{ item.image.url }}" alt="{{ item.name }}" class="w-100 h-100 object-fit-cover">
+                      {% else %}
+                        <div class="w-100 h-100 d-flex align-items-center justify-content-center text-dark bg-light fw-bold" style="font-size: 0.7rem;">D.9</div>
+                      {% endif %}
+                    </div>
+                    <div>
+                      <h6 class="text-white mb-1 fw-semibold" style="font-size: 0.9rem; letter-spacing: 0.5px;">{{ item.name }}</h6>
+                      <small class="text-muted fw-light" style="font-size: 0.7rem; letter-spacing: 0.5px;">Article Code: {{ item.key }}</small>
+                    </div>
+                  </div>
+                </td>
+
+                <!-- Size -->
+                <td>
+                  <span class="badge bg-dark border border-secondary text-uppercase px-2 py-1 rounded-0 text-light fw-normal" style="font-size: 0.7rem; letter-spacing: 1px;">
+                    {{ item.size|default:"N/A" }}
+                  </span>
+                </td>
+
+                <!-- Price -->
+                <td>
+                  <span class="fw-bold" style="color: var(--accent-gold); font-size: 0.9rem;">RS {{ item.price }}</span>
+                </td>
+
+                <!-- Quantity -->
+                <td>
+                  <span class="text-light fw-medium px-3 py-1 bg-black border border-secondary rounded-0 d-inline-block" style="font-size: 0.85rem;">
+                    {{ item.quantity }}
+                  </span>
+                </td>
+
+                <!-- Action / Delete -->
+                <td class="text-end pe-4">
+                  <a href="{% url 'remove_from_cart' item.key %}" 
+                     class="btn btn-outline-danger btn-sm rounded-0 d-inline-flex align-items-center justify-content-center delete-item-btn" 
+                     style="width: 34px; height: 34px; border-color: rgba(220, 53, 69, 0.4);"
+                     title="Remove Item">
+                    <i class="fa-solid fa-trash-can" style="font-size: 0.75rem;"></i>
+                  </a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
       </div>
       {% else %}
-      <div class="alert alert-warning">Your cart is empty.</div>
+      <!-- Empty Cart State -->
+      <div class="card bg-dark border-secondary rounded-0 text-center py-5 px-4 shadow-lg" style="border-color: rgba(212, 175, 55, 0.15) !important;">
+        <div class="mb-3 pt-3">
+          <i class="fa-solid fa-bag-shopping text-muted opacity-50" style="font-size: 4rem;"></i>
+        </div>
+        <h4 class="text-white fw-bold mb-2 luxury-font" style="letter-spacing: 1px;">Your cart is currently empty</h4>
+        <p class="text-muted mb-4 fw-light mx-auto" style="font-size: 0.85rem; max-width: 400px; letter-spacing: 0.5px;">Explore our exclusive luxury footwear collection and secure your perfect pair today.</p>
+        <div>
+          <a href="{% url 'product_list' %}" class="btn btn-contact-submit px-5 py-3 rounded-0 text-uppercase fw-bold" style="letter-spacing: 1.5px; font-size: 0.75rem;">START SHOPPING</a>
+        </div>
+      </div>
       {% endif %}
     </div>
 
-    <!-- Right Side: Single Order Summary Card -->
-    <div class="col-md-4">
-      <div class="card bg-white text-dark p-4 rounded shadow-sm">
-        <h4 class="fw-bold mb-3">Order Summary</h4>
-        <hr />
-        <div class="d-flex justify-content-between align-items-center mb-3">
-          <span class="fs-5">Total:</span>
-          <span class="fs-5 fw-bold text-primary">RS {{ total_price }}</span>
+    <!-- Right Side: Order Summary Card -->
+    <div class="col-lg-4">
+      <div class="card bg-dark text-light p-4 rounded-0 shadow-lg border border-secondary" style="border-color: rgba(212, 175, 55, 0.15) !important;">
+        <h4 class="fw-bold mb-3 luxury-font text-white" style="letter-spacing: 1.5px; font-size: 1.25rem;">Order Summary</h4>
+        <div style="width: 35px; height: 1.5px; background-color: var(--accent-gold); margin-bottom: 1rem;"></div>
+        
+        <div class="d-flex justify-content-between align-items-center mb-2 text-muted fw-light" style="font-size: 0.85rem; letter-spacing: 0.5px;">
+          <span>Subtotal</span>
+          <span class="fw-semibold text-light">RS {{ total_price }}</span>
         </div>
+        <div class="d-flex justify-content-between align-items-center mb-3 text-muted fw-light" style="font-size: 0.85rem; letter-spacing: 0.5px;">
+          <span>Shipping</span>
+          <span class="text-success fw-medium" style="font-size: 0.75rem; letter-spacing: 0.5px;">Calculated at checkout</span>
+        </div>
+
+        <!-- Coupon Code Section -->
+        <div class="mb-3 pt-2">
+          <div class="input-group rounded-0">
+            <input type="text" class="form-control form-control-brutalist rounded-0" placeholder="Promo / Coupon Code" style="font-size: 0.8rem; padding: 12px 14px;">
+            <button class="btn btn-outline-light rounded-0 px-3 text-uppercase fw-semibold transition-all" type="button" style="font-size: 0.7rem; border-color: rgba(255,255,255,0.2); letter-spacing: 1px;">Apply</button>
+          </div>
+        </div>
+        
+        <div class="border-top border-secondary border-opacity-25 my-3"></div>
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <span class="fs-6 fw-bold text-white text-uppercase" style="letter-spacing: 1px;">Total Amount:</span>
+          <span class="fs-4 fw-bold" style="color: var(--accent-gold);">RS {{ total_price }}</span>
+        </div>
+
         {% if cart_items %}
-        <a href="{% url 'checkout' %}" class="btn btn-primary btn-lg w-100"
-          >Proceed to Checkout</a
-        >
+        <a href="{% url 'checkout' %}" class="btn btn-lg w-100 text-uppercase fw-bold rounded-0 py-3 mb-3 shadow-sm transition-all" style="letter-spacing: 1.5px; font-size: 0.8rem; background-color: var(--accent-gold); color: #000; border: none;">
+          Proceed to Checkout <i class="fa-solid fa-arrow-right ms-2" style="font-size: 0.75rem;"></i>
+        </a>
         {% else %}
-        <button class="btn btn-secondary btn-lg w-100" disabled>
+        <button class="btn btn-secondary btn-lg w-100 text-uppercase fw-bold rounded-0 py-3 mb-3 opacity-50" disabled style="letter-spacing: 1.5px; font-size: 0.8px;">
           Proceed to Checkout
         </button>
         {% endif %}
+
+        <!-- Guest Checkout Note -->
+        <div class="text-center mb-4">
+          <span class="text-muted fw-light" style="font-size: 0.7rem; letter-spacing: 0.5px;">Express & Secure Guest Checkout Options Available</span>
+        </div>
+
+        <!-- Trust Badges -->
+        <div class="row text-center text-muted mt-2 pt-3 border-top border-secondary border-opacity-25 opacity-80" style="font-size: 0.65rem; letter-spacing: 0.5px;">
+          <div class="col-4">
+            <i class="fa-solid fa-shield-halved mb-1 text-light fs-6" style="color: var(--accent-gold) !important;"></i>
+            <div class="fw-light">Secure Checkout</div>
+          </div>
+          <div class="col-4">
+            <i class="fa-solid fa-truck-fast mb-1 text-light fs-6" style="color: var(--accent-gold) !important;"></i>
+            <div class="fw-light">Fast Delivery</div>
+          </div>
+          <div class="col-4">
+            <i class="fa-solid fa-rotate-left mb-1 text-light fs-6" style="color: var(--accent-gold) !important;"></i>
+            <div class="fw-light">Easy Returns</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
+
+<style>
+  :root {
+    --accent-gold: #d4af37;
+  }
+  .cart-item-row {
+    transition: background-color 0.2s ease;
+  }
+  .cart-item-row:hover {
+    background-color: rgba(212, 175, 55, 0.03) !important;
+  }
+  .delete-item-btn {
+    transition: all 0.25s ease;
+  }
+  .delete-item-btn:hover {
+    background-color: #dc3545 !important;
+    color: #fff !important;
+    border-color: #dc3545 !important;
+  }
+  .step-badge {
+    transition: all 0.3s ease;
+  }
+</style>
 {% endblock %}

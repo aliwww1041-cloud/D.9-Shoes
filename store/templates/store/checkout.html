@@ -1,177 +1,258 @@
-{% extends 'store/base.html' %} {% load static %} {% block content %}
-<!-- Baaki aap ka saara checkout code yahan niche aayega -->
-<div class="container py-5 text-light">
-  <h2 class="fw-bold mb-4 luxury-serif">Checkout 💳</h2>
+{% extends 'store/base.html' %} 
+{% load static %} 
+
+{% block content %}
+<div class="container py-5 text-light checkout-wrapper">
+  <!-- Step-by-Step Progress Indicator -->
+  <div class="row justify-content-center mb-5">
+    <div class="col-lg-8">
+      <div class="d-flex justify-content-between align-items-center position-relative">
+        <!-- Progress Line Background -->
+        <div class="position-absolute w-100 top-50 translate-middle-y bg-secondary opacity-25" style="height: 2px; z-index: 1;"></div>
+        
+        <!-- Step 1: Cart -->
+        <div class="d-flex flex-column align-items-center position-relative" style="z-index: 2;">
+          <div class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold shadow-sm bg-success transition-all" style="width: 38px; height: 38px; font-size: 0.85rem;">
+            <i class="fa-solid fa-check" style="font-size: 0.8rem;"></i>
+          </div>
+          <span class="text-light small mt-2 text-uppercase tracking-wider fw-medium" style="font-size: 0.75rem; letter-spacing: 0.05em;">Cart</span>
+        </div>
+
+        <!-- Step 2: Shipping -->
+        <div class="d-flex flex-column align-items-center position-relative" style="z-index: 2;">
+          <div class="rounded-circle d-flex align-items-center justify-content-center text-dark fw-bold shadow-lg active-step-bubble" style="width: 38px; height: 38px; background-color: var(--accent-gold); font-size: 0.85rem;">2</div>
+          <span class="text-white small mt-2 fw-bold text-uppercase tracking-wider" style="font-size: 0.75rem; letter-spacing: 0.05em; color: var(--accent-gold) !important;">Shipping</span>
+        </div>
+
+        <!-- Step 3: Confirmation -->
+        <div class="d-flex flex-column align-items-center position-relative" style="z-index: 2;">
+          <div class="rounded-circle d-flex align-items-center justify-content-center text-muted fw-bold bg-dark border border-secondary transition-all" style="width: 38px; height: 38px; font-size: 0.85rem;">3</div>
+          <span class="text-muted small mt-2 text-uppercase tracking-wider" style="font-size: 0.75rem; letter-spacing: 0.05em;">Confirmation</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Page Header -->
+  <div class="row mb-4">
+    <div class="col-12 text-center text-lg-start">
+      <h2 class="fw-bold luxury-font mb-1 text-white display-6" style="letter-spacing: 0.5px;">Secure Checkout <span style="color: var(--accent-gold);">💳</span></h2>
+      <p class="text-secondary small">Complete your order by providing your destination details and payment preferences.</p>
+    </div>
+  </div>
 
   <div class="row g-4">
-    <!-- Left: Shipping Form -->
-    <div class="col-md-7">
-      <div
-        class="card p-4 shadow-sm bg-dark text-light border-secondary rounded-0"
-      >
-        <h4 class="mb-3 text-warning luxury-serif">Shipping Address</h4>
-        <form method="POST" action="{% url 'checkout' %}">
+    <!-- Left: Shipping & Payment Form -->
+    <div class="col-lg-7">
+      <div class="card p-4 p-md-5 shadow-lg bg-dark text-light border-secondary rounded-4 position-relative overflow-hidden">
+        <div class="card-glow-accent"></div>
+        
+        <h4 class="mb-4 text-warning luxury-font border-bottom border-secondary pb-3 d-flex align-items-center" style="font-size: 1.15rem; letter-spacing: 0.05em;">
+          <i class="fa-solid fa-truck-fast me-2 text-warning"></i>Shipping Address
+        </h4>
+
+        <form method="POST" action="{% url 'checkout' %}" class="needs-validation" novalidate>
           {% csrf_token %}
 
           <div class="mb-3">
-            <label class="form-label">Full Name</label>
-            <input
-              type="text"
-              name="full_name"
-              class="form-control bg-secondary text-light border-0 rounded-0"
-              required
-            />
+            <label class="form-label text-secondary small text-uppercase fw-bold tracking-wider">Full Name</label>
+            <div class="input-group">
+              <span class="input-group-text bg-secondary border-0 text-light rounded-start-3"><i class="fa-solid fa-user"></i></span>
+              <input
+                type="text"
+                name="full_name"
+                class="form-control bg-secondary text-light border-0 rounded-end-3 py-2.5 shadow-none ps-3"
+                placeholder="Enter your full name"
+                required
+              />
+            </div>
           </div>
 
           <div class="row">
             <div class="col-md-6 mb-3">
-              <label class="form-label">Email Address (for confirmation)</label>
-              <input
-                type="email"
-                name="email"
-                class="form-control bg-secondary text-light border-0 rounded-0"
-                placeholder="example@email.com"
-                required
-              />
+              <label class="form-label text-secondary small text-uppercase fw-bold tracking-wider">Email Address</label>
+              <div class="input-group">
+                <span class="input-group-text bg-secondary border-0 text-light rounded-start-3"><i class="fa-solid fa-envelope"></i></span>
+                <input
+                  type="email"
+                  name="email"
+                  class="form-control bg-secondary text-light border-0 rounded-end-3 py-2.5 shadow-none ps-3"
+                  placeholder="example@email.com"
+                  required
+                />
+              </div>
             </div>
             <div class="col-md-6 mb-3">
-              <label class="form-label">Phone Number</label>
-              <input
-                type="text"
-                name="phone"
-                class="form-control bg-secondary text-light border-0 rounded-0"
-                required
-              />
+              <label class="form-label text-secondary small text-uppercase fw-bold tracking-wider">Phone Number</label>
+              <div class="input-group">
+                <span class="input-group-text bg-secondary border-0 text-light rounded-start-3"><i class="fa-solid fa-phone"></i></span>
+                <input
+                  type="text"
+                  name="phone"
+                  class="form-control bg-secondary text-light border-0 rounded-end-3 py-2.5 shadow-none ps-3"
+                  placeholder="03XXXXXXXXX"
+                  required
+                />
+              </div>
             </div>
           </div>
 
           <div class="mb-3">
-            <label class="form-label">Address</label>
-            <textarea
-              name="address"
-              class="form-control bg-secondary text-light border-0 rounded-0"
-              rows="3"
-              required
-            ></textarea>
+            <label class="form-label text-secondary small text-uppercase fw-bold tracking-wider">Complete Street Address</label>
+            <div class="input-group">
+              <span class="input-group-text bg-secondary border-0 text-light rounded-start-3 align-items-start pt-2.5"><i class="fa-solid fa-location-dot"></i></span>
+              <textarea
+                name="address"
+                class="form-control bg-secondary text-light border-0 rounded-end-3 shadow-none ps-3 pt-2.5"
+                rows="3"
+                placeholder="House #, Street name, Area/Locality"
+                required
+              ></textarea>
+            </div>
           </div>
 
           <div class="mb-4">
-            <label class="form-label">City</label>
-            <input
-              type="text"
-              name="city"
-              class="form-control bg-secondary text-light border-0 rounded-0"
-              required
-            />
+            <label class="form-label text-secondary small text-uppercase fw-bold tracking-wider">City</label>
+            <div class="input-group">
+              <span class="input-group-text bg-secondary border-0 text-light rounded-start-3"><i class="fa-solid fa-city"></i></span>
+              <input
+                type="text"
+                name="city"
+                class="form-control bg-secondary text-light border-0 rounded-end-3 py-2.5 shadow-none ps-3"
+                placeholder="e.g. Jaranwala, Lahore, Faisalabad"
+                required
+              />
+            </div>
           </div>
 
-          <h5 class="text-warning fw-bold mb-3">SELECT PAYMENT METHOD</h5>
+          <h4 class="text-warning fw-bold mb-3 luxury-font border-bottom border-secondary pb-3 pt-3 d-flex align-items-center" style="font-size: 1.15rem; letter-spacing: 0.05em;">
+            <i class="fa-solid fa-wallet me-2 text-warning"></i>Select Payment Method
+          </h4>
 
-          <!-- YAHAN SE PASTE KAREIN -->
-          <h5 class="text-warning fw-bold mb-3">SELECT PAYMENT METHOD</h5>
-
-          <div class="payment-methods d-flex flex-column gap-2 mb-4">
-            <!-- JazzCash -->
-            <label
-              class="payment-option border border-secondary p-3 rounded bg-dark d-flex align-items-center justify-content-between"
-              style="cursor: pointer"
-            >
-              <div class="d-flex align-items-center gap-3">
-                <input
-                  type="radio"
-                  name="payment_method"
-                  value="jazzcash"
-                  class="form-check-input mt-0"
-                  checked
-                  required
-                />
-                <span class="text-white fw-bold fs-6"
-                  >JazzCash Mobile Account</span
-                >
-              </div>
-            </label>
-
+          <div class="payment-methods d-flex flex-column gap-3 mb-4">
             <!-- EasyPaisa -->
-            <label
-              class="payment-option border border-secondary p-3 rounded bg-dark d-flex align-items-center justify-content-between"
-              style="cursor: pointer"
-            >
+            <label class="payment-option border border-secondary p-3.5 bg-dark d-flex align-items-center justify-content-between rounded-3 position-relative" style="cursor: pointer; transition: all 0.25s ease;">
               <div class="d-flex align-items-center gap-3">
                 <input
                   type="radio"
                   name="payment_method"
                   value="easypaisa"
-                  class="form-check-input mt-0"
+                  class="form-check-input mt-0 shadow-none custom-radio"
                   required
                 />
-                <span class="text-white fw-bold fs-6"
-                  >EasyPaisa Mobile Account</span
-                >
+                <span class="text-white fw-semibold fs-6">EasyPaisa Mobile Account</span>
               </div>
+              <span class="badge bg-success rounded-pill px-3 py-1.5 shadow-sm bg-opacity-75" style="font-size: 0.75rem;">🟢 EasyPaisa</span>
             </label>
+
             <!-- Cash on Delivery -->
-            <label
-              class="payment-option border border-secondary p-3 rounded bg-dark d-flex align-items-center justify-content-between"
-              style="cursor: pointer"
-            >
+            <label class="payment-option border border-secondary p-3.5 bg-dark d-flex align-items-center justify-content-between rounded-3 position-relative" style="cursor: pointer; transition: all 0.25s ease;">
               <div class="d-flex align-items-center gap-3">
                 <input
                   type="radio"
                   name="payment_method"
                   value="cod"
-                  class="form-check-input mt-0"
+                  class="form-check-input mt-0 shadow-none custom-radio"
                   required
                 />
-                <span class="text-white fw-bold fs-6"
-                  >Cash on Delivery (COD)</span
-                >
+                <span class="text-white fw-semibold fs-6">Cash on Delivery (COD)</span>
               </div>
-              <span class="badge bg-success fs-6 p-2">💵 COD</span>
+              <span class="badge bg-warning rounded-pill text-dark px-3 py-1.5 fw-bold shadow-sm" style="font-size: 0.75rem;">💵 COD</span>
             </label>
           </div>
 
           <button
             type="submit"
-            class="btn btn-warning text-dark fw-bold px-4 py-2 rounded-0 text-uppercase"
+            class="btn fw-bold px-5 py-3.5 rounded-3 text-uppercase w-100 shadow-lg position-relative overflow-hidden premium-cta-btn"
+            style="letter-spacing: 1.5px; background-color: var(--accent-gold); color: #fff; border: none; transition: transform 0.2s ease, filter 0.2s ease;"
           >
-            Place Order
+            Place Order Now <i class="fa-solid fa-lock ms-2"></i>
           </button>
         </form>
       </div>
     </div>
 
     <!-- Right: Order Summary Section -->
-    <div class="col-md-5">
-      <div
-        class="card p-4 shadow-sm bg-dark text-light border-secondary rounded-0"
-      >
-        <h4 class="mb-3 text-warning luxury-serif">Order Summary</h4>
-        <hr class="border-secondary" />
+    <div class="col-lg-5">
+      <div class="card p-4 p-md-4 shadow-lg bg-dark text-light border-secondary rounded-4 sticky-top" style="top: 100px;">
+        <h4 class="mb-3 text-white luxury-font" style="letter-spacing: 0.5px;">Order Summary</h4>
+        <hr class="border-secondary opacity-25" />
 
-        <div class="d-flex justify-content-between mb-2">
-          <span class="text-muted">Subtotal</span>
-          <span class="fw-bold">Rs. {{ total }}</span>
+        <div class="d-flex justify-content-between mb-2 text-secondary" style="font-size: 0.95rem;">
+          <span>Subtotal</span>
+          <span class="fw-bold text-light">Rs. {{ total }}</span>
         </div>
 
-        <div class="d-flex justify-content-between mb-2">
-          <span class="text-muted">Shipping Charges</span>
-          <span class="text-success fw-bold">FREE</span>
+        <div class="d-flex justify-content-between mb-3 text-secondary" style="font-size: 0.95rem;">
+          <span>Shipping Charges</span>
+          <span class="text-success fw-bold text-uppercase" style="font-size: 0.85rem; letter-spacing: 0.05em;">Free</span>
         </div>
 
-        <hr class="border-secondary" />
+        <hr class="border-secondary opacity-25" />
 
-        <div class="d-flex justify-content-between mb-3 fs-5">
-          <span class="fw-bold text-uppercase">Total Payable</span>
-          <span class="fw-bold text-warning">Rs. {{ total }}</span>
+        <div class="d-flex justify-content-between mb-4 fs-5 align-items-center">
+          <span class="fw-bold text-uppercase text-white" style="font-size: 0.95rem; letter-spacing: 0.05em;">Total Payable</span>
+          <span class="fw-bold fs-3" style="color: var(--accent-gold);">Rs. {{ total }}</span>
         </div>
 
-        <div
-          class="alert alert-secondary text-center small rounded-0 border-0 mb-0"
-        >
+        <div class="alert alert-secondary text-center small rounded-3 border-0 mb-3 text-dark bg-light fw-semibold shadow-sm py-2.5">
           🔒 Guaranteed Safe & Secure Checkout
+        </div>
+
+        <!-- Trust Features -->
+        <div class="border-top border-secondary opacity-75 pt-3 mt-2">
+          <div class="d-flex align-items-center gap-3 mb-2.5 text-secondary small">
+            <i class="fa-solid fa-circle-check text-success fs-5"></i>
+            <span class="text-light">Verified product quality check before dispatch</span>
+          </div>
+          <div class="d-flex align-items-center gap-3 text-secondary small">
+            <i class="fa-solid fa-headset text-warning fs-5"></i>
+            <span class="text-light">24/7 Customer support via WhatsApp/Call</span>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<style>
+  .payment-option {
+    border-width: 1.5px !important;
+  }
+  .payment-option:hover {
+    border-color: var(--accent-gold) !important;
+    background-color: rgba(255, 255, 255, 0.02) !important;
+    transform: translateY(-1px);
+  }
+  .payment-option input[type="radio"]:checked + span {
+    color: var(--accent-gold) !important;
+  }
+  .payment-option:has(input[type="radio"]:checked) {
+    border-color: var(--accent-gold) !important;
+    background: linear-gradient(90deg, rgba(212, 175, 55, 0.08) 0%, transparent 100%);
+  }
+  .form-control:focus, .input-group-text:focus {
+    background-color: #2b2d35 !important;
+    color: #fff !important;
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15) !important;
+    border-color: var(--accent-gold) !important;
+  }
+  .form-control::placeholder {
+    color: #6c757d;
+    opacity: 0.8;
+  }
+  .premium-cta-btn:hover {
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+  }
+  .card-glow-accent {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+</style>
 {% endblock %}

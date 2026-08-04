@@ -1,90 +1,245 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Easypaisa Payment - D.9 Shoes</title>
-    <style>
-      body {
-        background-color: #121212;
-        color: #ffffff;
-        font-family: Arial, sans-serif;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-      }
-      .container {
-        background: #1e1e1e;
-        padding: 30px;
-        border-radius: 10px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-        width: 400px;
-        text-align: center;
-      }
-      h2 {
-        color: #00ba7c;
-      }
-      .info {
-        margin: 15px 0;
-        font-size: 16px;
-        text-align: left;
-      }
-      .info span {
-        float: right;
-        font-weight: bold;
-      }
-      input[type="text"] {
-        width: 100%;
-        padding: 10px;
-        margin: 10px 0;
-        background: #2a2a2a;
-        border: 1px solid #444;
-        color: #fff;
-        border-radius: 5px;
-      }
-      button {
-        background: #00ba7c;
-        color: white;
-        padding: 12px;
-        width: 100%;
-        border: none;
-        border-radius: 5px;
-        font-size: 16px;
-        cursor: pointer;
-        font-weight: bold;
-      }
-      button:hover {
-        background: #009663;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <h2>Easypaisa Payment</h2>
-      <p>Please complete your payment via Easypaisa.</p>
+{% extends 'store/base.html' %} 
+{% load static %} 
 
-      <div class="info">
-        <p>Order ID: <span>#{{ order.id }}</span></p>
-        <p>Total Amount: <span>Rs. {{ order.total_amount }}</span></p>
-        <p>Merchant Account: <span>0312-7995381</span></p>
+{% block content %}
+<div class="container-fluid checkout-wrapper py-6 px-3 px-md-4 text-light">
+  <!-- Step-by-Step Progress Indicator -->
+  <div class="row justify-content-center mb-5 animate-fade-in">
+    <div class="col-lg-8 col-xl-6">
+      <div class="d-flex justify-content-between align-items-center position-relative px-md-4">
+        <!-- Progress Line Background -->
+        <div class="position-absolute w-100 top-50 translate-middle-y progress-line-bg" style="height: 2px; z-index: 1;"></div>
+        
+        <!-- Step 1: Cart (Completed) -->
+        <div class="d-flex flex-column align-items-center position-relative stepper-step" style="z-index: 2;">
+          <div class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold shadow-custom bg-easypaisa-success" style="width: 40px; height: 40px;">
+            <i class="fa-solid fa-check" style="font-size: 0.85rem;"></i>
+          </div>
+          <span class="text-light-muted small mt-2 text-uppercase tracking-wider fw-semibold" style="font-size: 0.7rem;">Cart</span>
+        </div>
+
+        <!-- Step 2: Shipping (Completed) -->
+        <div class="d-flex flex-column align-items-center position-relative stepper-step" style="z-index: 2;">
+          <div class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold shadow-custom bg-easypaisa-success" style="width: 40px; height: 40px;">
+            <i class="fa-solid fa-check" style="font-size: 0.85rem;"></i>
+          </div>
+          <span class="text-light-muted small mt-2 text-uppercase tracking-wider fw-semibold" style="font-size: 0.7rem;">Shipping</span>
+        </div>
+
+        <!-- Step 3: Payment (Active) -->
+        <div class="d-flex flex-column align-items-center position-relative stepper-step" style="z-index: 2;">
+          <div class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold shadow-glow bg-easypaisa-success" style="width: 40px; height: 40px;">3</div>
+          <span class="text-white small mt-2 fw-bold text-uppercase tracking-wider" style="font-size: 0.7rem;">Payment</span>
+        </div>
+
+        <!-- Step 4: Confirmation (Pending) -->
+        <div class="d-flex flex-column align-items-center position-relative stepper-step" style="z-index: 2;">
+          <div class="rounded-circle d-flex align-items-center justify-content-center text-light-muted fw-bold bg-surface border border-subtle" style="width: 40px; height: 40px;">4</div>
+          <span class="text-light-muted small mt-2 text-uppercase tracking-wider" style="font-size: 0.7rem;">Confirmation</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row justify-content-center animate-fade-in-delayed">
+    <div class="col-md-8 col-lg-6 col-xl-5">
+      
+      <!-- Payment Card -->
+      <div class="card payment-card text-white border-0 shadow-custom rounded-0 overflow-hidden">
+        
+        <!-- Header Banner with Easypaisa Theme -->
+        <div class="p-4 text-center border-bottom border-subtle payment-header">
+          <div class="mb-3">
+            <span class="badge badge-easypaisa rounded-0 px-3 py-2 text-uppercase fw-bold">
+              <i class="fa-solid fa-wallet me-2"></i> Easypaisa Secure Gateway
+            </span>
+          </div>
+          <h2 class="fw-bold luxury-font text-white mb-2 fs-4">Complete Payment</h2>
+          <p class="text-light-muted small mb-0">Verify your transaction details below to finalize your order.</p>
+        </div>
+
+        <div class="p-4 p-md-5">
+          <!-- Order Information Box -->
+          <div class="order-summary-box p-4 border border-subtle mb-4 rounded-0">
+            <div class="d-flex justify-content-between mb-2.5 text-light-muted small">
+              <span>Order Reference:</span>
+              <span class="text-white fw-bold font-monospace">#{{ order.id }}</span>
+            </div>
+            <div class="d-flex justify-content-between mb-2.5 text-light-muted small">
+              <span>Total Payable:</span>
+              <span class="fw-bold text-easypaisa fs-5">Rs. {{ order.total_amount }}</span>
+            </div>
+            <hr class="border-subtle my-3 opacity-50" />
+            <div class="d-flex justify-content-between align-items-center text-light-muted small">
+              <span>Merchant Account:</span>
+              <span class="text-gold fw-bold font-monospace bg-surface px-2.5 py-1.5 border border-subtle select-all">0312-7995381</span>
+            </div>
+          </div>
+
+          <!-- Instructions -->
+          <div class="mb-4 text-start instruction-box p-3 border-start border-3 border-easypaisa">
+            <h6 class="text-white fw-bold small text-uppercase mb-2 tracking-wide">
+              <i class="fa-solid fa-circle-info text-easypaisa me-1"></i> Payment Instructions:
+            </h6>
+            <ol class="text-light-muted small ps-3 mb-0" style="line-height: 1.7;">
+              <li class="mb-1">Transfer exact amount of <strong class="text-white">Rs. {{ order.total_amount }}</strong> to Easypaisa account <strong class="text-white">0312-7995381</strong>.</li>
+              <li class="mb-1">Locate the <strong class="text-white">11-digit Transaction ID (TID)</strong> in your SMS confirmation or app receipt.</li>
+              <li>Provide your mobile number and TID fields below for instant verification.</li>
+            </ol>
+          </div>
+
+          <!-- Payment Form -->
+          <form action="{% url 'order_success' order.id %}" method="GET" class="needs-validation" novalidate>
+            <div class="mb-4 text-start">
+              <label class="form-label text-light-muted small text-uppercase fw-bold tracking-wider" for="easypaisa_phone">Your Easypaisa Mobile No</label>
+              <div class="input-group input-group-custom">
+                <span class="input-group-text bg-surface text-light-muted border-subtle rounded-0 px-3"><i class="fa-solid fa-phone"></i></span>
+                <input
+                  type="tel"
+                  id="easypaisa_phone"
+                  name="easypaisa_phone"
+                  class="form-control bg-surface text-white border-subtle rounded-0 shadow-none py-2.5 px-3"
+                  placeholder="03XXXXXXXXX"
+                  aria-label="Your Easypaisa Mobile Number"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="mb-4 text-start">
+              <label class="form-label text-light-muted small text-uppercase fw-bold tracking-wider" for="transaction_id">Transaction ID (TID)</label>
+              <div class="input-group input-group-custom">
+                <span class="input-group-text bg-surface text-light-muted border-subtle rounded-0 px-3"><i class="fa-solid fa-receipt"></i></span>
+                <input
+                  type="text"
+                  id="transaction_id"
+                  name="transaction_id"
+                  class="form-control bg-surface text-white border-subtle rounded-0 shadow-none py-2.5 px-3 font-monospace"
+                  placeholder="Enter 11-digit TID"
+                  aria-label="Transaction ID (TID)"
+                  maxlength="11"
+                  required
+                />
+              </div>
+              <div class="form-text text-light-muted mt-1.5" style="font-size: 0.72rem;">Check your 3737 confirmation SMS for your unique 11-digit transaction ID.</div>
+            </div>
+
+            <button type="submit" class="btn btn-easypaisa text-white fw-bold py-3 w-100 rounded-0 text-uppercase tracking-wide shadow-custom">
+              Verify & Confirm Order <i class="fa-solid fa-circle-check ms-2"></i>
+            </button>
+          </form>
+        </div>
+
+        <!-- Footer Security Note -->
+        <div class="card-footer bg-surface border-top border-subtle text-center py-3 text-light-muted" style="font-size: 0.75rem;">
+          <i class="fa-solid fa-shield-halved text-easypaisa me-1.5"></i> Encrypted & Verified Secure Manual Gateway
+        </div>
       </div>
 
-      <form action="{% url 'order_success' order.id %}" method="GET">
-        <input
-          type="text"
-          name="easypaisa_phone"
-          placeholder="Enter your Easypaisa Mobile No"
-          required
-        />
-        <input
-          type="text"
-          name="transaction_id"
-          placeholder="Enter 11-digit Transaction ID (TID)"
-          required
-        />
-        <button type="submit">Verify & Confirm Order</button>
-      </form>
     </div>
-  </body>
-</html>
+  </div>
+</div>
+
+<!-- Professional Styling & Design System -->
+<style>
+  :root {
+    --obsidian-dark: #0b0c10;
+    --card-surface: #121318;
+    --border-subtle: rgba(255, 255, 255, 0.08);
+    --easypaisa-green: #00ba7c;
+    --easypaisa-green-hover: #009663;
+    --easypaisa-glow: rgba(0, 186, 124, 0.25);
+  }
+
+  .checkout-wrapper {
+    background-color: var(--obsidian-dark);
+    min-height: 85vh;
+  }
+
+  .progress-line-bg {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  .bg-easypaisa-success {
+    background-color: var(--easypaisa-green) !important;
+  }
+
+  .text-easypaisa {
+    color: var(--easypaisa-green) !important;
+  }
+
+  .bg-surface {
+    background-color: var(--card-surface) !important;
+  }
+
+  .border-subtle {
+    border-color: var(--border-subtle) !important;
+  }
+
+  .payment-card {
+    background-color: var(--card-surface) !important;
+    border: 1px solid var(--border-subtle) !important;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6) !important;
+  }
+
+  .payment-header {
+    background-color: #0e0f13 !important;
+  }
+
+  .badge-easypaisa {
+    background-color: rgba(0, 186, 124, 0.15);
+    color: var(--easypaisa-green);
+    border: 1px solid rgba(0, 186, 124, 0.3);
+    font-size: 0.65rem;
+    letter-spacing: 1.5px;
+  }
+
+  .order-summary-box {
+    background-color: #0b0c10 !important;
+  }
+
+  .instruction-box {
+    background-color: rgba(255, 255, 255, 0.02);
+  }
+
+  .input-group-custom .form-control:focus {
+    background-color: #171920 !important;
+    color: #fff !important;
+    border-color: var(--easypaisa-green) !important;
+    box-shadow: 0 0 15px var(--easypaisa-glow) !important;
+  }
+
+  .btn-easypaisa {
+    background-color: var(--easypaisa-green);
+    border: 1px solid var(--easypaisa-green);
+    letter-spacing: 1px;
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  }
+
+  .btn-easypaisa:hover {
+    background-color: var(--easypaisa-green-hover) !important;
+    border-color: var(--easypaisa-green-hover) !important;
+    color: #fff !important;
+    box-shadow: 0 0 25px var(--easypaisa-glow);
+    transform: translateY(-2px);
+  }
+
+  .shadow-glow {
+    box-shadow: 0 0 20px var(--easypaisa-glow);
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+  }
+
+  .animate-fade-in-delayed {
+    animation: fadeIn 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) 0.1s forwards;
+    opacity: 0;
+  }
+</style>
+{% endblock %}

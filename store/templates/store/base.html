@@ -16,7 +16,7 @@
     />
     <!-- Google Fonts -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Poppins:wght@300;400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Poppins:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <!-- Icons -->
@@ -35,106 +35,90 @@
     />
 
     <style>
-      /* Navbar ko mobile par behtar dikhane ke liye */
-      .navbar-collapse {
-        background-color: #141518 !important;
-        padding: 15px;
-        border-radius: 5px;
-        margin-top: 10px;
-      }
-
-      /* 🌟 Navbar Bottom Accent Line (Gold/Orange Theme Match) */
-      .navbar {
-        background-color: #0f1012 !important;
-        border-bottom: 2px solid #ff4500 !important;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-      }
-
-      /* Product images ki height ko fix karna */
-      .card-img-top,
-      .product-card img,
-      .swiper-slide img {
-        width: 100% !important;
-        height: 180px !important;
-        object-fit: cover !important;
-      }
-
       :root {
-        --bg-dark: #0f1012;
-        --card-dark: #181a1e;
-        --accent-gold: #ff4500;
-        --text-light: #f0f0f0;
-        --text-muted: #9a9a9a;
-      }
-      /* Header ki height ke mutabiq isay adjust kar sakte hain */
-      body {
-        padding-top: 80px;
+        --bg-dark: #0a0b0d;
+        --card-dark: #121316;
+        --accent-gold: #d4af37;
+        --accent-gold-hover: #e5c158;
+        --text-light: #f4f4f6;
+        --text-muted: #9ca3af;
+        --border-subtle: rgba(212, 175, 55, 0.15);
       }
 
       html {
         scroll-behavior: smooth;
       }
 
-      html,
       body {
-        max-width: 100% !important;
-        overflow-x: hidden !important;
+        padding-top: 90px;
         background-color: var(--bg-dark);
-        background-image: url("{% static 'images/bg-pattern.jpg' %}");
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
         color: var(--text-light);
         font-family: "Poppins", sans-serif;
+        max-width: 100% !important;
+        overflow-x: hidden !important;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        -webkit-font-smoothing: antialiased;
       }
 
-      img {
-        max-width: 100%;
-        height: auto;
-      }
-
-      h1,
-      h2,
-      h3,
-      .luxury-font,
-      .luxury-serif {
+      h1, h2, h3, h4, h5, h6, .luxury-font, .luxury-serif {
         font-family: "Playfair Display", serif !important;
       }
 
+      /* 🌟 Ultra-Refined Sticky Navbar Styling */
+      .navbar {
+        background-color: rgba(10, 11, 13, 0.88) !important;
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border-bottom: 1px solid rgba(212, 175, 55, 0.12) !important;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+      }
+
       .navbar-brand {
+        font-family: "Playfair Display", serif;
         font-weight: 800;
-        letter-spacing: 1px;
+        letter-spacing: 2.5px;
         color: #fff !important;
-        font-size: 1.2rem;
+        font-size: 1.5rem;
         text-transform: uppercase;
+        transition: opacity 0.3s ease;
+      }
+      .navbar-brand:hover {
+        opacity: 0.85;
       }
 
       .nav-link {
         color: var(--text-muted) !important;
-        font-size: 0.9rem;
-        letter-spacing: 1px;
+        font-size: 0.8rem;
+        letter-spacing: 1.5px;
         text-transform: uppercase;
-        transition: color 0.3s;
+        font-weight: 500;
+        transition: color 0.3s ease, transform 0.2s ease;
+        padding: 8px 14px !important;
       }
 
       .nav-link:hover,
       .nav-link.active {
-        color: #fff !important;
+        color: var(--accent-gold) !important;
       }
 
+      /* Dropdown Customization */
       @media (min-width: 992px) {
         .nav-item.dropdown:hover .dropdown-menu {
           display: block !important;
           margin-top: 0;
-          animation: fadeIn 0.2s ease-in-out;
+          animation: dropdownFade 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
       }
 
-      @keyframes fadeIn {
+      @keyframes dropdownFade {
         from {
           opacity: 0;
-          transform: translateY(8px);
+          transform: translateY(12px);
         }
         to {
           opacity: 1;
@@ -143,203 +127,139 @@
       }
 
       .dropdown-menu-dark {
-        background-color: #141518 !important;
-        border: 1px solid rgba(255, 255, 255, 0.15) !important;
-        border-radius: 4px !important;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
-        padding: 8px 0;
-        min-width: 200px;
+        background-color: var(--card-dark) !important;
+        border: 1px solid rgba(212, 175, 55, 0.2) !important;
+        border-radius: 0px !important;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.85);
+        padding: 12px 0;
+        min-width: 230px;
       }
 
       .dropdown-item {
-        color: #bbb !important;
-        font-size: 0.85rem;
-        padding: 10px 20px;
-        transition: all 0.2s ease;
+        color: var(--text-muted) !important;
+        font-size: 0.78rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        padding: 10px 24px;
+        transition: all 0.25s ease;
       }
 
       .dropdown-item:hover {
-        background-color: #1f2228 !important;
+        background-color: rgba(212, 175, 55, 0.08) !important;
         color: var(--accent-gold) !important;
-        padding-left: 24px;
+        padding-left: 28px;
       }
 
+      /* Mobile Navbar Collapse Background */
+      @media (max-width: 991.98px) {
+        .navbar-collapse {
+          background-color: var(--card-dark) !important;
+          padding: 24px;
+          border: 1px solid rgba(212, 175, 55, 0.15);
+          margin-top: 18px;
+          box-shadow: 0 15px 35px rgba(0,0,0,0.9);
+        }
+      }
+
+      /* Global Image Standards */
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+
+      /* Contact Section */
       .contact-section {
-        background-color: #0b0c0e;
-        border-top: 2px solid #222;
+        background-color: #07080a;
+        border-top: 1px solid rgba(255, 255, 255, 0.04);
+        position: relative;
       }
 
       .contact-card {
-        background-color: #141518;
-        border: 2px solid #2a2a2a;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        background-color: var(--card-dark);
+        border: 1px solid rgba(212, 175, 55, 0.15);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+        border-radius: 0px;
       }
 
       .form-control-brutalist {
-        background-color: #0d0e10 !important;
-        border: 1px solid #333 !important;
+        background-color: #0b0c0e !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
         color: #fff !important;
         border-radius: 0px !important;
-        padding: 12px 15px;
+        padding: 15px 20px;
+        font-size: 0.85rem;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
+      }
+
+      .form-control-brutalist:focus {
+        border-color: var(--accent-gold) !important;
+        box-shadow: 0 0 15px rgba(212, 175, 55, 0.15) !important;
+        background-color: #0d0e10 !important;
+      }
+
+      .form-control-brutalist::placeholder {
+        color: #6b7280;
       }
 
       .btn-contact-submit {
         background-color: var(--accent-gold);
-        color: #fff;
+        color: #000;
         font-weight: 700;
+        letter-spacing: 2px;
         text-transform: uppercase;
-        border: 2px solid var(--accent-gold);
-        padding: 12px;
+        border: none;
+        border-radius: 0px;
+        padding: 16px;
+        font-size: 0.8rem;
+        transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
       }
 
+      .btn-contact-submit:hover {
+        background-color: #fff;
+        color: #000;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(212, 175, 55, 0.25);
+      }
+
+      /* Footer Styling */
       footer {
-        background-color: #080809;
-        border-top: 1px solid rgba(255, 255, 255, 0.05);
-        padding: 30px 0;
+        background-color: #050507;
+        border-top: 1px solid rgba(255, 255, 255, 0.04);
+        padding: 50px 0;
         color: var(--text-muted);
-        font-size: 0.85rem;
+        font-size: 0.8rem;
       }
 
-      /* 📱 Strict Mobile Image Sizing Fix */
-      img,
-      .swiper-slide img,
-      .product-card img,
-      .product-img,
-      .card-img-top {
-        width: 100% !important;
-        max-height: 200px !important;
-        height: 200px !important;
-        object-fit: contain !important;
-        background-color: #141518;
-      }
-
-      .product-detail-img {
-        max-height: 350px;
-        width: 100%;
-        object-fit: contain;
-      }
-
-      /* 📱 Ultra-Clean Mobile Card Typography & Compact Height Fix (3 Products View) */
-      @media (max-width: 576px) {
-        /* 📱 Professional Mobile Card Layout */
-        .product-card .card-img-top,
-        .product-card img {
-          height: 105px !important;
-          object-fit: contain !important;
-        }
-        .product-card .card-body {
-          padding: 6px 4px !important;
-        }
-        .product-card h6.card-title {
-          font-size: 0.7rem !important;
-          margin-bottom: 2px !important;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
-        /* Subtitle / Brand text ko clean karna */
-        .product-card p.small,
-        .product-card .text-muted {
-          font-size: 0.55rem !important;
-          margin-bottom: 2px !important;
-        }
-        /* Prices overlap fix aur proper alignment */
-        .product-card .d-flex.justify-content-center,
-        .product-card .price-container {
-          font-size: 0.65rem !important;
-          margin-bottom: 4px !important;
-        }
-        .product-card .price-text,
-        .product-card .text-decoration-line-through {
-          font-size: 0.6rem !important;
-        }
-        /* View Button styling */
-        .product-card .btn {
-          padding: 2px 6px !important;
-          font-size: 0.6rem !important;
-          margin-top: 2px !important;
-        }
-        /* Sale badge chota aur neat */
-        .product-card .badge,
-        .product-card .sale-badge {
-          font-size: 0.45rem !important;
-          padding: 2px 4px !important;
-          top: 4px !important;
-          left: 4px !important;
-        }
-        /* Arrows ko adjust karna taake text ke oopar na aayein */
-        .swiper-button-next,
-        .swiper-button-prev {
-          width: 22px !important;
-          height: 22px !important;
-        }
-        .swiper-button-next::after,
-        .swiper-button-prev::after {
-          font-size: 10px !important;
-        }
-      }
-      /* Product Card Hover Effect */
+      /* Universal Product Card Polish */
       .product-card {
-        transition:
-          transform 0.3s ease,
-          box-shadow 0.3s ease;
+        background-color: var(--card-dark);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease, border-color 0.4s ease;
       }
 
       .product-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(255, 193, 7, 0.2); /* Halki si yellow/gold glow shadow */
-        border-color: #ffc107 !important;
-      }
-      .custom-view-all-btn {
-        color: #ff0015;
-        border: 2px solid #1b1713;
-        background-color: transparent;
-        transition: all 0.3s ease-in-out;
-      }
-
-      .custom-view-all-btn:hover {
-        background-color: #727272;
-        color: #000;
-        box-shadow: 0 0 15px rgba(255, 127, 0, 0.4);
-      }
-      .product-card .btn-outline-warning,
-      .product-card a[href*="product_detail"] {
-        color: #ff4500 !important;
-        border-color: #ff4500 !important;
-        transition: all 0.3s ease-in-out;
-      }
-
-      .product-card .btn-outline-warning:hover,
-      .product-card a[href*="product_detail"]:hover {
-        background-color: #ff4500 !important;
-        color: #fff !important;
-        box-shadow: 0 0 15px rgba(255, 69, 0, 0.4);
+        transform: translateY(-8px);
+        border-color: rgba(212, 175, 55, 0.35) !important;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7), 0 0 20px rgba(212, 175, 55, 0.08);
       }
     </style>
   </head>
-  <body class="d-flex flex-column min-vh-100">
-    <!-- Header / Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark shadow">
+  <body>
+    <!-- Header / Sticky Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
       <div class="container px-3">
         <!-- Logo -->
-        <a
-          class="navbar-brand fw-bold text-uppercase"
-          href="{% url 'product_list' %}"
-          >D.9 Shoes</a
-        >
+        <a class="navbar-brand" href="{% url 'product_list' %}">D.9 Shoes</a>
 
-        <!-- Mobile Cart & Hamburger Toggle -->
+        <!-- Mobile Action Icons & Toggle -->
         <div class="d-flex align-items-center gap-3 d-lg-none">
-          <a
-            href="{% url 'cart' %}"
-            class="position-relative text-white me-1"
-            style="font-size: 1.2rem"
-          >
+          <a href="{% url 'cart' %}" class="position-relative text-white" style="font-size: 1.2rem;" aria-label="Cart">
             <i class="fa-solid fa-bag-shopping"></i>
           </a>
 
           <button
-            class="navbar-toggler border-1 border-secondary p-1"
+            class="navbar-toggler border-0 p-1 text-white shadow-none"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#navMenu"
@@ -347,23 +267,21 @@
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
-            <span class="navbar-toggler-icon"></span>
+            <i class="fa-solid fa-bars fs-4"></i>
           </button>
         </div>
 
         <!-- Links Container -->
-        <div class="collapse navbar-collapse mt-2 mt-lg-0" id="navMenu">
-          <ul class="navbar-nav mx-auto gap-1 gap-lg-3 py-2 py-lg-0">
+        <div class="collapse navbar-collapse" id="navMenu">
+          <ul class="navbar-nav mx-auto gap-1 gap-lg-2 py-2 py-lg-0">
             <li class="nav-item">
-              <a class="nav-link text-uppercase" href="{% url 'product_list' %}"
-                >Home</a
-              >
+              <a class="nav-link" href="{% url 'product_list' %}">Home</a>
             </li>
 
-            <!-- Men Dropdown Menu with Jump Links -->
+            <!-- Men Dropdown Menu -->
             <li class="nav-item dropdown">
               <a
-                class="nav-link dropdown-toggle text-uppercase"
+                class="nav-link dropdown-toggle"
                 href="#"
                 id="menDropdown"
                 role="button"
@@ -372,168 +290,75 @@
               >
                 Men
               </a>
-              <ul
-                class="dropdown-menu dropdown-menu-dark"
-                aria-labelledby="menDropdown"
-              >
-                <li><a class="dropdown-item" href="/#sleeper">Sleeper</a></li>
-                <li><a class="dropdown-item" href="/#shoe">Shoe</a></li>
-                <li>
-                  <a class="dropdown-item" href="/#peshawari-chapal"
-                    >Peshawari Chapal</a
-                  >
-                </li>
-                <li><a class="dropdown-item" href="/#pumpy">Pumpy</a></li>
-                <li><a class="dropdown-item" href="/#loafers">Loafers</a></li>
-                <li><a class="dropdown-item" href="/#naurozi">Naurozi</a></li>
-                <li><a class="dropdown-item" href="/#sandals">Sandals</a></li>
-              </ul>
-              <ul
-                class="dropdown-menu dropdown-menu-dark"
-                aria-labelledby="menDropdown"
-              >
-                <li>
-                  <a
-                    class="dropdown-item"
-                    href="{% url 'category_products' 'sleeper' %}"
-                    >Sleeper</a
-                  >
-                </li>
-                <li>
-                  <a
-                    class="dropdown-item"
-                    href="{% url 'category_products' 'shoe' %}"
-                    >Shoe</a
-                  >
-                </li>
-                <li>
-                  <a
-                    class="dropdown-item"
-                    href="{% url 'category_products' 'peshawari-chapal' %}"
-                    >Peshawari Chapal</a
-                  >
-                </li>
-                <li>
-                  <a
-                    class="dropdown-item"
-                    href="{% url 'category_products' 'pumpy' %}"
-                    >Pumpy</a
-                  >
-                </li>
-                <li>
-                  <a
-                    class="dropdown-item"
-                    href="{% url 'category_products' 'loafers' %}"
-                    >Loafers</a
-                  >
-                </li>
-                <li>
-                  <a
-                    class="dropdown-item"
-                    href="{% url 'category_products' 'naurozi' %}"
-                    >Naurozi</a
-                  >
-                </li>
-                <li>
-                  <a
-                    class="dropdown-item"
-                    href="{% url 'category_products' 'sandals' %}"
-                    >Sandals</a
-                  >
-                </li>
+              <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="menDropdown">
+                <li><a class="dropdown-item" href="{% url 'category_products' 'sleeper' %}">Sleeper</a></li>
+                <li><a class="dropdown-item" href="{% url 'category_products' 'shoe' %}">Shoe</a></li>
+                <li><a class="dropdown-item" href="{% url 'category_products' 'peshawari-chapal' %}">Peshawari Chapal</a></li>
+                <li><a class="dropdown-item" href="{% url 'category_products' 'pumpy' %}">Pumpy</a></li>
+                <li><a class="dropdown-item" href="{% url 'category_products' 'loafers' %}">Loafers</a></li>
+                <li><a class="dropdown-item" href="{% url 'category_products' 'naurozi' %}">Naurozi</a></li>
+                <li><a class="dropdown-item" href="{% url 'category_products' 'sandals' %}">Sandals</a></li>
               </ul>
             </li>
 
             <li class="nav-item">
-              <a
-                class="nav-link text-uppercase"
-                href="{% url 'product_list' %}?category=luxury"
-                >Luxury Edition</a
-              >
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link text-uppercase" href="#contact">Contact</a>
+              <a class="nav-link" href="{% url 'contact' %}">Contact</a>
             </li>
           </ul>
 
-          <!-- Cart & User Buttons (Right Side - Desktop) -->
-          <div class="d-none d-lg-flex align-items-center gap-3">
-            <a
-              href="{% url 'cart' %}"
-              class="position-relative text-white me-2"
-              style="font-size: 1.2rem"
-            >
+          <!-- Desktop Right Actions -->
+          <div class="d-none d-lg-flex align-items-center gap-4">
+            <a href="{% url 'cart' %}" class="position-relative text-white transition-opacity hover-opacity-75" style="font-size: 1.25rem;" aria-label="Cart">
               <i class="fa-solid fa-bag-shopping"></i>
             </a>
 
             {% if user.is_authenticated and user.is_staff %}
-            <a href="/admin/" class="btn btn-outline-light py-1 px-3 btn-sm"
-              >Admin Portal</a
-            >
+            <a href="/admin/" class="btn btn-outline-light rounded-0 py-2 px-4 btn-sm" style="font-size: 0.7rem; letter-spacing: 1.5px; border-color: rgba(255,255,255,0.2);">Admin Portal</a>
             {% endif %}
           </div>
         </div>
       </div>
     </nav>
 
-    <!-- Main Content -->
-    <main class="flex-grow-1">{% block content %} {% endblock %}</main>
+    <!-- Main Dynamic Content Container -->
+    <main class="flex-grow-1">
+      {% block content %} {% endblock %}
+    </main>
 
     <!-- Contact Section -->
     <section id="contact" class="contact-section py-5">
-      <div class="container py-2">
-        <div class="row g-4 align-items-center">
+      <div class="container py-4">
+        <div class="row g-5 align-items-center">
           <div class="col-lg-5">
             <div class="pe-lg-3">
-              <span
-                class="text-uppercase fw-bold small tracking-widest"
-                style="color: var(--accent-gold)"
-                >Need Assistance?</span
-              >
-              <h2 class="display-6 fw-bold text-white mb-3 luxury-font">
-                GET IN TOUCH
-              </h2>
-              <p class="text-muted mb-4" style="font-size: 0.9rem">
-                Have questions about our edition, size availability, or custom
-                orders?
+              <span class="text-uppercase fw-semibold small" style="color: var(--accent-gold); letter-spacing: 3px;">Need Assistance?</span>
+              <h2 class="display-6 fw-bold text-white mb-3 luxury-font mt-2" style="letter-spacing: 1px;">GET IN TOUCH</h2>
+              <p class="text-muted mb-4" style="font-size: 0.9rem; line-height: 1.8; font-weight: 300;">
+                Have questions about our luxury editions, size availability, or custom individual orders? Reach out to our concierge team.
               </p>
+              <div class="d-flex flex-column gap-2 text-muted small" style="letter-spacing: 1px;">
+                <p class="mb-1"><i class="fa-solid fa-location-dot me-2" style="color: var(--accent-gold);"></i> Jaranwala, Punjab, Pakistan</p>
+                <p class="mb-0"><i class="fa-solid fa-envelope me-2" style="color: var(--accent-gold);"></i> concierge@d9shoes.com</p>
+              </div>
             </div>
           </div>
 
           <div class="col-lg-7">
-            <div class="contact-card p-3 p-md-5">
+            <div class="contact-card p-4 p-md-5">
               <form action="#" method="POST">
                 {% csrf_token %}
                 <div class="row g-3">
                   <div class="col-md-6">
-                    <input
-                      type="text"
-                      class="form-control form-control-brutalist"
-                      placeholder="Your Name"
-                      required
-                    />
+                    <input type="text" class="form-control form-control-brutalist" placeholder="Your Name" required />
                   </div>
                   <div class="col-md-6">
-                    <input
-                      type="email"
-                      class="form-control form-control-brutalist"
-                      placeholder="Email Address"
-                      required
-                    />
+                    <input type="email" class="form-control form-control-brutalist" placeholder="Email Address" required />
                   </div>
                   <div class="col-12">
-                    <textarea
-                      class="form-control form-control-brutalist"
-                      rows="3"
-                      placeholder="Message..."
-                      required
-                    ></textarea>
+                    <textarea class="form-control form-control-brutalist" rows="4" placeholder="Your Message..." required></textarea>
                   </div>
-                  <div class="col-12 mt-3">
-                    <button type="submit" class="btn btn-contact-submit w-100">
-                      SEND MESSAGE
-                    </button>
+                  <div class="col-12 mt-4">
+                    <button type="submit" class="btn btn-contact-submit w-100">SEND MESSAGE</button>
                   </div>
                 </div>
               </form>
@@ -544,14 +369,12 @@
     </section>
 
     <!-- Footer -->
-    <footer class="mt-auto text-center">
+    <footer class="text-center">
       <div class="container">
-        <p class="mb-1 text-uppercase tracking-widest">
-          D.9 Shoes — Haute Footwear Collection
-        </p>
-        <p class="small text-muted mb-0">
-          © 2026 Engineered for Luxury & Comfort.
-        </p>
+        <h5 class="text-white luxury-font fw-bold mb-3" style="letter-spacing: 3px; font-size: 1.15rem;">D.9 SHOES</h5>
+        <p class="mb-2 text-uppercase text-light fw-light" style="letter-spacing: 2.5px; font-size: 0.75rem;">Haute Footwear Collection</p>
+        <div style="width: 40px; height: 1.5px; background-color: var(--accent-gold); margin: 15px auto;" class="opacity-75"></div>
+        <p class="small text-muted mb-0 fw-light" style="letter-spacing: 1px; font-size: 0.75rem;">© 2026 D.9 Shoes. Engineered for Ultimate Luxury & Comfort. All Rights Reserved.</p>
       </div>
     </footer>
 
